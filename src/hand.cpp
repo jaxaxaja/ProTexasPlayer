@@ -17,7 +17,10 @@ const std::map<Card, std::string> Hand::cardToStringMap_ = {{Card::As, "As"}, {C
 
 Hand::Hand(Card a, Card b)
 {
-    hand_ = cardToStringMap_.at(a) + cardToStringMap_.at(b);
+    if (a < b)
+        hand_ = cardToStringMap_.at(a) + cardToStringMap_.at(b);
+    else
+        hand_ = cardToStringMap_.at(b) + cardToStringMap_.at(a);
 }
 
 std::string Hand::getHand() const
