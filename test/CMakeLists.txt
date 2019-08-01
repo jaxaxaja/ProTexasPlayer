@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 2.8)
 
 project(ProTexasPlayerTest)
 
@@ -10,7 +10,10 @@ set(SOURCES src/handtest.cpp
 
 add_executable(ProTexasPlayerTest ${SOURCES})
 
-target_link_libraries(ProTexasPlayerTest ${CMAKE_CURRENT_SOURCE_DIR}/../../gtest/googletest/build/lib/libgtest.a)
+if(UNIX)
+    target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/../../gtest/libgtest.a pthread)
+else()
+    target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/../../gtest/libgtest.a)
+endif()
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../gtest/googletest/include
-                    ${CMAKE_CURRENT_SOURCE_DIR}/../inc)
+include_directories(../../gtest ../inc)
