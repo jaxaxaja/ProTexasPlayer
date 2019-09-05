@@ -11,9 +11,9 @@ set(SOURCES src/handtest.cpp
 add_executable(ProTexasPlayerTest ${SOURCES})
 
 if(UNIX)
-    target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/../../gtest/libgtest.a pthread)
+    target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/../lib/gtest/libgtest.a pthread)
 else()
-    target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/../../gtest/libgtest.a)
+    target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/../lib/gtest/libgtest.a)
 endif()
 
-include_directories(../../gtest ../inc)
+include_directories(../lib/gtest ../lib/spdlog ../inc)

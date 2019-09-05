@@ -2,6 +2,7 @@
 #include "Board.h"
 #include <random>
 #include <chrono>
+#include <spdlog/spdlog.h>
 
 RealDeck::RealDeck()
 {
