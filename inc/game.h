@@ -3,7 +3,7 @@
 
 #include "player.h"
 #include "croupier.h"
-#include "board.h"
+#include "Board.h"
 #include <vector>
 #include <memory>
 
@@ -15,7 +15,7 @@ private:
     long handNumber_;
     Board board_;
     std::string stake_;
-    std::vector<std::unique_ptr<Player>> players_;
+    std::vector<Player> players_;
     Croupier croupier_;
 };
 

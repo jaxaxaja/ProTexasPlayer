@@ -1,8 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "hand.h"
-#include "board.h"
+#include "Hand.h"
+#include "Board.h"
 #include "strategy.h"
 #include "playerStatistics.h"
 #include <string>
@@ -13,7 +13,8 @@ public:
     Player(const std::string& name, const Board& board, Hand hand, size_t bigBlinds);
     bool isActive() const { return isActive_; }
     std::string getName() const { return name_; }
-    void showHand();
+    void setHand(Hand hand) { hand_ = hand; }
+    void showHand() const;
 private:
     std::string name_;
     Hand hand_;

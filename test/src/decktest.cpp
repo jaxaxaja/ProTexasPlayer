@@ -1,19 +1,19 @@
 #include <gtest/gtest.h>
-#include <deck.h>
-#include <hand.h>
+#include <deck/RealDeck.h>
+#include <Hand.h>
 #include <iostream>
 
-TEST(DeckTest, EntireDeck)
+TEST(RealDeckTest, EntireDeck)
 {
-    Deck deck;
+    RealDeck deck;
     EXPECT_EQ(52u, deck.size());
     for (Card c = Card::As; c <= Card::TwoC; ++c)
         EXPECT_TRUE(deck.isInDeck(c));
 }
 
-TEST(DeckTest, RandomCards)
+TEST(RealDeckTest, RandomCards)
 {
-    Deck deck;
+    RealDeck deck;
     EXPECT_EQ(52u, deck.size());
     Card c1 = deck.getRandomCard();
     EXPECT_FALSE(deck.isInDeck(c1));

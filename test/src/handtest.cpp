@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include <hand.h>
+#include <Hand.h>
 
 TEST(HandTest, brodwayCreation)
 {

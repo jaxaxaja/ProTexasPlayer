@@ -6,7 +6,7 @@ Player::Player(const std::string& name, const Board& board, Hand hand, size_t bi
     //wczytac dane z bazy dotyczace statystyk
 }
 
-void Player::showHand()
+void Player::showHand() const
 {
     //zalogowac reke jaka mial gracz
 }

@@ -1,20 +1,20 @@
 #ifndef CROUPIER_H
 #define CROUPIER_H
 
-#include "deck.h"
+#include <deck/DeckImpl.h>
 #include "player.h"
-#include "board.h"
+#include "Board.h"
 #include <vector>
 #include <memory>
 
 class Croupier
 {
 public:
-    Croupier(Board& board);
+    Croupier(Board& board, const std::vector<Player>& players);
 private:
-    Deck deck_;
+    std::unique_ptr<DeckImpl> deck_;
     Board& board_;
-    std::vector<std::shared_ptr<Player>> players_;
+    const std::vector<Player>& players_;
 };
 
 #endif //CROUPIER_H

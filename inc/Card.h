@@ -17,7 +17,7 @@ enum class Card
     FiveS, FiveH, FiveD, FiveC,
     FourS, FourH, FourD, FourC,
     ThreeS, ThreeH, ThreeD, ThreeC,
-    TwoS, TwoH, TwoD, TwoC, NoCard
+    TwoS, TwoH, TwoD, TwoC, Unknown
 };
 
 inline Card operator++(Card& x) {

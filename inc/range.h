@@ -1,7 +1,7 @@
 #ifndef RANGE_H
 #define RANGE_H
 
-#include "hand.h"
+#include "Hand.h"
 #include <set>
 
 class Range

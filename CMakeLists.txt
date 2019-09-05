@@ -4,8 +4,9 @@ project(ProTexasPlayer)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
 
-set(SOURCES src/hand.cpp
-            src/deck.cpp
+set(SOURCES src/Hand.cpp
+            src/deck/RealDeck.cpp
+            src/deck/AhkDeck.cpp
             src/range.cpp
             src/game.cpp
             src/player.cpp
@@ -16,4 +17,4 @@ set(SOURCES src/hand.cpp
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/inc)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/inc ../gtest)

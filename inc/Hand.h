@@ -1,7 +1,7 @@
 #ifndef HAND_H
 #define HAND_H
 
-#include "card.h"
+#include "Card.h"
 #include <string>
 #include <map>
 
