@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include <deck/RealDeck.h>
 #include <Hand.h>
-#include <iostream>
 
 TEST(RealDeckTest, EntireDeck)
 {
@@ -22,5 +21,4 @@ TEST(RealDeckTest, RandomCards)
     EXPECT_FALSE(deck.isInDeck(c2));
     EXPECT_EQ(50u, deck.size());
     Hand h(c1, c2);
-    std::cout << h.getHand() << std::endl;
 }

@@ -4,9 +4,13 @@ project(ProTexasPlayerTest)
 
 set(SOURCES src/handtest.cpp
             src/decktest.cpp
+            src/gametest.cpp
             src/main.cpp
             ../src/Hand.cpp
-            ../src/deck/RealDeck.cpp)
+            ../src/deck/RealDeck.cpp
+            ../src/game/Game.cpp
+            ../src/Croupier.cpp
+            ../src/Player.cpp)
 
 add_executable(ProTexasPlayerTest ${SOURCES})
 

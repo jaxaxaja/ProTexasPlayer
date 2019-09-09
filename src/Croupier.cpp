@@ -25,3 +25,12 @@ void Croupier::dealRiverCards()
 {
     deck_->dealRiverCards(board_);
 }
+
+void Croupier::checkOrBet()
+{
+
+}
+void Croupier::callRaiseOrFold()
+{
+
+}

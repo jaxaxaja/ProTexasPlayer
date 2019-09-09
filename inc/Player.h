@@ -10,7 +10,7 @@
 class Player
 {
 public:
-    Player(const std::string& name, const Board& board, Hand hand, size_t bigBlinds);
+    Player(const std::string& name, const Board& board, size_t bigBlinds);
     bool isActive() const { return isActive_; }
     std::string getName() const { return name_; }
     void setHand(Hand hand) { hand_ = hand; }

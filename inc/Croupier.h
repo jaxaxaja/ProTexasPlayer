@@ -15,6 +15,8 @@ public:
     void dealFlopCards();
     void dealTurnCards();
     void dealRiverCards();
+    void checkOrBet();
+    void callRaiseOrFold();
 private:
     std::unique_ptr<DeckImpl> deck_;
     Board& board_;

@@ -12,7 +12,8 @@ const std::map<Card, std::string> Hand::cardToStringMap_ = {{Card::As, "As"}, {C
                                                             {Card::FiveS, "5s"}, {Card::FiveH, "5h"}, {Card::FiveD, "5d"}, {Card::FiveC, "5c"},
                                                             {Card::FourS, "4s"}, {Card::FourH, "4h"}, {Card::FourD, "4d"}, {Card::FourC, "4c"},
                                                             {Card::ThreeS, "3s"}, {Card::ThreeH, "3h"}, {Card::ThreeD, "3d"}, {Card::ThreeC, "3c"},
-                                                            {Card::TwoS, "2s"}, {Card::TwoH, "2h"}, {Card::TwoD, "2d"}, {Card::TwoC, "2c"} };
+                                                            {Card::TwoS, "2s"}, {Card::TwoH, "2h"}, {Card::TwoD, "2d"}, {Card::TwoC, "2c"},
+                                                            {Card::Unknown, "Unknown"}};
 
 Hand::Hand(Card a, Card b)
 {

@@ -6,11 +6,20 @@
 class River : public GameState
 {
 public:
-    virtual void dealCards(const Croupier &croupier) override
+    virtual void dealCards(Croupier &croupier) override
     {
         croupier.dealRiverCards();
     }
-    virtual void askPlayers(const Croupier& croupier) override;
+    virtual void askPlayers(Croupier& croupier) override
+    {
+        croupier.checkOrBet();
+    }
+    virtual void nextState(Game* game) override
+    {
+        game->setGameState(nullptr);
+        delete this;
+    }
+    virtual ~River() = default;
 };
 
 #endif //RIVER_H
