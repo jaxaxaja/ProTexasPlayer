@@ -1,5 +1,4 @@
 #include "Hand.h"
-#include <iostream>
 
 const std::map<Card, std::string> Hand::cardToStringMap_ = {{Card::As, "As"}, {Card::Ah, "Ah"}, {Card::Ad, "Ad"}, {Card::Ac, "Ac"},
                                                             {Card::Ks, "Ks"}, {Card::Kh, "Kh"}, {Card::Kd, "Kd"}, {Card::Kc, "Kc"},

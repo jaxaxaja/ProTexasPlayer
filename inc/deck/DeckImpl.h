@@ -2,7 +2,7 @@
 #define DECK_IMPL_H
 
 #include "Board.h"
-#include "player.h"
+#include "Player.h"
 
 class DeckImpl
 {

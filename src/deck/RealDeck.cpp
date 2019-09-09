@@ -34,6 +34,7 @@ Card RealDeck::getRandomCard()
 void RealDeck::dealCardsToPlayer(Player &player)
 {
     Hand hand(getRandomCard(), getRandomCard());
+    spdlog::info("Dealt hand to player {}: {}", player.getName(), hand.getHand());
     player.setHand(hand);
 }
 

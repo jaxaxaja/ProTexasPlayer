@@ -1,5 +1,5 @@
 //
-// Copyright(c) 2016 Gabi Melman.
+// Copyright(c) 2016-2018 Gabi Melman.
 // Distributed under the MIT License (http://opensource.org/licenses/MIT)
 //
 
@@ -11,23 +11,17 @@
 //
 
 #if !defined(SPDLOG_FMT_EXTERNAL)
-
+#ifdef SPDLOG_HEADER_ONLY
 #ifndef FMT_HEADER_ONLY
 #define FMT_HEADER_ONLY
+#endif
 #endif
 #ifndef FMT_USE_WINDOWS_H
 #define FMT_USE_WINDOWS_H 0
 #endif
+#include "bundled/core.h"
 #include "bundled/format.h"
-#if defined(SPDLOG_FMT_PRINTF)
-#include "bundled/printf.h"
-#endif
-
-#else // external fmtlib
-
-#include <fmt/format.h>
-#if defined(SPDLOG_FMT_PRINTF)
-#include <fmt/printf.h>
-#endif
-
+#else // SPDLOG_FMT_EXTERNAL is defined - use external fmtlib
+#include "fmt/core.h"
+#include "fmt/format.h"
 #endif
