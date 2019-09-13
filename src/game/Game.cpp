@@ -32,3 +32,9 @@ void Game::playHand()
     }
     spdlog::info("End of a hand! Hand number: {}", handNumber_);
 }
+
+Game::~Game()
+{
+    if (gameState_)
+        delete gameState_;
+}

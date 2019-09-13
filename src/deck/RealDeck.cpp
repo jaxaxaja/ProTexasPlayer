@@ -28,7 +28,7 @@ Card RealDeck::getRandomCard()
     } while (!isInDeck(c));
 
     deck_.erase(c);
-    spdlog::debug("Deck random card generated: {}", c);
+    spdlog::debug("Random card generated from deck: {}", c);
     return c;
 }
 

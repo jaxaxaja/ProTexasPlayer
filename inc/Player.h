@@ -14,7 +14,7 @@ public:
     bool isActive() const { return isActive_; }
     std::string getName() const { return name_; }
     void setHand(Hand hand) { hand_ = hand; }
-    void showHand() const;
+    std::string showHand() const;
 private:
     std::string name_;
     Hand hand_;

@@ -14,6 +14,7 @@ class Game
     FRIEND_TEST(GameTest, activePlayers);
 public:
     Game(long handNumber, const std::string stake, const std::vector<Player>& players);
+    ~Game();
     void playHand();
     void setGameState(GameState* state);
 private:

@@ -6,6 +6,7 @@
 
 class Board
 {
+    friend class Croupier;
 public:
     Board() : turn_(Card::Unknown), river_(Card::Unknown), pot_(0) {}
     void setFlop(const std::vector<Card>& flop) { flop_ = flop; }
