@@ -2,7 +2,6 @@
 #define CARD_CONVERTER_H
 
 #include "Hand.h"
-#include <spdlog/spdlog.h>
 #include <map>
 
 class CardConverter

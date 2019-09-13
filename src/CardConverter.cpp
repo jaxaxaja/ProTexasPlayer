@@ -1,4 +1,6 @@
 #include "CardConverter.h"
+#include <spdlog/spdlog.h>
+#include <spdlog/fmt/ostr.h>
 
 const std::map<std::string, Card> CardConverter::stringToCardMap_ = {{"As", Card::As},       {"Ah", Card::Ah},       {"Ad", Card::Ad},       {"Ac", Card::Ac},
                                                                      {"Ks", Card::Ks},       {"Kh", Card::Kh},       {"Kd", Card::Kd},       {"Kc", Card::Kc},
@@ -18,6 +20,7 @@ Card CardConverter::CardFromString(const std::string& card)
 {
     try {
         Card c = stringToCardMap_.at(card);
+        spdlog::debug("Converted string {} to card: {}", card, c);
         return c;
     }
     catch (const std::out_of_range& e)
@@ -28,11 +31,12 @@ Card CardConverter::CardFromString(const std::string& card)
     return Card::Unknown;
 }
 
-Hand CardConverter::HandFromString(const std::string &cards)
+Hand CardConverter::HandFromString(const std::string& cards)
 {
     try {
-        Card c1 = CardFromString(cards.substr(2));
+        Card c1 = CardFromString(cards.substr(0,2));
         Card c2 = CardFromString(cards.substr(2,2));
+        spdlog::debug("Converted string {} to hand {}{}", cards, c1, c2);
         return Hand(c1,c2);
     }
     catch (const std::exception& e)

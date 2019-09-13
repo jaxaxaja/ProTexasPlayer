@@ -5,6 +5,7 @@ project(ProTexasPlayer)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
 
 set(SOURCES src/Card.cpp
+            src/CardConverter.cpp
             src/Hand.cpp
             src/deck/RealDeck.cpp
             src/deck/AhkDeck.cpp
