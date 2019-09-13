@@ -1,8 +1,8 @@
 #include <deck/RealDeck.h>
-#include "Board.h"
 #include <random>
 #include <chrono>
 #include <spdlog/spdlog.h>
+#include <spdlog/fmt/ostr.h>
 
 RealDeck::RealDeck()
 {
@@ -28,20 +28,18 @@ Card RealDeck::getRandomCard()
     } while (!isInDeck(c));
 
     deck_.erase(c);
+    spdlog::debug("Deck random card generated: {}", c);
     return c;
 }
 
 void RealDeck::dealCardsToPlayer(Player &player)
 {
-    Hand hand(getRandomCard(), getRandomCard());
-    spdlog::info("Dealt hand to player {}: {}", player.getName(), hand.getHand());
-    player.setHand(hand);
+    player.setHand({getRandomCard(), getRandomCard()});
 }
 
 void RealDeck::dealFlopCards(Board &board)
 {
-    std::vector<Card> flop = {getRandomCard(), getRandomCard(), getRandomCard()};
-    board.setFlop(flop);
+    board.setFlop({getRandomCard(), getRandomCard(), getRandomCard()});
 }
 
 void RealDeck::dealTurnCards(Board &board)

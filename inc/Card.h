@@ -1,7 +1,7 @@
 #ifndef CARD_H
 #define CARD_H
 
-#include <type_traits>
+#include <ostream>
 
 enum class Card
 {
@@ -20,8 +20,7 @@ enum class Card
     TwoS, TwoH, TwoD, TwoC, Unknown
 };
 
-inline Card operator++(Card& x) {
-    return x = static_cast<Card>(std::underlying_type<Card>::type(x) + 1);
-}
+Card operator++(Card& x);
+std::ostream& operator<<(std::ostream& os, const Card& c);
 
 #endif // CARD_H

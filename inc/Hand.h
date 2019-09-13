@@ -9,7 +9,6 @@ class Hand
 {
 private:
     std::string hand_;
-    static const std::map<Card, std::string> cardToStringMap_;
 public:
     Hand() { Hand(Card::Unknown, Card::Unknown); }
     Hand(Card a, Card b);
