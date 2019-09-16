@@ -8,6 +8,7 @@ set(SOURCES src/Card.cpp
             src/CardConverter.cpp
             src/Hand.cpp
             src/deck/RealDeck.cpp
+            src/deck/StandardInputDeck.cpp
             src/deck/AhkDeck.cpp
             src/Range.cpp
             src/game/Game.cpp

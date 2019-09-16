@@ -36,3 +36,27 @@ TEST(CardConverterTest, HandFromString)
     Hand h7 = CardConverter::HandFromString("a");
     EXPECT_EQ("UnknownUnknown", h7.getHand());
 }
+
+TEST(CardConverterTest, FlopFromString)
+{
+    std::vector<Card> f1 = CardConverter::FlopFromString("KdKhAs");
+    ASSERT_EQ(3u, f1.size());
+    EXPECT_EQ(Card::Kd, f1.front());
+    EXPECT_EQ(Card::Kh, f1.at(1));
+    EXPECT_EQ(Card::As, f1.back());
+    std::vector<Card> f2 = CardConverter::FlopFromString("4c5s6s");
+    ASSERT_EQ(3u, f2.size());
+    EXPECT_EQ(Card::FourC, f2.front());
+    EXPECT_EQ(Card::FiveS, f2.at(1));
+    EXPECT_EQ(Card::SixS, f2.back());
+    std::vector<Card> f3 = CardConverter::FlopFromString("8c7d");
+    ASSERT_EQ(3, f3.size());
+    EXPECT_EQ(Card::EightC, f3.front());
+    EXPECT_EQ(Card::SevenD, f3.at(1));
+    EXPECT_EQ(Card::Unknown, f3.back());
+    std::vector<Card> f4 = CardConverter::FlopFromString("TsxTdc");
+    ASSERT_EQ(3, f4.size());
+    EXPECT_EQ(Card::Ts, f4.front());
+    EXPECT_EQ(Card::Unknown, f4.at(1));
+    EXPECT_EQ(Card::Unknown, f4.back());
+}

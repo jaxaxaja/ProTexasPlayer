@@ -2,7 +2,7 @@
 #define CARD_CONVERTER_H
 
 #include "Hand.h"
-#include <map>
+#include <vector>
 
 class CardConverter
 {
@@ -10,6 +10,7 @@ class CardConverter
 public:
     static Card CardFromString(const std::string& card);
     static Hand HandFromString(const std::string& cards);
+    static std::vector<Card> FlopFromString(const std::string& cards);
 };
 
 #endif

@@ -46,3 +46,19 @@ Hand CardConverter::HandFromString(const std::string& cards)
     }
     return Hand(Card::Unknown, Card::Unknown);
 }
+
+std::vector<Card> CardConverter::FlopFromString(const std::string& cards)
+{
+    std::vector<Card> v;
+    try {
+        for (int i = 0; i < 3; ++i)
+            v.emplace_back(CardFromString(cards.substr(i*2,2)));
+        return v;
+    }
+    catch(const std::exception& e)
+    {
+        spdlog::error("Cannot convert string {} to Flop cards!", cards);
+        spdlog::error(e.what());
+    }
+    return {};
+}
