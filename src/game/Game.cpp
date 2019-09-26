@@ -21,14 +21,20 @@ void Game::setGameState(GameState* state)
 
 void Game::playHand()
 {
-    spdlog::info("Start of a hand! Playing hand number: {}", handNumber_);
-    setGameState(new PreFlop());
-    while (activePlayers() > 1)
+    try {
+        spdlog::info("Start of a hand! Playing hand number: {}", handNumber_);
+        setGameState(new PreFlop());
+        while (activePlayers() > 1)
+        {
+            spdlog::debug("Number of active players: {}", activePlayers());
+            gameState_->dealCards(croupier_);
+            gameState_->askPlayers(croupier_);
+            gameState_->nextState(this);
+        }
+    }
+    catch (const std::exception& e)
     {
-        spdlog::debug("Number of active players: {}", activePlayers());
-        gameState_->dealCards(croupier_);
-        gameState_->askPlayers(croupier_);
-        gameState_->nextState(this);
+        spdlog::critical(e.what());
     }
     spdlog::info("End of a hand! Hand number: {}", handNumber_);
 }

@@ -6,7 +6,7 @@ Player::Player(const std::string& name, const Board& board, size_t bigBlinds)
     //wczytac dane z bazy dotyczace statystyk
 }
 
-std::string Player::showHand() const
+const std::string& Player::showHand() const
 {
     return hand_.getHand();
 }

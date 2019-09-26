@@ -12,7 +12,7 @@ Hand::Hand(Card a, Card b)
     hand_ = cards.str();
 }
 
-std::string Hand::getHand() const
+const std::string& Hand::getHand() const
 {
     return hand_;
 }

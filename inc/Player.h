@@ -12,9 +12,9 @@ class Player
 public:
     Player(const std::string& name, const Board& board, size_t bigBlinds);
     bool isActive() const { return isActive_; }
-    std::string getName() const { return name_; }
+    const std::string& getName() const { return name_; }
     void setHand(Hand hand) { hand_ = hand; }
-    std::string showHand() const;
+    const std::string& showHand() const;
 private:
     std::string name_;
     Hand hand_;

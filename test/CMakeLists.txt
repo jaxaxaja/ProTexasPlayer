@@ -5,12 +5,12 @@ project(ProTexasPlayerTest)
 set(SOURCES src/handtest.cpp
             src/decktest.cpp
             src/gametest.cpp
-            src/cardconvertertest.cpp
+            src/streamparsertest.cpp
             src/main.cpp
             ../src/Card.cpp
-            ../src/CardConverter.cpp
             ../src/Hand.cpp
             ../src/deck/RealDeck.cpp
+            ../src/deck/StreamParser.cpp
             ../src/game/Game.cpp
             ../src/Croupier.cpp
             ../src/Player.cpp)

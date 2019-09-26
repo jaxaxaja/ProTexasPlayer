@@ -12,7 +12,7 @@ private:
 public:
     Hand() { Hand(Card::Unknown, Card::Unknown); }
     Hand(Card a, Card b);
-    std::string getHand() const;
+    const std::string& getHand() const;
 };
 
 #endif // HAND_H

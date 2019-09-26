@@ -5,11 +5,12 @@ project(ProTexasPlayer)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
 
 set(SOURCES src/Card.cpp
-            src/CardConverter.cpp
             src/Hand.cpp
             src/deck/RealDeck.cpp
             src/deck/StandardInputDeck.cpp
             src/deck/AhkDeck.cpp
+            src/deck/FileDeck.cpp
+            src/deck/StreamParser.cpp
             src/Range.cpp
             src/game/Game.cpp
             src/game/PreFlop.cpp

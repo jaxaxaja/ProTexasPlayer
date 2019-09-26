@@ -2,14 +2,12 @@
 #define STANDARD_INPUT_DECK_H
 
 #include <deck/DeckImpl.h>
+#include <deck/StreamParser.h>
 #include <map>
 
 class StandardInputDeck : public DeckImpl
 {
-private:
-    Card getCard();
-    Hand getHand();
-    std::vector<Card> getFlop();
+    StreamParser parser_;
 public:
     StandardInputDeck() = default;
 

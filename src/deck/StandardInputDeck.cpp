@@ -1,65 +1,62 @@
 #include <deck/StandardInputDeck.h>
-#include "CardConverter.h"
+#include "Exceptions.h"
 #include <iostream>
 #include <algorithm>
-
-Card StandardInputDeck::getCard()
-{
-    Card c = Card::Unknown;
-    while (c == Card::Unknown)
-    {
-        std::string card;
-        std::cin >> card;
-        c = CardConverter::CardFromString(card);
-    }
-    return c;
-}
-
-Hand StandardInputDeck::getHand()
-{
-    Hand h;
-    while (h.getHand().find("Unknown"))
-    {
-        std::string hand;
-        std::cin >> hand;
-        h = CardConverter::HandFromString(hand);
-    }
-    return h;
-}
-
-std::vector<Card> StandardInputDeck::getFlop()
-{
-    std::vector<Card> flop = {Card::Unknown, Card::Unknown, Card::Unknown};
-    auto hasUnknown = [&flop](){ return (std::find(flop.begin(), flop.end(), Card::Unknown) != flop.end()); };
-    while (hasUnknown())
-    {
-        std::string cards;
-        std::cin >> cards;
-        flop = CardConverter::FlopFromString(cards);
-    }
-    return flop;
-}
+#include <spdlog/spdlog.h>
+#include <spdlog/fmt/ostr.h>
 
 void StandardInputDeck::dealCardsToPlayer(Player& player)
 {
     std::cout << "Specify cards for player " << player.getName() << ": ";
-    player.setHand(getHand());
+    Hand h;
+    if (!parser_.parsePlayerHand(&std::cin, h))
+    {
+        spdlog::error("Cannot parse player hand from user input");
+        throw PlayerHandParsingError();
+    }
+
+    spdlog::info("Dealt hand {} to player {}", h.getHand(), player.getName());
+    player.setHand(h);
 }
 
 void StandardInputDeck::dealFlopCards(Board& board)
 {
     std::cout << "Specify cards for Flop: ";
-    board.setFlop(getFlop());
+    std::vector<Card> v;
+    if (!parser_.parseFlopCards(&std::cin, v))
+    {
+        spdlog::error("Cannot parse flop cards from user input");
+        throw FlopParsingError();
+    }
+
+    spdlog::info("Dealt flop cards: {}{}{}", v.front(), v.at(1), v.back());
+    board.setFlop(v);
 }
 
 void StandardInputDeck::dealTurnCards(Board& board)
 {
     std::cout << "Specify card for turn: ";
-    board.setTurn(getCard());
+    Card c;
+    if (!parser_.parseCard(&std::cin, c))
+    {
+        spdlog::error("Cannot parse card from user input");
+        throw TurnParsingError();
+    }
+
+    spdlog::info("Dealt turn card: {}", c);
+    board.setTurn(c);
 }
 
 void StandardInputDeck::dealRiverCards(Board& board)
 {
     std::cout << "Specify cards for river: ";
-    board.setRiver(getCard());
+    Card c;
+    if (!parser_.parseCard(&std::cin, c))
+    {
+        spdlog::error("Cannot parse card from user input");
+        throw RiverParsingError();
+    }
+
+    spdlog::info("Dealt river card: {}", c);
+    board.setRiver(c);
 }
