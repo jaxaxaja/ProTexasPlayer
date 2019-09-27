@@ -3,10 +3,15 @@
 
 #include "Card.h"
 #include <vector>
+#include <gtest/gtest.h>
 
 class Board
 {
     friend class Croupier;
+    FRIEND_TEST(FileDeckTest, BrokenFlop);
+    FRIEND_TEST(FileDeckTest, BrokenTurn);
+    FRIEND_TEST(FileDeckTest, BrokenRiver);
+    FRIEND_TEST(FileDeckTest, DealPlayersAndStreets);
 public:
     Board() : turn_(Card::Unknown), river_(Card::Unknown), pot_(0) {}
     void setFlop(const std::vector<Card>& flop) { flop_ = flop; }
