@@ -8,12 +8,6 @@ Game::Game(long handNumber, const std::string stake, const std::vector<Player> &
     //stworzyc numOfPlayers graczy z odpowiednimi parametrami
 }
 
-size_t Game::activePlayers()
-{
-    auto Active = [](const Player& player) { return player.isActive(); };
-    return std::count_if(players_.begin(), players_.end(), Active);
-}
-
 void Game::setGameState(GameState* state)
 {
     gameState_ = state;
@@ -24,9 +18,9 @@ void Game::playHand()
     try {
         spdlog::info("Start of a hand! Playing hand number: {}", handNumber_);
         setGameState(new PreFlop());
-        while (activePlayers() > 1)
+        while (croupier_.activePlayers() > 1)
         {
-            spdlog::debug("Number of active players: {}", activePlayers());
+            spdlog::debug("Number of active players: {}", croupier_.activePlayers());
             gameState_->dealCards(croupier_);
             gameState_->askPlayers(croupier_);
             gameState_->nextState(this);

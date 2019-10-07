@@ -17,6 +17,7 @@ public:
     void dealRiverCards();
     void checkOrBet();
     void callRaiseOrFold();
+    size_t activePlayers();
 private:
     std::unique_ptr<DeckImpl> deck_;
     Board& board_;

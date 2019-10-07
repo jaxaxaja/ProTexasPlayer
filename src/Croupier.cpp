@@ -41,3 +41,9 @@ void Croupier::callRaiseOrFold()
 {
 
 }
+
+size_t Croupier::activePlayers()
+{
+    auto Active = [](const Player& player) { return player.isActive(); };
+    return std::count_if(players_.begin(), players_.end(), Active);
+}
