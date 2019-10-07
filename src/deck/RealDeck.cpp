@@ -35,19 +35,23 @@ Card RealDeck::getRandomCard()
 void RealDeck::dealCardsToPlayer(Player &player)
 {
     player.setHand({getRandomCard(), getRandomCard()});
+    spdlog::info("Dealt hand {} to player {}", player.showHand(), player.getName());
 }
 
 void RealDeck::dealFlopCards(Board &board)
 {
-    board.setFlop({getRandomCard(), getRandomCard(), getRandomCard()});
+    board.flop_ = {getRandomCard(), getRandomCard(), getRandomCard()};
+    spdlog::info("Dealt flop cards: {}{}{}", board.flop_.front(), board.flop_.at(1), board.flop_.back());
 }
 
 void RealDeck::dealTurnCards(Board &board)
 {
-    board.setTurn(getRandomCard());
+    board.turn_ = getRandomCard();
+    spdlog::info("Dealt turn card: {}", board.turn_);
 }
 
 void RealDeck::dealRiverCards(Board &board)
 {
-    board.setRiver(getRandomCard());
+    board.river_  = getRandomCard();
+    spdlog::info("Dealt river card: {}", board.river_);
 }

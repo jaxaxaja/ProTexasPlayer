@@ -30,7 +30,7 @@ void StandardInputDeck::dealFlopCards(Board& board)
     }
 
     spdlog::info("Dealt flop cards: {}{}{}", v.front(), v.at(1), v.back());
-    board.setFlop(v);
+    board.flop_ = v;
 }
 
 void StandardInputDeck::dealTurnCards(Board& board)
@@ -44,7 +44,7 @@ void StandardInputDeck::dealTurnCards(Board& board)
     }
 
     spdlog::info("Dealt turn card: {}", c);
-    board.setTurn(c);
+    board.turn_ = c;
 }
 
 void StandardInputDeck::dealRiverCards(Board& board)
@@ -58,5 +58,5 @@ void StandardInputDeck::dealRiverCards(Board& board)
     }
 
     spdlog::info("Dealt river card: {}", c);
-    board.setRiver(c);
+    board.river_ = c;
 }

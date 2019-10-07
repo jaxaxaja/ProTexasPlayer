@@ -32,7 +32,7 @@ void FileDeck::dealFlopCards(Board &board)
     }
 
     spdlog::info("Dealt flop cards: {}{}{}", v.front(), v.at(1), v.back());
-    board.setFlop(v);
+    board.flop_ = v;
 }
 
 void FileDeck::dealTurnCards(Board &board)
@@ -45,7 +45,7 @@ void FileDeck::dealTurnCards(Board &board)
     }
 
     spdlog::info("Dealt turn card: {}", c);
-    board.setTurn(c);
+    board.turn_ = c;
 }
 
 void FileDeck::dealRiverCards(Board &board)
@@ -58,7 +58,7 @@ void FileDeck::dealRiverCards(Board &board)
     }
 
     spdlog::info("Dealt river card: {}", c);
-    board.setRiver(c);
+    board.river_ = c;
 }
 
 FileDeck::~FileDeck()
