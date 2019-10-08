@@ -9,18 +9,18 @@ TEST(FileDeckTest, DealPlayersAndStreets)
     try {
         FileDeck deck("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck1");
         Board board;
-        Player player1("Lukasz", board, 100);
-        Player player2("Damian", board, 100);
-        Player player3("Pawel", board, 100);
-        Player player4("Marcin", board, 100);
+        Player player1("Lukasz", board, 100, Position::BU);
+        Player player2("Damian", board, 100, Position::SB);
+        Player player3("Pawel", board, 100, Position::BB);
+        Player player4("Marcin", board, 100, Position::EP);
 
-        deck.dealCardsToPlayer(player1);
+        deck.dealCardsToPlayer(&player1);
         EXPECT_EQ("Ah2s", player1.showHand());
-        deck.dealCardsToPlayer(player2);
+        deck.dealCardsToPlayer(&player2);
         EXPECT_EQ("KcJd", player2.showHand());
-        deck.dealCardsToPlayer(player3);
+        deck.dealCardsToPlayer(&player3);
         EXPECT_EQ("TsTc", player3.showHand());
-        deck.dealCardsToPlayer(player4);
+        deck.dealCardsToPlayer(&player4);
         EXPECT_EQ("8h4h", player4.showHand());
 
         deck.dealFlopCards(board);
@@ -46,9 +46,9 @@ TEST(FileDeckTest, BrokenPlayerCards)
     try {
         FileDeck deck("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck2");
         Board board;
-        Player player1("Lukasz", board, 100);
+        Player player1("Lukasz", board, 100, Position::BU);
 
-        EXPECT_THROW(deck.dealCardsToPlayer(player1), PlayerHandParsingError);
+        EXPECT_THROW(deck.dealCardsToPlayer(&player1), PlayerHandParsingError);
     }
     catch(const std::exception& e)
     {
@@ -61,15 +61,15 @@ TEST(FileDeckTest, BrokenFlop)
     try {
         FileDeck deck("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck3");
         Board board;
-        Player player1("Lukasz", board, 100);
-        Player player2("Damian", board, 100);
-        Player player3("Pawel", board, 100);
-        Player player4("Marcin", board, 100);
+        Player player1("Lukasz", board, 100, Position::BU);
+        Player player2("Damian", board, 100, Position::SB);
+        Player player3("Pawel", board, 100, Position::BB);
+        Player player4("Marcin", board, 100, Position::EP);
 
-        deck.dealCardsToPlayer(player1);
-        deck.dealCardsToPlayer(player2);
-        deck.dealCardsToPlayer(player3);
-        deck.dealCardsToPlayer(player4);
+        deck.dealCardsToPlayer(&player1);
+        deck.dealCardsToPlayer(&player2);
+        deck.dealCardsToPlayer(&player3);
+        deck.dealCardsToPlayer(&player4);
         EXPECT_THROW(deck.dealFlopCards(board), FlopParsingError);
 
     }
@@ -84,15 +84,15 @@ TEST(FileDeckTest, BrokenTurn)
     try {
         FileDeck deck("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck4");
         Board board;
-        Player player1("Lukasz", board, 100);
-        Player player2("Damian", board, 100);
-        Player player3("Pawel", board, 100);
-        Player player4("Marcin", board, 100);
+        Player player1("Lukasz", board, 100, Position::BU);
+        Player player2("Damian", board, 100, Position::SB);
+        Player player3("Pawel", board, 100, Position::BB);
+        Player player4("Marcin", board, 100, Position::EP);
 
-        deck.dealCardsToPlayer(player1);
-        deck.dealCardsToPlayer(player2);
-        deck.dealCardsToPlayer(player3);
-        deck.dealCardsToPlayer(player4);
+        deck.dealCardsToPlayer(&player1);
+        deck.dealCardsToPlayer(&player2);
+        deck.dealCardsToPlayer(&player3);
+        deck.dealCardsToPlayer(&player4);
         deck.dealFlopCards(board);
         EXPECT_THROW(deck.dealTurnCards(board), TurnParsingError);
 
@@ -108,15 +108,15 @@ TEST(FileDeckTest, BrokenRiver)
     try {
         FileDeck deck("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck5");
         Board board;
-        Player player1("Lukasz", board, 100);
-        Player player2("Damian", board, 100);
-        Player player3("Pawel", board, 100);
-        Player player4("Marcin", board, 100);
+        Player player1("Lukasz", board, 100, Position::BU);
+        Player player2("Damian", board, 100, Position::SB);
+        Player player3("Pawel", board, 100, Position::BB);
+        Player player4("Marcin", board, 100, Position::EP);
 
-        deck.dealCardsToPlayer(player1);
-        deck.dealCardsToPlayer(player2);
-        deck.dealCardsToPlayer(player3);
-        deck.dealCardsToPlayer(player4);
+        deck.dealCardsToPlayer(&player1);
+        deck.dealCardsToPlayer(&player2);
+        deck.dealCardsToPlayer(&player3);
+        deck.dealCardsToPlayer(&player4);
         deck.dealFlopCards(board);
         deck.dealTurnCards(board);
         EXPECT_THROW(deck.dealRiverCards(board), RiverParsingError);

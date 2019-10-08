@@ -3,6 +3,7 @@
 
 #include <game/GameState.h>
 #include <game/River.h>
+#include <spdlog/spdlog.h>
 
 class Turn : public GameState
 {
@@ -10,13 +11,15 @@ public:
     virtual void dealCards(Croupier &croupier) override
     {
         croupier.dealTurnCards();
+        croupier.preparePostFlopPlayersToAct();
     }
     virtual void askPlayers(Croupier& croupier) override
     {
-        croupier.checkOrBet();
+        croupier.askPlayers();
     }
     virtual void nextState(Game* game) override
     {
+        spdlog::info("Finished Turn game state. Setting new state: River");
         game->setGameState(new River());
         delete this;
     }

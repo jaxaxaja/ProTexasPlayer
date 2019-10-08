@@ -1,21 +1,22 @@
 #include <deck/AhkDeck.h>
 
-void AhkDeck::dealCardsToPlayer(Player &player)
+void AhkDeck::dealCardsToPlayer(Player* player)
 {
-    //to implement AHK getting cards logic
+    //get info from AHK about cards dealt to Hero
+    //rest is Unknown, Unknown
 }
 
 void AhkDeck::dealFlopCards(Board &board)
 {
-    // to implement
+    // get info from AHK about cards dealt on flop
 }
 
 void AhkDeck::dealTurnCards(Board &board)
 {
-    //to implement
+    // get info from AHK about cards dealt on turn
 }
 
 void AhkDeck::dealRiverCards(Board &board)
 {
-    //to implement
+    // get info from AHK about cards dealt on river
 }

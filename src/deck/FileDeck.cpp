@@ -9,7 +9,7 @@ FileDeck::FileDeck(const std::string &fileName) : fileName_(fileName), file_(fil
         throw std::ifstream::failure("Cannot open file " + fileName);
 }
 
-void FileDeck::dealCardsToPlayer(Player &player)
+void FileDeck::dealCardsToPlayer(Player* player)
 {
     Hand h;
     if (!parser_.parsePlayerHand(&file_, h))
@@ -18,8 +18,8 @@ void FileDeck::dealCardsToPlayer(Player &player)
         throw PlayerHandParsingError();
     }
 
-    spdlog::info("Dealt hand {} to player {}", h.getHand(), player.getName());
-    player.setHand(h);
+    spdlog::info("Dealt hand {} to player {}", h.getHand(), player->getName());
+    player->setHand(h);
 }
 
 void FileDeck::dealFlopCards(Board &board)

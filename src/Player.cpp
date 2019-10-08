@@ -1,12 +1,12 @@
 #include "Player.h"
 
-Player::Player(const std::string& name, const Board& board, size_t bigBlinds)
-    : isActive_(true), name_(name), board_(board), bigBlinds_(bigBlinds)
+Player::Player(const std::string& name, const Board& board, size_t bigBlinds, Position position)
+    : name_(name), board_(board), position_(position), bigBlinds_(bigBlinds)
 {
     //wczytac dane z bazy dotyczace statystyk
 }
 
-const std::string& Player::showHand() const
+Move Player::makeMove(const size_t bb)
 {
-    return hand_.getHand();
+    return Move(Action::Fold, 0);
 }

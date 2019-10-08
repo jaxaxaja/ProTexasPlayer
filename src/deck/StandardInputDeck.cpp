@@ -5,9 +5,9 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
 
-void StandardInputDeck::dealCardsToPlayer(Player& player)
+void StandardInputDeck::dealCardsToPlayer(Player* player)
 {
-    std::cout << "Specify cards for player " << player.getName() << ": ";
+    std::cout << "Specify cards for player " << player->getName() << ": ";
     Hand h;
     if (!parser_.parsePlayerHand(&std::cin, h))
     {
@@ -15,8 +15,8 @@ void StandardInputDeck::dealCardsToPlayer(Player& player)
         throw PlayerHandParsingError();
     }
 
-    spdlog::info("Dealt hand {} to player {}", h.getHand(), player.getName());
-    player.setHand(h);
+    spdlog::info("Dealt hand {} to player {}", h.getHand(), player->getName());
+    player->setHand(h);
 }
 
 void StandardInputDeck::dealFlopCards(Board& board)

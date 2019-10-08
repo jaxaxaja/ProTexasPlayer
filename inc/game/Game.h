@@ -6,7 +6,6 @@
 #include "Board.h"
 #include <game/GameState.h>
 #include <vector>
-#include <memory>
 #include <gtest/gtest.h>
 
 class Game
@@ -14,14 +13,14 @@ class Game
     long handNumber_;
     Board board_;
     std::string stake_;
-    std::vector<Player> players_;
+    std::vector<Player*> players_;
     Croupier croupier_;
     GameState* gameState_;
 
     FRIEND_TEST(GameTest, activePlayers);
 
 public:
-    Game(long handNumber, const std::string stake, const std::vector<Player>& players);
+    Game(long handNumber, const std::string stake, const std::vector<Player*> &players, std::unique_ptr<DeckImpl> deck);
     ~Game();
     void playHand();
     void setGameState(GameState* state);

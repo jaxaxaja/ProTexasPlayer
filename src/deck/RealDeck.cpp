@@ -15,7 +15,7 @@ bool RealDeck::isInDeck(const Card& c) const
     return deck_.find(c) != deck_.end();
 }
 
-Card RealDeck::getRandomCard()
+Card RealDeck::getRandomCard() //jak deck bedzie vectorem to mozna shuffle zrobic i brac dowolne karty, trzeba tylko sprawdzic jak losowy jest schuffle
 {
     auto duration = std::chrono::system_clock::now().time_since_epoch();
     auto mili = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
@@ -32,10 +32,10 @@ Card RealDeck::getRandomCard()
     return c;
 }
 
-void RealDeck::dealCardsToPlayer(Player &player)
+void RealDeck::dealCardsToPlayer(Player* player)
 {
-    player.setHand({getRandomCard(), getRandomCard()});
-    spdlog::info("Dealt hand {} to player {}", player.showHand(), player.getName());
+    player->setHand({getRandomCard(), getRandomCard()});
+    spdlog::info("Dealt hand {} to player {}", player->showHand(), player->getName());
 }
 
 void RealDeck::dealFlopCards(Board &board)

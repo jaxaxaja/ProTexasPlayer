@@ -11,15 +11,14 @@ set(SOURCES src/Card.cpp
             src/deck/AhkDeck.cpp
             src/deck/FileDeck.cpp
             src/deck/StreamParser.cpp
-            src/Range.cpp
             src/game/Game.cpp
             src/game/PreFlop.cpp
             src/game/Flop.cpp
             src/game/Turn.cpp
             src/game/River.cpp
+            src/strategy/Range.cpp
             src/Player.cpp
             src/Croupier.cpp
-            src/Strategy.cpp
             src/PlayerStatistics.cpp
             src/main.cpp)
 

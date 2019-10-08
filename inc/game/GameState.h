@@ -9,8 +9,8 @@ class GameState
 {
 public:
     virtual void dealCards(Croupier& croupier) = 0;
-    virtual void askPlayers(Croupier& croupier) = 0;
     virtual void nextState(Game* game) = 0;
+    virtual void askPlayers(Croupier& croupier) = 0;
     virtual ~GameState() = default;
 };
 

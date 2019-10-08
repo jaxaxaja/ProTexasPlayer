@@ -11,7 +11,7 @@ class StandardInputDeck : public DeckImpl
 public:
     StandardInputDeck() = default;
 
-    virtual void dealCardsToPlayer(Player& player) override;
+    virtual void dealCardsToPlayer(Player *player) override;
     virtual void dealFlopCards(Board& board) override;
     virtual void dealTurnCards(Board& board) override;
     virtual void dealRiverCards(Board& board) override;

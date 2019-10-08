@@ -4,24 +4,31 @@
 #include <deck/DeckImpl.h>
 #include "Player.h"
 #include "Board.h"
-#include <vector>
-#include <memory>
+#include <queue>
+#include <gtest/gtest.h>
 
 class Croupier
 {
+    std::unique_ptr<DeckImpl> deck_;
+    Board& board_;
+    std::vector<Player*> players_;
+    std::queue<Player*> playersToAct_;
+    std::vector<Player*> hypotheticalPlayers_ToAct_;
+
+    FRIEND_TEST(CroupierTest, PreparePlayersToAct1);
+    FRIEND_TEST(CroupierTest, PreparePlayersToAct2);
+    FRIEND_TEST(CroupierTest, PreparePlayersToAct3);
+
 public:
-    Croupier(Board& board, std::vector<Player>& players);
+    Croupier(Board& board, const std::vector<Player*> &players, std::unique_ptr<DeckImpl> deck);
     void dealCardsToPlayers();
     void dealFlopCards();
     void dealTurnCards();
     void dealRiverCards();
-    void checkOrBet();
-    void callRaiseOrFold();
+    void askPlayers(size_t bb = 0);
     size_t activePlayers();
-private:
-    std::unique_ptr<DeckImpl> deck_;
-    Board& board_;
-    std::vector<Player>& players_;
+    void preparePreFlopPlayersToAct();
+    void preparePostFlopPlayersToAct();
 };
 
 #endif //CROUPIER_H

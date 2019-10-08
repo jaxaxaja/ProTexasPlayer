@@ -2,8 +2,8 @@
 #include <game/PreFlop.h>
 #include <spdlog/spdlog.h>
 
-Game::Game(long handNumber, const std::string stake, const std::vector<Player> &players)
-    : handNumber_(handNumber), stake_(stake), players_(players), croupier_(board_, players_), gameState_(nullptr)
+Game::Game(long handNumber, const std::string stake, const std::vector<Player*> &players, std::unique_ptr<DeckImpl> deck)
+    : handNumber_(handNumber), stake_(stake), players_(players), croupier_(board_, players_, std::move(deck)), gameState_(nullptr)
 {
     //stworzyc numOfPlayers graczy z odpowiednimi parametrami
 }
@@ -29,6 +29,7 @@ void Game::playHand()
     catch (const std::exception& e)
     {
         spdlog::critical(e.what());
+        spdlog::critical("Cannot play a hand!");
     }
     spdlog::info("End of a hand! Hand number: {}", handNumber_);
 }
