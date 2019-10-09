@@ -83,7 +83,7 @@ void Croupier::preparePreFlopPlayersToAct()
 
         if (firstPlayer == players_.end()) //there is no SB nor BB player so we have less than 2 players, this is abnormal situation
         {
-            spdlog::error("Cannot find Button player!");
+            spdlog::error("Cannot find Button nor SB player!");
             throw NoPlayerFoundError();
         }
     }

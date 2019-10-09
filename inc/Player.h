@@ -5,19 +5,9 @@
 #include "Board.h"
 #include <strategy/StrategyImpl.h>
 #include "PlayerStatistics.h"
+#include "Position.h"
+#include "Move.h"
 #include <string>
-
-enum class Position
-{
-    BU, SB, BB, EP, MP, CO, Unknown
-};
-
-enum class Action
-{
-    Fold, Check, Call, Bet, Raise
-};
-
-using Move = std::pair<Action, size_t>;
 
 class Player
 {

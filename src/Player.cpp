@@ -8,5 +8,8 @@ Player::Player(const std::string& name, const Board& board, size_t bigBlinds, Po
 
 Move Player::makeMove(const size_t bb)
 {
-    return Move(Action::Fold, 0);
+    if (bb > 0)
+        return strategy_->callRaiseOrFold(bb);
+
+    return strategy_->checkOrBet();
 }

@@ -16,6 +16,10 @@ set(SOURCES src/Card.cpp
             src/game/Flop.cpp
             src/game/Turn.cpp
             src/game/River.cpp
+            src/strategy/AhkStrategy.cpp
+            src/strategy/FileStrategy.cpp
+            src/strategy/StandardInputStrategy.cpp
+            src/strategy/RealStrategy.cpp
             src/strategy/Range.cpp
             src/Player.cpp
             src/Croupier.cpp
