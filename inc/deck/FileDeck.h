@@ -2,7 +2,7 @@
 #define FILE_DECK_H
 
 #include <deck/DeckImpl.h>
-#include <deck/StreamParser.h>
+#include "StreamParser.h"
 #include <fstream>
 
 class FileDeck : public DeckImpl

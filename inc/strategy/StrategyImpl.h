@@ -8,6 +8,7 @@ class StrategyImpl
 public:
     virtual Move checkOrBet() = 0;
     virtual Move callRaiseOrFold(unsigned int bb) = 0;
+    virtual ~StrategyImpl() = default;
 };
 
 #endif //STRATEGY_IMPL_H

@@ -23,6 +23,11 @@ struct PlayerHandParsingError : public std::exception
     virtual const char* what() const noexcept override {"Parsing player hand error";}
 };
 
+struct PlayerMoveParsingError : public std::exception
+{
+    virtual const char* what() const noexcept override {"Parsing player move error";}
+};
+
 struct NoPlayerFoundError : public std::exception
 {
     virtual const char* what() const noexcept override {"Cannot find player when preparing list of players to act";}

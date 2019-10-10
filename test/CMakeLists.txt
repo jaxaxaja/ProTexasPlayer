@@ -12,11 +12,13 @@ set(SOURCES src/handtest.cpp
             ../src/Card.cpp
             ../src/Hand.cpp
             ../src/deck/RealDeck.cpp
-            ../src/deck/StreamParser.cpp
+            ../src/StreamParser.cpp
             ../src/deck/FileDeck.cpp
             ../src/game/Game.cpp
             ../src/Croupier.cpp
-            ../src/Player.cpp)
+            ../src/Player.cpp
+            ../src/Move.cpp
+            ../src/Position.cpp)
 
 add_executable(ProTexasPlayerTest ${SOURCES})
 

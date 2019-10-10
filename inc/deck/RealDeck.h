@@ -25,6 +25,7 @@ public:
     virtual void dealFlopCards(Board& board) override;
     virtual void dealTurnCards(Board& board) override;
     virtual void dealRiverCards(Board& board) override;
+    virtual ~RealDeck() = default;
 };
 
 #endif // REAL_DECK_H

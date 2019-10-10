@@ -10,7 +10,9 @@ set(SOURCES src/Card.cpp
             src/deck/StandardInputDeck.cpp
             src/deck/AhkDeck.cpp
             src/deck/FileDeck.cpp
-            src/deck/StreamParser.cpp
+            src/StreamParser.cpp
+            src/Position.cpp
+            src/Move.cpp
             src/game/Game.cpp
             src/game/PreFlop.cpp
             src/game/Flop.cpp

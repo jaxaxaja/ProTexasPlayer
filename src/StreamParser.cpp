@@ -1,4 +1,4 @@
-#include <deck/StreamParser.h>
+#include "StreamParser.h"
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
 
@@ -15,6 +15,9 @@ const std::map<std::string, Card> StreamParser::stringToCardMap_ = {{"As", Card:
                                                                     {"4s", Card::FourS},    {"4h", Card::FourH},    {"4d", Card::FourD},    {"4c", Card::FourC},
                                                                     {"3s", Card::ThreeS},   {"3h", Card::ThreeH},   {"3d", Card::ThreeD},   {"3c", Card::ThreeC},
                                                                     {"2s", Card::TwoS},     {"2h", Card::TwoH},     {"2d", Card::TwoD},     {"2c", Card::TwoC}};
+
+const std::map<std::string, Move> StreamParser::stringToMoveMap_ = {{"F", Move(Action::Fold, 0)}, {"CA", Move(Action::Call, 0)}, {"CH", Move(Action::Check, 0)},
+                                                                    {"B", Move(Action::Bet, 0)}, {"R", Move(Action::Raise, 0)}};
 
 Card StreamParser::CardFromString(const std::string& card)
 {
@@ -100,6 +103,58 @@ bool StreamParser::parseFlopCards(std::istream* const istr, std::vector<Card>& v
     if (v.empty() || hasUnknown)
     {
         spdlog::error("Got unknown card when parsing flop string: {}", cards);
+        return false;
+    }
+
+    return true;
+}
+
+Move StreamParser::moveFromString(const std::string& move, std::istream* const istr)
+{
+    try {
+        Move m = stringToMoveMap_.at(move);
+        spdlog::debug("Converted string {} to move: {}", move, m);
+
+        if (m.first == Action::Bet || m.first == Action::Raise)
+        {
+            std::string bbString;
+            *istr >> bbString;
+            try {
+                m.second = std::stoi(bbString);
+                return m;
+            }
+            catch(const std::exception& e)
+            {
+                spdlog::error("Cannot convert {} to number in {} move", bbString, m);
+                spdlog::error(e.what());
+            }
+        }
+        return m;
+    }
+    catch (const std::out_of_range& e)
+    {
+        spdlog::error("Cannot convert string {} to Move type!", move);
+        spdlog::error(e.what());
+    }
+
+    return Move(Action::Unknown, 0);
+}
+
+bool StreamParser::parsePlayerMove(std::istream* const istr, Move& m)
+{
+    std::string move;
+    *istr >> move;
+    m = moveFromString(move, istr);
+
+    if (m.first == Action::Unknown)
+    {
+        spdlog::error("Got unknown Move when parsing string: {}", move);
+        return false;
+    }
+
+    if ((m.first == Action::Bet || m.first == Action::Raise) && m.second == 0)
+    {
+        spdlog::error("Got unknown size of Bet/Raise when parsing move: {}", m);
         return false;
     }
 

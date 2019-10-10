@@ -8,6 +8,7 @@ class RealStrategy : public StrategyImpl
 public:
     virtual Move checkOrBet() override;
     virtual Move callRaiseOrFold(unsigned int bb) override;
+    virtual ~RealStrategy() = default;
 };
 
 #endif //REAL_STRATEGY_H

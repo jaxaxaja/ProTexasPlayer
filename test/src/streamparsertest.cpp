@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include <deck/StreamParser.h>
+#include "StreamParser.h"
 #include <sstream>
 
 TEST(StreamParserTest, CardFromString)

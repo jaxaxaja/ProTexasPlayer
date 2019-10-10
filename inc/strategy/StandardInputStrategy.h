@@ -8,6 +8,7 @@ class StandardInputStrategy : public StrategyImpl
 public:
     virtual Move checkOrBet() override;
     virtual Move callRaiseOrFold(unsigned int bb) override;
+    virtual ~StandardInputStrategy() = default;
 };
 
 #endif //STANDARD_INPUT_STRATEGY_H

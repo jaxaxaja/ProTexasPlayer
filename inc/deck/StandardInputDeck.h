@@ -2,7 +2,7 @@
 #define STANDARD_INPUT_DECK_H
 
 #include <deck/DeckImpl.h>
-#include <deck/StreamParser.h>
+#include "StreamParser.h"
 #include <map>
 
 class StandardInputDeck : public DeckImpl
@@ -15,6 +15,7 @@ public:
     virtual void dealFlopCards(Board& board) override;
     virtual void dealTurnCards(Board& board) override;
     virtual void dealRiverCards(Board& board) override;
+    virtual ~StandardInputDeck() = default;
 };
 
 #endif //STANDARD_INPUT_DECK_H

@@ -10,6 +10,7 @@ public:
     virtual void dealFlopCards(Board& board) override;
     virtual void dealTurnCards(Board& board) override;
     virtual void dealRiverCards(Board& board) override;
+    virtual ~AhkDeck() = default;
 };
 
 #endif //AHK_DECK_H
