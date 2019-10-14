@@ -8,7 +8,7 @@
 TEST(StreamDeckTest, DealPlayersAndStreets)
 {
     try {
-        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck1");
+        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamDeck1");
         StreamDeck deck(file);
         Board board;
         Player player1("Lukasz", board, 100, Position::BU);
@@ -36,6 +36,7 @@ TEST(StreamDeckTest, DealPlayersAndStreets)
 
         deck.dealRiverCards(board);
         EXPECT_EQ(Card::Td, board.river_);
+        file.close();
     }
     catch(const std::exception& e)
     {
@@ -46,12 +47,13 @@ TEST(StreamDeckTest, DealPlayersAndStreets)
 TEST(StreamDeckTest, BrokenPlayerCards)
 {
     try {
-        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck2");
+        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamDeck2");
         StreamDeck deck(file);
         Board board;
         Player player1("Lukasz", board, 100, Position::BU);
 
         EXPECT_THROW(deck.dealCardsToPlayer(&player1), PlayerHandParsingError);
+        file.close();
     }
     catch(const std::exception& e)
     {
@@ -62,7 +64,7 @@ TEST(StreamDeckTest, BrokenPlayerCards)
 TEST(StreamDeckTest, BrokenFlop)
 {
     try {
-        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck3");
+        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamDeck3");
         StreamDeck deck(file);
         Board board;
         Player player1("Lukasz", board, 100, Position::BU);
@@ -75,7 +77,7 @@ TEST(StreamDeckTest, BrokenFlop)
         deck.dealCardsToPlayer(&player3);
         deck.dealCardsToPlayer(&player4);
         EXPECT_THROW(deck.dealFlopCards(board), FlopParsingError);
-
+        file.close();
     }
     catch(const std::exception& e)
     {
@@ -86,7 +88,7 @@ TEST(StreamDeckTest, BrokenFlop)
 TEST(StreamDeckTest, BrokenTurn)
 {
     try {
-        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck4");
+        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamDeck4");
         StreamDeck deck(file);
         Board board;
         Player player1("Lukasz", board, 100, Position::BU);
@@ -100,7 +102,7 @@ TEST(StreamDeckTest, BrokenTurn)
         deck.dealCardsToPlayer(&player4);
         deck.dealFlopCards(board);
         EXPECT_THROW(deck.dealTurnCards(board), TurnParsingError);
-
+        file.close();
     }
     catch(const std::exception& e)
     {
@@ -111,7 +113,7 @@ TEST(StreamDeckTest, BrokenTurn)
 TEST(StreamDeckTest, BrokenRiver)
 {
     try {
-        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck5");
+        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamDeck5");
         StreamDeck deck(file);
         Board board;
         Player player1("Lukasz", board, 100, Position::BU);
@@ -126,7 +128,7 @@ TEST(StreamDeckTest, BrokenRiver)
         deck.dealFlopCards(board);
         deck.dealTurnCards(board);
         EXPECT_THROW(deck.dealRiverCards(board), RiverParsingError);
-
+        file.close();
     }
     catch(const std::exception& e)
     {

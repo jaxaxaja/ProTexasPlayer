@@ -15,9 +15,9 @@ Move StreamStrategy::callRaiseOrFold(unsigned int bb)
         throw PlayerMoveParsingError();
     }
 
-    if (m.first != Action::Call || m.first != Action::Raise || m.first != Action::Fold)
+    if (m.first == Action::Bet)
     {
-        spdlog::error("Cannot use {} move from stream! Expected call, raise or fold!", m);
+        spdlog::error("Cannot use {} move from stream! Expected call, raise, fold or check for BB!", m);
         throw WrongPlayerMoveError();
     }
 
@@ -36,9 +36,9 @@ Move StreamStrategy::checkOrBet()
         throw PlayerMoveParsingError();
     }
 
-    if (m.first != Action::Check || m.first != Action::Bet || m.first != Action::Fold)
+    if (m.first == Action::Raise || m.first == Action::Call)
     {
-        spdlog::error("Cannot use {} move from stream! Expected check or bet!", m);
+        spdlog::error("Cannot use {} move from stream! Expected check, bet or fold!", m);
         throw WrongPlayerMoveError();
     }
 

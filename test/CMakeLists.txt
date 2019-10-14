@@ -8,7 +8,7 @@ set(SOURCES src/handtest.cpp
             src/streamparsertest.cpp
             src/streamdecktest.cpp
             src/croupiertest.cpp
-            #src/streamstrategytest.cpp
+            src/streamstrategytest.cpp
             src/main.cpp
             ../src/Card.cpp
             ../src/Hand.cpp
@@ -19,7 +19,8 @@ set(SOURCES src/handtest.cpp
             ../src/Croupier.cpp
             ../src/Player.cpp
             ../src/Move.cpp
-            ../src/Position.cpp)
+            ../src/Position.cpp
+            ../src/strategy/StreamStrategy.cpp)
 
 add_executable(ProTexasPlayerTest ${SOURCES})
 

@@ -1,32 +1,38 @@
 #include <gtest/gtest.h>
 #include <strategy/StreamStrategy.h>
+#include <fstream>
+#include "Exceptions.h"
 
 TEST(StreamStrategy, GoodPlayerMoves)
 {
     try {
-        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/FileStrategy1");
+        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamStrategy1");
         StreamStrategy strategy(file);
-        //a jak bedziemy handlowac dwa streamy do pliku w prawdziwej grze? Filedeck i FileStrategy, moze file deck przekaze stream do strategy?
-        deck.dealCardsToPlayer(&player1);
-        EXPECT_EQ("Ah2s", player1.showHand());
-        deck.dealCardsToPlayer(&player2);
-        EXPECT_EQ("KcJd", player2.showHand());
-        deck.dealCardsToPlayer(&player3);
-        EXPECT_EQ("TsTc", player3.showHand());
-        deck.dealCardsToPlayer(&player4);
-        EXPECT_EQ("8h4h", player4.showHand());
-
-        deck.dealFlopCards(board);
-        ASSERT_EQ(3, board.flop_.size());
-        EXPECT_EQ(Card::FourD, board.flop_.front());
-        EXPECT_EQ(Card::Jc, board.flop_.at(1));
-        EXPECT_EQ(Card::Kh, board.flop_.back());
-
-        deck.dealTurnCards(board);
-        EXPECT_EQ(Card::Ac, board.turn_);
-
-        deck.dealRiverCards(board);
-        EXPECT_EQ(Card::Td, board.river_);
+        Move m = strategy.callRaiseOrFold(1);
+        EXPECT_EQ(Action::Fold, m.first);
+        m = strategy.callRaiseOrFold(1);
+        EXPECT_EQ(Action::Fold, m.first);
+        m = strategy.callRaiseOrFold(1);
+        EXPECT_EQ(Action::Call, m.first);
+        m = strategy.callRaiseOrFold(1);
+        EXPECT_EQ(Action::Check, m.first);
+        m = strategy.checkOrBet();
+        EXPECT_EQ(Action::Bet, m.first);
+        EXPECT_EQ(5, m.second);
+        m = strategy.callRaiseOrFold(5);
+        EXPECT_EQ(Action::Raise, m.first);
+        EXPECT_EQ(15, m.second);
+        m = strategy.callRaiseOrFold(15);
+        EXPECT_EQ(Action::Call, m.first);
+        EXPECT_EQ(0, m.second);
+        m = strategy.checkOrBet();
+        EXPECT_EQ(Action::Check, m.first);
+        m = strategy.checkOrBet();
+        EXPECT_EQ(Action::Bet, m.first);
+        EXPECT_EQ(25, m.second);
+        m = strategy.callRaiseOrFold(25);
+        EXPECT_EQ(Action::Fold, m.first);
+        file.close();
     }
     catch(const std::exception& e)
     {
@@ -34,7 +40,44 @@ TEST(StreamStrategy, GoodPlayerMoves)
     }
 }
 
-TEST(StreamStrategy, BrokenPlayerMoves)
+TEST(StreamStrategy, BrokenPreFlopMove)
 {
+    try {
+        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamStrategy2");
+        StreamStrategy strategy(file);
+        Move m = strategy.callRaiseOrFold(1);
+        EXPECT_EQ(Action::Fold, m.first);
+        m = strategy.callRaiseOrFold(1);
+        EXPECT_EQ(Action::Fold, m.first);
+        EXPECT_THROW(strategy.callRaiseOrFold(1), WrongPlayerMoveError);
+        file.close();
+    }
+    catch(const std::exception& e)
+    {
+        std::cout<< e.what();
+    }
+}
 
+TEST(StreamStrategy, BrokenPostFlopMove)
+{
+    try {
+        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamStrategy3");
+        StreamStrategy strategy(file);
+        Move m = strategy.callRaiseOrFold(1);
+        EXPECT_EQ(Action::Fold, m.first);
+        m = strategy.callRaiseOrFold(1);
+        EXPECT_EQ(Action::Fold, m.first);
+        m = strategy.callRaiseOrFold(1);
+        EXPECT_EQ(Action::Call, m.first);
+        m = strategy.callRaiseOrFold(1);
+        EXPECT_EQ(Action::Check, m.first);
+        m = strategy.checkOrBet();
+        EXPECT_EQ(Action::Check, m.first);
+        EXPECT_THROW(strategy.checkOrBet(), WrongPlayerMoveError);
+        file.close();
+    }
+    catch(const std::exception& e)
+    {
+        std::cout<< e.what();
+    }
 }

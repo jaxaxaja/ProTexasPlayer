@@ -36,7 +36,7 @@ TEST(CroupierTest, DealCardsFromRealDeck)
 TEST(CroupierTest, DealCardsFromFile)
 {
     try {
-        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck1");
+        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamDeck1");
         std::unique_ptr<DeckImpl> deck = std::make_unique<StreamDeck>(file);
         Board board;
         Player player1("Lukasz", board, 100, Position::BU);
@@ -63,6 +63,7 @@ TEST(CroupierTest, DealCardsFromFile)
 
         croupier.dealRiverCards();
         EXPECT_EQ(Card::Td, board.river_);
+        file.close();
     }
     catch(const std::exception& e)
     {
