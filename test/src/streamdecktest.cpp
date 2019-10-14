@@ -1,13 +1,15 @@
 #include <gtest/gtest.h>
-#include <deck/FileDeck.h>
+#include <deck/StreamDeck.h>
 #include "Board.h"
 #include "Player.h"
 #include "Exceptions.h"
+#include <fstream>
 
-TEST(FileDeckTest, DealPlayersAndStreets)
+TEST(StreamDeckTest, DealPlayersAndStreets)
 {
     try {
-        FileDeck deck("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck1");
+        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck1");
+        StreamDeck deck(file);
         Board board;
         Player player1("Lukasz", board, 100, Position::BU);
         Player player2("Damian", board, 100, Position::SB);
@@ -41,10 +43,11 @@ TEST(FileDeckTest, DealPlayersAndStreets)
     }
 }
 
-TEST(FileDeckTest, BrokenPlayerCards)
+TEST(StreamDeckTest, BrokenPlayerCards)
 {
     try {
-        FileDeck deck("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck2");
+        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck2");
+        StreamDeck deck(file);
         Board board;
         Player player1("Lukasz", board, 100, Position::BU);
 
@@ -56,10 +59,11 @@ TEST(FileDeckTest, BrokenPlayerCards)
     }
 }
 
-TEST(FileDeckTest, BrokenFlop)
+TEST(StreamDeckTest, BrokenFlop)
 {
     try {
-        FileDeck deck("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck3");
+        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck3");
+        StreamDeck deck(file);
         Board board;
         Player player1("Lukasz", board, 100, Position::BU);
         Player player2("Damian", board, 100, Position::SB);
@@ -79,10 +83,11 @@ TEST(FileDeckTest, BrokenFlop)
     }
 }
 
-TEST(FileDeckTest, BrokenTurn)
+TEST(StreamDeckTest, BrokenTurn)
 {
     try {
-        FileDeck deck("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck4");
+        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck4");
+        StreamDeck deck(file);
         Board board;
         Player player1("Lukasz", board, 100, Position::BU);
         Player player2("Damian", board, 100, Position::SB);
@@ -103,10 +108,11 @@ TEST(FileDeckTest, BrokenTurn)
     }
 }
 
-TEST(FileDeckTest, BrokenRiver)
+TEST(StreamDeckTest, BrokenRiver)
 {
     try {
-        FileDeck deck("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck5");
+        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck5");
+        StreamDeck deck(file);
         Board board;
         Player player1("Lukasz", board, 100, Position::BU);
         Player player2("Damian", board, 100, Position::SB);

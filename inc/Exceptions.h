@@ -33,4 +33,9 @@ struct NoPlayerFoundError : public std::exception
     virtual const char* what() const noexcept override {"Cannot find player when preparing list of players to act";}
 };
 
+struct WrongPlayerMoveError : public std::exception
+{
+    virtual const char* what() const noexcept override {"Wrong player move error";}
+};
+
 #endif //EXCEPTIONS_H

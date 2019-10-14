@@ -1,4 +1,6 @@
 #include "Player.h"
+#include <spdlog/spdlog.h>
+#include <spdlog/fmt/ostr.h>
 
 Player::Player(const std::string& name, const Board& board, size_t bigBlinds, Position position)
     : name_(name), board_(board), position_(position), bigBlinds_(bigBlinds)
@@ -8,8 +10,13 @@ Player::Player(const std::string& name, const Board& board, size_t bigBlinds, Po
 
 Move Player::makeMove(const size_t bb)
 {
-    if (bb > 0)
-        return strategy_->callRaiseOrFold(bb);
+    Move m;
 
-    return strategy_->checkOrBet();
+    if (bb > 0)
+        m = strategy_->callRaiseOrFold(bb);
+    else
+        m = strategy_->checkOrBet();
+
+    spdlog::info("Player {} on position {} makes a move {}", getName(), getPosition(), m);
+    return m;
 }

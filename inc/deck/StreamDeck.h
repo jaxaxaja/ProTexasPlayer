@@ -1,23 +1,22 @@
-#ifndef FILE_DECK_H
-#define FILE_DECK_H
+#ifndef STREAM_DECK_H
+#define STREAM_DECK_H
 
 #include <deck/DeckImpl.h>
 #include "StreamParser.h"
-#include <fstream>
+#include <istream>
 
-class FileDeck : public DeckImpl
+class StreamDeck : public DeckImpl
 {
-    std::ifstream file_;
-    std::string fileName_;
+    std::istream& ins_;
     StreamParser parser_;
 
 public:
-    FileDeck(const std::string& fileName);
+    StreamDeck(std::istream &ins) : ins_(ins) {}
     virtual void dealCardsToPlayer(Player *player) override;
     virtual void dealFlopCards(Board& board) override;
     virtual void dealTurnCards(Board& board) override;
     virtual void dealRiverCards(Board& board) override;
-    virtual ~FileDeck();
+    virtual ~StreamDeck() = default;
 };
 
-#endif //FILE_DECK_H
+#endif //STREAM_DECK_H

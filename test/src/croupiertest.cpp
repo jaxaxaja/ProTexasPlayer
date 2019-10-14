@@ -1,8 +1,9 @@
 #include <gtest/gtest.h>
 #include <Croupier.h>
 #include <deck/RealDeck.h>
-#include <deck/FileDeck.h>
+#include <deck/StreamDeck.h>
 #include "Exceptions.h"
+#include <fstream>
 
 TEST(CroupierTest, DealCardsFromRealDeck)
 {
@@ -35,7 +36,8 @@ TEST(CroupierTest, DealCardsFromRealDeck)
 TEST(CroupierTest, DealCardsFromFile)
 {
     try {
-        std::unique_ptr<DeckImpl> deck = std::make_unique<FileDeck>("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck1");
+        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/FileDeck1");
+        std::unique_ptr<DeckImpl> deck = std::make_unique<StreamDeck>(file);
         Board board;
         Player player1("Lukasz", board, 100, Position::BU);
         Player player2("Damian", board, 100, Position::SB);

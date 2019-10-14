@@ -6,14 +6,15 @@ set(SOURCES src/handtest.cpp
             src/decktest.cpp
             src/gametest.cpp
             src/streamparsertest.cpp
-            src/filedecktest.cpp
+            src/streamdecktest.cpp
             src/croupiertest.cpp
+            #src/streamstrategytest.cpp
             src/main.cpp
             ../src/Card.cpp
             ../src/Hand.cpp
             ../src/deck/RealDeck.cpp
             ../src/StreamParser.cpp
-            ../src/deck/FileDeck.cpp
+            ../src/deck/StreamDeck.cpp
             ../src/game/Game.cpp
             ../src/Croupier.cpp
             ../src/Player.cpp
