@@ -2,8 +2,8 @@
 #include <game/PreFlop.h>
 #include <spdlog/spdlog.h>
 
-Game::Game(long handNumber, const std::string stake, const std::vector<Player*> &players, std::unique_ptr<DeckImpl> deck)
-    : handNumber_(handNumber), stake_(stake), players_(players), croupier_(board_, players_, std::move(deck)), gameState_(nullptr)
+Game::Game(const std::string& stake, const std::vector<Player*> &players, std::unique_ptr<DeckImpl> deck)
+    : stake_(stake), players_(players), croupier_(board_, players_, std::move(deck))
 {
     //stworzyc numOfPlayers graczy z odpowiednimi parametrami
 }
@@ -15,8 +15,9 @@ void Game::setGameState(GameState* state)
 
 void Game::playHand()
 {
+    ++handNumber_;
     try {
-        spdlog::info("Start of a hand! Playing hand number: {}", handNumber_);
+        spdlog::info("Start of a hand! Playing hand number: {} on stake {}", handNumber_, stake_);
         setGameState(new PreFlop());
         while (croupier_.activePlayers() > 1)
         {

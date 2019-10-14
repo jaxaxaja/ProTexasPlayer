@@ -2,6 +2,7 @@
 #include <deck/StreamDeck.h>
 #include "Board.h"
 #include "Player.h"
+#include <strategy/StreamStrategy.h>
 #include "Exceptions.h"
 #include <fstream>
 
@@ -11,10 +12,10 @@ TEST(StreamDeckTest, DealPlayersAndStreets)
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamDeck1");
         StreamDeck deck(file);
         Board board;
-        Player player1("Lukasz", board, 100, Position::BU);
-        Player player2("Damian", board, 100, Position::SB);
-        Player player3("Pawel", board, 100, Position::BB);
-        Player player4("Marcin", board, 100, Position::EP);
+        Player player1("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
+        Player player2("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin));
+        Player player3("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin));
+        Player player4("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin));
 
         deck.dealCardsToPlayer(&player1);
         EXPECT_EQ("Ah2s", player1.showHand());
@@ -50,7 +51,7 @@ TEST(StreamDeckTest, BrokenPlayerCards)
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamDeck2");
         StreamDeck deck(file);
         Board board;
-        Player player1("Lukasz", board, 100, Position::BU);
+        Player player1("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
 
         EXPECT_THROW(deck.dealCardsToPlayer(&player1), PlayerHandParsingError);
         file.close();
@@ -67,10 +68,10 @@ TEST(StreamDeckTest, BrokenFlop)
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamDeck3");
         StreamDeck deck(file);
         Board board;
-        Player player1("Lukasz", board, 100, Position::BU);
-        Player player2("Damian", board, 100, Position::SB);
-        Player player3("Pawel", board, 100, Position::BB);
-        Player player4("Marcin", board, 100, Position::EP);
+        Player player1("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
+        Player player2("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin));
+        Player player3("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin));
+        Player player4("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin));
 
         deck.dealCardsToPlayer(&player1);
         deck.dealCardsToPlayer(&player2);
@@ -91,10 +92,10 @@ TEST(StreamDeckTest, BrokenTurn)
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamDeck4");
         StreamDeck deck(file);
         Board board;
-        Player player1("Lukasz", board, 100, Position::BU);
-        Player player2("Damian", board, 100, Position::SB);
-        Player player3("Pawel", board, 100, Position::BB);
-        Player player4("Marcin", board, 100, Position::EP);
+        Player player1("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
+        Player player2("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin));
+        Player player3("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin));
+        Player player4("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin));
 
         deck.dealCardsToPlayer(&player1);
         deck.dealCardsToPlayer(&player2);
@@ -116,10 +117,10 @@ TEST(StreamDeckTest, BrokenRiver)
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamDeck5");
         StreamDeck deck(file);
         Board board;
-        Player player1("Lukasz", board, 100, Position::BU);
-        Player player2("Damian", board, 100, Position::SB);
-        Player player3("Pawel", board, 100, Position::BB);
-        Player player4("Marcin", board, 100, Position::EP);
+        Player player1("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
+        Player player2("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin));
+        Player player3("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin));
+        Player player4("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin));
 
         deck.dealCardsToPlayer(&player1);
         deck.dealCardsToPlayer(&player2);

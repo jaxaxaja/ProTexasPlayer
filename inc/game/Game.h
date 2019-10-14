@@ -10,17 +10,17 @@
 
 class Game
 {
-    long handNumber_;
+    long handNumber_ = 0;
     Board board_;
     std::string stake_;
     std::vector<Player*> players_;
     Croupier croupier_;
-    GameState* gameState_;
+    GameState* gameState_ = nullptr;
 
     FRIEND_TEST(GameTest, activePlayers);
 
 public:
-    Game(long handNumber, const std::string stake, const std::vector<Player*> &players, std::unique_ptr<DeckImpl> deck);
+    Game(const std::string& stake, const std::vector<Player*> &players, std::unique_ptr<DeckImpl> deck);
     ~Game();
     void playHand();
     void setGameState(GameState* state);

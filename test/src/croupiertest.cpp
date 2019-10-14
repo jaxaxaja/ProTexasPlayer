@@ -2,16 +2,17 @@
 #include <Croupier.h>
 #include <deck/RealDeck.h>
 #include <deck/StreamDeck.h>
+#include <strategy/StreamStrategy.h>
 #include "Exceptions.h"
 #include <fstream>
 
 TEST(CroupierTest, DealCardsFromRealDeck)
 {
     Board board;
-    Player player1("Lukasz", board, 100, Position::BU);
-    Player player2("Damian", board, 100, Position::SB);
-    Player player3("Pawel", board, 100, Position::BB);
-    Player player4("Marcin", board, 100, Position::EP);
+    Player player1("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
+    Player player2("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin));
+    Player player3("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin));
+    Player player4("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin));
     std::vector<Player*> players = {&player1, &player2, &player3, &player4};
     std::unique_ptr<DeckImpl> deck = std::make_unique<RealDeck>();
     Croupier croupier(board, players, std::move(deck));
@@ -39,10 +40,10 @@ TEST(CroupierTest, DealCardsFromFile)
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamDeck1");
         std::unique_ptr<DeckImpl> deck = std::make_unique<StreamDeck>(file);
         Board board;
-        Player player1("Lukasz", board, 100, Position::BU);
-        Player player2("Damian", board, 100, Position::SB);
-        Player player3("Pawel", board, 100, Position::BB);
-        Player player4("Marcin", board, 100, Position::EP);
+        Player player1("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
+        Player player2("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin));
+        Player player3("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin));
+        Player player4("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin));
         std::vector<Player*> players = {&player1, &player2, &player3, &player4};
         Croupier croupier(board, players, std::move(deck));
 
@@ -74,12 +75,12 @@ TEST(CroupierTest, DealCardsFromFile)
 TEST(CroupierTest, PreparePlayersToAct1)
 {
     Board board;
-    Player player1("Lukasz", board, 100, Position::BU);
-    Player player2("Damian", board, 100, Position::SB);
-    Player player3("Pawel", board, 100, Position::BB);
-    Player player4("Marcin", board, 100, Position::EP);
-    Player player5("Marcin", board, 100, Position::MP);
-    Player player6("Marcin", board, 100, Position::CO);
+    Player player1("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
+    Player player2("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin));
+    Player player3("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin));
+    Player player4("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin));
+    Player player5("Marcin", board, 100, Position::MP, std::make_unique<StreamStrategy>(std::cin));
+    Player player6("Marcin", board, 100, Position::CO, std::make_unique<StreamStrategy>(std::cin));
     std::vector<Player*> players = {&player1, &player2, &player3, &player4, &player5, &player6};
     std::unique_ptr<DeckImpl> deck = std::make_unique<RealDeck>();
     Croupier croupier(board, players, std::move(deck));
@@ -104,9 +105,9 @@ TEST(CroupierTest, PreparePlayersToAct1)
 TEST(CroupierTest, PreparePlayersToAct2)
 {
     Board board;
-    Player player1("Lukasz", board, 100, Position::BU);
-    Player player2("Damian", board, 100, Position::SB);
-    Player player3("Pawel", board, 100, Position::BB);
+    Player player1("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
+    Player player2("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin));
+    Player player3("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin));
     std::vector<Player*> players = {&player1, &player2, &player3};
     std::unique_ptr<DeckImpl> deck = std::make_unique<RealDeck>();
     Croupier croupier(board, players, std::move(deck));
@@ -131,8 +132,8 @@ TEST(CroupierTest, PreparePlayersToAct2)
 TEST(CroupierTest, PreparePlayersToAct3)
 {
     Board board;
-    Player player1("Lukasz", board, 100, Position::BU);
-    Player player2("Damian", board, 100, Position::SB);
+    Player player1("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
+    Player player2("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin));
     std::vector<Player*> players = {&player1, &player2};
     std::unique_ptr<DeckImpl> deck = std::make_unique<RealDeck>();
     Croupier croupier(board, players, std::move(deck));
@@ -157,7 +158,7 @@ TEST(CroupierTest, PreparePlayersToAct3)
 TEST(CroupierTest, PreparePlayersToAct4)
 {
     Board board;
-    Player player1("Lukasz", board, 100, Position::BU);
+    Player player1("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
     std::vector<Player*> players = {&player1};
     std::unique_ptr<DeckImpl> deck = std::make_unique<RealDeck>();
     Croupier croupier(board, players, std::move(deck));

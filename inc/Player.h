@@ -12,7 +12,7 @@
 class Player
 {
 public:
-    Player(const std::string& name, const Board& board, size_t bigBlinds, Position position);
+    Player(const std::string& name, const Board& board, size_t bigBlinds, Position position, std::unique_ptr<StrategyImpl> strategy);
     bool isActive() const { return isActive_; }
     const std::string& getName() const { return name_; }
     void setHand(Hand hand) { hand_ = hand; }

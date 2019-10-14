@@ -9,6 +9,16 @@ int main(int argc, char* argv[])
 
     spdlog::info("This is beginning of a ProTexasHoldemPlayer logging!");
 
+    //std::unique_ptr<DeckImpl> deck = fabryka abstrakcyjna niech nam tworzy decka (z argc bedziemy brac)
+    //const std::vector<Player*> &players,
+    //stworzyc Players graczy z odpowiednimi parametrami bazujac na deckImpl:
+    //jak AhkDeck to policzyc ilu i stworzyc nowych Player1, Player2 ... etc.
+    //jak RealDeck to z stdin
+    //jak StramDeck to z file
+    //croupier_(board_, players_, std::move(deck))
+
+    //fabryki abstrakcyjne do tworzenia strategy i deck implementacji bazujace na argc?
+    //
     //dostaje info od AHK
     //tworzy nowa gre (Game class) z parametrami od AHK (nr rozdania, gracze, stacki, karty etc.)
 
