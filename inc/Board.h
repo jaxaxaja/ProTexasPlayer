@@ -7,11 +7,11 @@
 
 struct Board
 {
-    Board() : turn_(Card::Unknown), river_(Card::Unknown), pot_(0) {}
+    Board() = default;
     std::vector<Card> flop_;
-    Card turn_;
-    Card river_;
-    size_t pot_;            //number in big blinds
+    Card turn_ = Card::Unknown;
+    Card river_ = Card::Unknown;
+    float pot_ = 0;            //number in big blinds
 };
 
 #endif

@@ -33,6 +33,11 @@ struct NoPlayerFoundError : public std::exception
     virtual const char* what() const noexcept override {"Cannot find player when preparing list of players to act";}
 };
 
+struct NoActivePlayerFoundError : public std::exception
+{
+    virtual const char* what() const noexcept override {"Cannot find active player when looking for a winner";}
+};
+
 struct WrongPlayerMoveError : public std::exception
 {
     virtual const char* what() const noexcept override {"Wrong player move error";}

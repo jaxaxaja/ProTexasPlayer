@@ -9,6 +9,7 @@ set(SOURCES src/handtest.cpp
             src/streamdecktest.cpp
             src/croupiertest.cpp
             src/streamstrategytest.cpp
+            src/playertest.cpp
             src/main.cpp
             ../src/Card.cpp
             ../src/Hand.cpp

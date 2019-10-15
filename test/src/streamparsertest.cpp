@@ -112,45 +112,50 @@ TEST(StreamParserTest, MoveFromString)
     std::stringstream str1("CH");
     EXPECT_TRUE(parser.parsePlayerMove(&str1, m));
     EXPECT_EQ(Action::Check, m.first);
-    EXPECT_EQ(0, m.second);
+    EXPECT_FLOAT_EQ(0, m.second);
 
     std::stringstream str2("CA");
     EXPECT_TRUE(parser.parsePlayerMove(&str2, m));
     EXPECT_EQ(Action::Call, m.first);
-    EXPECT_EQ(0, m.second);
+    EXPECT_FLOAT_EQ(0, m.second);
 
     std::stringstream str3("F");
     EXPECT_TRUE(parser.parsePlayerMove(&str3, m));
     EXPECT_EQ(Action::Fold, m.first);
-    EXPECT_EQ(0, m.second);
+    EXPECT_FLOAT_EQ(0, m.second);
 
     std::stringstream str4("R 9");
     EXPECT_TRUE(parser.parsePlayerMove(&str4, m));
     EXPECT_EQ(Action::Raise, m.first);
-    EXPECT_EQ(9, m.second);
+    EXPECT_FLOAT_EQ(9, m.second);
 
     std::stringstream str5("B 3");
     EXPECT_TRUE(parser.parsePlayerMove(&str5, m));
     EXPECT_EQ(Action::Bet, m.first);
-    EXPECT_EQ(3, m.second);
+    EXPECT_FLOAT_EQ(3, m.second);
+
+    std::stringstream str10("B 3.87");
+    EXPECT_TRUE(parser.parsePlayerMove(&str10, m));
+    EXPECT_EQ(Action::Bet, m.first);
+    EXPECT_FLOAT_EQ(3.87, m.second);
 
     std::stringstream str6("CB");
     EXPECT_FALSE(parser.parsePlayerMove(&str6, m));
     EXPECT_EQ(Action::Unknown, m.first);
-    EXPECT_EQ(0, m.second);
+    EXPECT_FLOAT_EQ(0, m.second);
 
     std::stringstream str7("ch");
     EXPECT_FALSE(parser.parsePlayerMove(&str7, m));
     EXPECT_EQ(Action::Unknown, m.first);
-    EXPECT_EQ(0, m.second);
+    EXPECT_FLOAT_EQ(0, m.second);
 
     std::stringstream str8("B z");
     EXPECT_FALSE(parser.parsePlayerMove(&str8, m));
     EXPECT_EQ(Action::Bet, m.first);
-    EXPECT_EQ(0, m.second);
+    EXPECT_FLOAT_EQ(0, m.second);
 
-    std::stringstream str9("R 12345678987654321");
+    std::stringstream str9("R 12332112332146673463643252562625322345678987654321");
     EXPECT_FALSE(parser.parsePlayerMove(&str9, m));
     EXPECT_EQ(Action::Raise, m.first);
-    EXPECT_EQ(0, m.second);
+    EXPECT_FLOAT_EQ(0, m.second);
 }

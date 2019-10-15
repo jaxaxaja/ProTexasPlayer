@@ -18,6 +18,7 @@ class Croupier
     FRIEND_TEST(CroupierTest, PreparePlayersToAct1);
     FRIEND_TEST(CroupierTest, PreparePlayersToAct2);
     FRIEND_TEST(CroupierTest, PreparePlayersToAct3);
+    FRIEND_TEST(CroupierTest, AskPlayers1);
 
 public:
     Croupier(Board& board, const std::vector<Player*> &players, std::unique_ptr<DeckImpl> deck);
@@ -25,7 +26,7 @@ public:
     void dealFlopCards();
     void dealTurnCards();
     void dealRiverCards();
-    void askPlayers(size_t bb = 0);
+    void askPlayers(float bb = 0);
     size_t activePlayers();
     void preparePreFlopPlayersToAct();
     void preparePostFlopPlayersToAct();

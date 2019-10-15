@@ -11,6 +11,8 @@ int main(int argc, char* argv[])
 
     //std::unique_ptr<DeckImpl> deck = fabryka abstrakcyjna niech nam tworzy decka (z argc bedziemy brac)
     //const std::vector<Player*> &players,
+    //jak tworzymy graczy to jeden ma byc Hero i dla niego tworzymy strategie jaka chcemy: stdin, file, real
+    //reszta to docelowo bedzie ahk, ale do testow bedzie tez file i real
     //stworzyc Players graczy z odpowiednimi parametrami bazujac na deckImpl:
     //jak AhkDeck to policzyc ilu i stworzyc nowych Player1, Player2 ... etc.
     //jak RealDeck to z stdin

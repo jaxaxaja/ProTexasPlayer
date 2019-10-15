@@ -3,7 +3,7 @@
 #include <spdlog/fmt/ostr.h>
 #include "Exceptions.h"
 
-Move StreamStrategy::callRaiseOrFold(unsigned int bb)
+Move StreamStrategy::callRaiseOrFold(float bb)
 {
     if (&ins_ == &std::cin)
         std::cout << "Specify move (call, raise or fold): ";

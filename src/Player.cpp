@@ -2,13 +2,19 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
 
-Player::Player(const std::string& name, const Board& board, size_t bigBlinds, Position position, std::unique_ptr<StrategyImpl> strategy)
+Player::Player(const std::string& name, const Board& board, float bigBlinds, Position position, std::unique_ptr<StrategyImpl> strategy)
     : name_(name), board_(board), position_(position), bigBlinds_(bigBlinds), strategy_(std::move(strategy))
 {
+    if (position == Position::SB)
+        betSize_ = 0.5;
+    else if (position == Position::BB)
+        betSize_ = 1;
+
+    bigBlinds_ -= betSize_;
     //wczytac dane z bazy dotyczace statystyk
 }
 
-Move Player::makeMove(const size_t bb)
+Move Player::makeMove(const float bb)
 {
     Move m;
 
@@ -18,5 +24,20 @@ Move Player::makeMove(const size_t bb)
         m = strategy_->checkOrBet();
 
     spdlog::info("Player {} on position {} makes a move {}", getName(), getPosition(), m);
+
+    if (m.first == Action::Fold)
+        isActive_ = false;
+    else if (m.first == Action::Call) //calculate size of a call based on previous betSizes
+    {
+        m.second = bb - betSize_;
+        bigBlinds_ -= m.second;
+        betSize_ = bb;
+    }
+    else if (m.first != Action::Check)
+    {
+        bigBlinds_ -= m.second - betSize_;
+        betSize_ = m.second;
+    }
+
     return m;
 }

@@ -120,7 +120,7 @@ Move StreamParser::moveFromString(const std::string& move, std::istream* const i
             std::string bbString;
             *istr >> bbString;
             try {
-                m.second = std::stoi(bbString);
+                m.second = std::stof(bbString);
                 return m;
             }
             catch(const std::exception& e)

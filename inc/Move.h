@@ -9,7 +9,7 @@ enum class Action
     Fold, Check, Call, Bet, Raise, Unknown
 };
 
-using Move = std::pair<Action, unsigned int>;
+using Move = std::pair<Action, float>;
 
 std::ostream& operator<<(std::ostream& os, const Move& p);
 

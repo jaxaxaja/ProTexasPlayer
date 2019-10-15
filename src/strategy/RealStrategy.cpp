@@ -3,7 +3,7 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
 
-Move RealStrategy::callRaiseOrFold(unsigned int bb)
+Move RealStrategy::callRaiseOrFold(const float bb)
 {
     Move m;
 

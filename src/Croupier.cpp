@@ -33,7 +33,7 @@ void Croupier::dealRiverCards()
     spdlog::info("Dealt RIVER: {}", board_.river_);
 }
 
-void Croupier::askPlayers(size_t bb)
+void Croupier::askPlayers(float bb)
 {
     while (!playersToAct_.empty())
     {
@@ -43,18 +43,34 @@ void Croupier::askPlayers(size_t bb)
 
         if (playerMove.first == Action::Raise || playerMove.first == Action::Bet)
         {
-            for (auto player : hypotheticalPlayers_ToAct_)
+            for (auto& player : hypotheticalPlayers_ToAct_)
                 playersToAct_.push(player);
 
             hypotheticalPlayers_ToAct_.clear();
             hypotheticalPlayers_ToAct_.push_back(playerToAct);
             bb = playerMove.second;
+            board_.pot_ += bb;
         }
 
         if (playerMove.first != Action::Fold)
             hypotheticalPlayers_ToAct_.push_back(playerToAct);
+
+        if (playerMove.first == Action::Call)
+            board_.pot_ += playerMove.second;
     }
+
     hypotheticalPlayers_ToAct_.clear();
+
+    if (activePlayers() <= 1) //end of a Hand, rest of Players have folded
+    {
+        auto isActive = [](const Player* player){ return player->isActive(); };
+        auto winner = std::find_if(players_.begin(), players_.end(), isActive);
+
+        if (winner == players_.end())
+            throw NoActivePlayerFoundError();
+
+        (*winner)->addMoney(board_.pot_);
+    }
 }
 
 size_t Croupier::activePlayers()
@@ -101,6 +117,7 @@ void Croupier::preparePreFlopPlayersToAct()
         playersToAct_.push(*nextPlayer);
         ++nextPlayer;
     }
+    board_.pot_ = 1.5; //SB + BB in the pot from the beginning
 }
 
 void Croupier::preparePostFlopPlayersToAct()
@@ -115,7 +132,10 @@ void Croupier::preparePostFlopPlayersToAct()
     }
 
     if ((*firstPlayer)->isActive())
+    {
         playersToAct_.push(*firstPlayer);
+        (*firstPlayer)->resetBetSize();
+    }
 
     auto nextPlayer = firstPlayer+1;
 
@@ -128,7 +148,10 @@ void Croupier::preparePostFlopPlayersToAct()
         }
 
         if ((*nextPlayer)->isActive())
+        {
             playersToAct_.push(*nextPlayer);
+            (*nextPlayer)->resetBetSize();
+        }
         ++nextPlayer;
     }
 }
