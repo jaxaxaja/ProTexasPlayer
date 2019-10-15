@@ -27,6 +27,8 @@ public:
     const std::string& getName() const { return name_; }
     void setHand(Hand hand) { hand_ = hand; }
     void resetBetSize() { betSize_ = 0; }
+    void setSbBetSize() { betSize_ = 0.5; bigBlinds_ -= 0.5; }
+    void setBbBetSize() { betSize_ = 1; bigBlinds_ -= 1; }
     const std::string& showHand() const { return hand_.getHand(); }
     Position getPosition() const { return position_; }
     float getStackSize() const { return bigBlinds_; }

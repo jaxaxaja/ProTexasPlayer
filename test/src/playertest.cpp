@@ -13,6 +13,8 @@ TEST(PlayerTest, makeMove1)
     Player player4("Marcin", board, 100, Position::BU, std::make_unique<StreamStrategy>(file));
 
     //PREFLOP
+    player1.setSbBetSize();
+    player2.setBbBetSize();
     Move m = player3.makeMove(1);
     EXPECT_EQ(Action::Fold, m.first);
     EXPECT_FLOAT_EQ(100, player3.getStackSize());
@@ -65,6 +67,8 @@ TEST(PlayerTest, makeMove2)
     Player player4("Marcin", board, 100, Position::BU, std::make_unique<StreamStrategy>(file));
 
     //PREFLOP
+    player1.setSbBetSize();
+    player2.setBbBetSize();
     Move m = player3.makeMove(1);
     EXPECT_EQ(Action::Raise, m.first);
     EXPECT_FLOAT_EQ(98, player3.getStackSize());
@@ -119,6 +123,8 @@ TEST(PlayerTest, makeMove3)
     Player player3("Pawel", board, 100, Position::BU, std::make_unique<StreamStrategy>(file));
 
     //PREFLOP
+    player1.setSbBetSize();
+    player2.setBbBetSize();
     Move m = player3.makeMove(1);
     EXPECT_EQ(Action::Raise, m.first);
     EXPECT_FLOAT_EQ(98, player3.getStackSize());

@@ -13,6 +13,7 @@ void Croupier::dealCardsToPlayers()
         deck_->dealCardsToPlayer(player);
         spdlog::info("Dealt hand to player {}: {}", player->getName(), player->showHand());
     }
+    board_.pot_ = 1.5; //SB + BB in the pot from the beginning
 }
 
 void Croupier::dealFlopCards()
@@ -79,6 +80,24 @@ size_t Croupier::activePlayers()
     return std::count_if(players_.begin(), players_.end(), active);
 }
 
+void Croupier::initializeSbAndBb(Position sb, Position bb)
+{
+    auto isSbPlayer = [&sb](const Player* player){ return player->getPosition() == sb; };
+    auto isBbPlayer = [&bb](const Player* player){ return player->getPosition() == bb; };
+
+    auto sbPlayer = std::find_if(players_.begin(), players_.end(), isSbPlayer);
+    auto bbPlayer = std::find_if(players_.begin(), players_.end(), isBbPlayer);
+
+    if (sbPlayer == players_.end() || bbPlayer == players_.end())
+    {
+        spdlog::error("Cannot initialize SB and BB player!");
+        throw NoPlayerFoundError();
+    }
+
+    (*sbPlayer)->setSbBetSize();
+    (*bbPlayer)->setBbBetSize();
+}
+
 void Croupier::preparePreFlopPlayersToAct()
 {
     auto isEpPlayer = [](const Player* player){ return player->getPosition() == Position::EP; };
@@ -90,11 +109,13 @@ void Croupier::preparePreFlopPlayersToAct()
         {
             auto isBuPlayer = [](const Player* player){ return player->getPosition() == Position::BU; };
             firstPlayer = std::find_if(players_.begin(), players_.end(), isBuPlayer);
+            initializeSbAndBb(Position::SB, Position::BB);
         }
         else //SB is first to act
         {
             auto isSbPlayer = [](const Player* player){ return player->getPosition() == Position::SB; };
             firstPlayer = std::find_if(players_.begin(), players_.end(), isSbPlayer);
+            initializeSbAndBb(Position::BU, Position::SB);
         }
 
         if (firstPlayer == players_.end()) //there is no SB nor BB player so we have less than 2 players, this is abnormal situation
@@ -117,7 +138,6 @@ void Croupier::preparePreFlopPlayersToAct()
         playersToAct_.push(*nextPlayer);
         ++nextPlayer;
     }
-    board_.pot_ = 1.5; //SB + BB in the pot from the beginning
 }
 
 void Croupier::preparePostFlopPlayersToAct()

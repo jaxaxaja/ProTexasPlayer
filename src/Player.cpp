@@ -5,12 +5,6 @@
 Player::Player(const std::string& name, const Board& board, float bigBlinds, Position position, std::unique_ptr<StrategyImpl> strategy)
     : name_(name), board_(board), position_(position), bigBlinds_(bigBlinds), strategy_(std::move(strategy))
 {
-    if (position == Position::SB)
-        betSize_ = 0.5;
-    else if (position == Position::BB)
-        betSize_ = 1;
-
-    bigBlinds_ -= betSize_;
     //wczytac dane z bazy dotyczace statystyk
 }
 

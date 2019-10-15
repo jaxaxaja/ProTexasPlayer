@@ -14,6 +14,7 @@ class Croupier
     std::vector<Player*> players_;
     std::queue<Player*> playersToAct_;
     std::vector<Player*> hypotheticalPlayers_ToAct_;
+    void initializeSbAndBb(Position sb, Position bb);
 
     FRIEND_TEST(CroupierTest, PreparePlayersToAct1);
     FRIEND_TEST(CroupierTest, PreparePlayersToAct2);
