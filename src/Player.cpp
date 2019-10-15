@@ -19,6 +19,8 @@ Move Player::makeMove(const float bb)
 
     spdlog::info("Player {} on position {} makes a move {}", getName(), getPosition(), m);
 
+    //moze lepiej Move'a zrobic jako klase z wirtualna metoda updatePlayer(Player* player)
+    // i te wyliczenia ponizej bedzie robic w tej metodzie
     if (m.first == Action::Fold)
         isActive_ = false;
     else if (m.first == Action::Call) //calculate size of a call based on previous betSizes
@@ -30,8 +32,13 @@ Move Player::makeMove(const float bb)
     else if (m.first != Action::Check)
     {
         bigBlinds_ -= m.second - betSize_;
+        float tmp = betSize_;
         betSize_ = m.second;
+        m.second -= tmp;
     }
+
+    if (bigBlinds_ <= 0)
+        isActive_ = false;
 
     return m;
 }

@@ -15,11 +15,14 @@ class Croupier
     std::queue<Player*> playersToAct_;
     std::vector<Player*> hypotheticalPlayers_ToAct_;
     void initializeSbAndBb(Position sb, Position bb);
+    void evaluateHandsAndChooseWinner();
 
     FRIEND_TEST(CroupierTest, PreparePlayersToAct1);
     FRIEND_TEST(CroupierTest, PreparePlayersToAct2);
     FRIEND_TEST(CroupierTest, PreparePlayersToAct3);
     FRIEND_TEST(CroupierTest, AskPlayers1);
+    FRIEND_TEST(CroupierTest, AskPlayers2);
+    FRIEND_TEST(CroupierTest, AskPlayers3);
 
 public:
     Croupier(Board& board, const std::vector<Player*> &players, std::unique_ptr<DeckImpl> deck);

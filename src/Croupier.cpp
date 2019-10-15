@@ -42,32 +42,38 @@ void Croupier::askPlayers(float bb)
         playersToAct_.pop();
         const Move playerMove = playerToAct->makeMove(bb);
 
+        //moze lepiej Move'a zrobic jako klase z wirtualna metoda updateCroupier(Croupier* croupier)
+        // i te wyliczenia ponizej robic w tej metodzie
         if (playerMove.first == Action::Raise || playerMove.first == Action::Bet)
         {
             for (auto& player : hypotheticalPlayers_ToAct_)
                 playersToAct_.push(player);
 
             hypotheticalPlayers_ToAct_.clear();
-            hypotheticalPlayers_ToAct_.push_back(playerToAct);
-            bb = playerMove.second;
-            board_.pot_ += bb;
+            bb = playerToAct->betSize_;
         }
 
         if (playerMove.first != Action::Fold)
+        {
             hypotheticalPlayers_ToAct_.push_back(playerToAct);
-
-        if (playerMove.first == Action::Call)
             board_.pot_ += playerMove.second;
+        }
     }
 
     hypotheticalPlayers_ToAct_.clear();
 
-    if (activePlayers() <= 1) //end of a Hand, rest of Players have folded
+    if (activePlayers() <= 1) //end of a Hand, rest of Players have folded or are allin
     {
+        auto isAllin = [](const Player* player){ return player->getStackSize() <= 0; };
+        auto allinPlayer = std::find_if(players_.begin(), players_.end(), isAllin);
+
+        if (allinPlayer != players_.end())
+            return evaluateHandsAndChooseWinner();
+
         auto isActive = [](const Player* player){ return player->isActive(); };
         auto winner = std::find_if(players_.begin(), players_.end(), isActive);
 
-        if (winner == players_.end())
+        if (winner == players_.end())   //there is no allin player nor active one!
             throw NoActivePlayerFoundError();
 
         (*winner)->addMoney(board_.pot_);
@@ -98,6 +104,12 @@ void Croupier::initializeSbAndBb(Position sb, Position bb)
     (*bbPlayer)->setBbBetSize();
 }
 
+void Croupier::evaluateHandsAndChooseWinner()
+{
+    std::vector<Player*> toEvaluate;
+    //std::transform(players_.begin(), players_.end())
+}
+
 void Croupier::preparePreFlopPlayersToAct()
 {
     auto isEpPlayer = [](const Player* player){ return player->getPosition() == Position::EP; };
@@ -124,6 +136,8 @@ void Croupier::preparePreFlopPlayersToAct()
             throw NoPlayerFoundError();
         }
     }
+    else
+        initializeSbAndBb(Position::SB, Position::BB);
 
     playersToAct_.push(*firstPlayer);
     auto nextPlayer = firstPlayer+1;

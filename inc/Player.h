@@ -20,6 +20,7 @@ class Player
     bool isActive_ = true;              //still plays his hand
     const Board& board_;
     Position position_ = Position::Unknown;
+    friend class Croupier;
 
 public:
     Player(const std::string& name, const Board& board, float bigBlinds, Position position, std::unique_ptr<StrategyImpl> strategy);
