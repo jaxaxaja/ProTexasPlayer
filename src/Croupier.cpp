@@ -40,23 +40,21 @@ void Croupier::askPlayers(float bb)
     {
         Player* playerToAct = playersToAct_.front();
         playersToAct_.pop();
-        const Move playerMove = playerToAct->makeMove(bb);
+        const std::unique_ptr<Move> playerMove = playerToAct->makeMove(bb);
 
-        //moze lepiej Move'a zrobic jako klase z wirtualna metoda updateCroupier(Croupier* croupier)
-        // i te wyliczenia ponizej robic w tej metodzie
-        if (playerMove.first == Action::Raise || playerMove.first == Action::Bet)
+        if (playerMove->isRaise() || playerMove->isBet())
         {
             for (auto& player : hypotheticalPlayers_ToAct_)
                 playersToAct_.push(player);
 
             hypotheticalPlayers_ToAct_.clear();
-            bb = playerToAct->betSize_;
+            bb = playerToAct->betSize();
         }
 
-        if (playerMove.first != Action::Fold)
+        if (!playerMove->isFold())
         {
             hypotheticalPlayers_ToAct_.push_back(playerToAct);
-            board_.pot_ += playerMove.second;
+            board_.pot_ += playerMove->moveSize();
         }
     }
 
@@ -76,7 +74,7 @@ void Croupier::askPlayers(float bb)
         if (winner == players_.end())   //there is no allin player nor active one!
             throw NoActivePlayerFoundError();
 
-        (*winner)->addMoney(board_.pot_);
+        (*winner)->adjustStack(board_.pot_);
     }
 }
 
@@ -168,7 +166,7 @@ void Croupier::preparePostFlopPlayersToAct()
     if ((*firstPlayer)->isActive())
     {
         playersToAct_.push(*firstPlayer);
-        (*firstPlayer)->resetBetSize();
+        (*firstPlayer)->setBetSize(0);
     }
 
     auto nextPlayer = firstPlayer+1;
@@ -184,7 +182,7 @@ void Croupier::preparePostFlopPlayersToAct()
         if ((*nextPlayer)->isActive())
         {
             playersToAct_.push(*nextPlayer);
-            (*nextPlayer)->resetBetSize();
+            (*nextPlayer)->setBetSize(0);
         }
         ++nextPlayer;
     }

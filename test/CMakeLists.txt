@@ -7,9 +7,9 @@ set(SOURCES src/handtest.cpp
             src/gametest.cpp
             src/streamparsertest.cpp
             src/streamdecktest.cpp
-            src/croupiertest.cpp
             src/streamstrategytest.cpp
             src/playertest.cpp
+            src/croupiertest.cpp
             src/main.cpp
             ../src/Card.cpp
             ../src/Hand.cpp
@@ -19,7 +19,11 @@ set(SOURCES src/handtest.cpp
             ../src/game/Game.cpp
             ../src/Croupier.cpp
             ../src/Player.cpp
-            ../src/Move.cpp
+            ../src/move/Move.cpp
+            ../src/move/Fold.cpp
+            ../src/move/Call.cpp
+            ../src/move/Bet.cpp
+            ../src/move/Raise.cpp
             ../src/Position.cpp
             ../src/strategy/StreamStrategy.cpp)
 

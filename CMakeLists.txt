@@ -11,12 +11,16 @@ set(SOURCES src/Card.cpp
             src/deck/AhkDeck.cpp
             src/StreamParser.cpp
             src/Position.cpp
-            src/Move.cpp
             src/game/Game.cpp
             src/game/PreFlop.cpp
             src/game/Flop.cpp
             src/game/Turn.cpp
             src/game/River.cpp
+            src/move/Move.cpp
+            src/move/Fold.cpp
+            src/move/Call.cpp
+            src/move/Bet.cpp
+            src/move/Raise.cpp
             src/strategy/AhkStrategy.cpp
             src/strategy/StreamStrategy.cpp
             src/strategy/RealStrategy.cpp

@@ -3,35 +3,35 @@
 #include <fstream>
 #include "Exceptions.h"
 
-TEST(StreamStrategy, GoodPlayerMoves)
+TEST(StreamStrategyTest, GoodPlayerMoves)
 {
     try {
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamStrategy1");
         StreamStrategy strategy(file);
-        Move m = strategy.callRaiseOrFold(1);
-        EXPECT_EQ(Action::Fold, m.first);
+        std::unique_ptr<Move> m = strategy.callRaiseOrFold(1);
+        EXPECT_TRUE(m->isFold());
         m = strategy.callRaiseOrFold(1);
-        EXPECT_EQ(Action::Fold, m.first);
+        EXPECT_TRUE(m->isFold());
         m = strategy.callRaiseOrFold(1);
-        EXPECT_EQ(Action::Call, m.first);
+        EXPECT_TRUE(m->isCall());
         m = strategy.callRaiseOrFold(1);
-        EXPECT_EQ(Action::Check, m.first);
+        EXPECT_TRUE(m->isCheck());
         m = strategy.checkOrBet();
-        EXPECT_EQ(Action::Bet, m.first);
-        EXPECT_EQ(5, m.second);
+        EXPECT_TRUE(m->isBet());
+        EXPECT_EQ(5, m->moveSize());
         m = strategy.callRaiseOrFold(5);
-        EXPECT_EQ(Action::Raise, m.first);
-        EXPECT_EQ(15, m.second);
+        EXPECT_TRUE(m->isRaise());
+        EXPECT_EQ(15, m->moveSize());
         m = strategy.callRaiseOrFold(15);
-        EXPECT_EQ(Action::Call, m.first);
-        EXPECT_EQ(0, m.second);
+        EXPECT_TRUE(m->isCall());
+        EXPECT_EQ(0, m->moveSize());
         m = strategy.checkOrBet();
-        EXPECT_EQ(Action::Check, m.first);
+        EXPECT_TRUE(m->isCheck());
         m = strategy.checkOrBet();
-        EXPECT_EQ(Action::Bet, m.first);
-        EXPECT_EQ(25, m.second);
+        EXPECT_TRUE(m->isBet());
+        EXPECT_EQ(25, m->moveSize());
         m = strategy.callRaiseOrFold(25);
-        EXPECT_EQ(Action::Fold, m.first);
+        EXPECT_TRUE(m->isFold());
         file.close();
     }
     catch(const std::exception& e)
@@ -40,15 +40,15 @@ TEST(StreamStrategy, GoodPlayerMoves)
     }
 }
 
-TEST(StreamStrategy, BrokenPreFlopMove)
+TEST(StreamStrategyTest, BrokenPreFlopMove)
 {
     try {
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamStrategy2");
         StreamStrategy strategy(file);
-        Move m = strategy.callRaiseOrFold(1);
-        EXPECT_EQ(Action::Fold, m.first);
+        std::unique_ptr<Move> m = strategy.callRaiseOrFold(1);
+        EXPECT_TRUE(m->isFold());
         m = strategy.callRaiseOrFold(1);
-        EXPECT_EQ(Action::Fold, m.first);
+        EXPECT_TRUE(m->isFold());
         EXPECT_THROW(strategy.callRaiseOrFold(1), WrongPlayerMoveError);
         file.close();
     }
@@ -58,21 +58,21 @@ TEST(StreamStrategy, BrokenPreFlopMove)
     }
 }
 
-TEST(StreamStrategy, BrokenPostFlopMove)
+TEST(StreamStrategyTest, BrokenPostFlopMove)
 {
     try {
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamStrategy3");
         StreamStrategy strategy(file);
-        Move m = strategy.callRaiseOrFold(1);
-        EXPECT_EQ(Action::Fold, m.first);
+        std::unique_ptr<Move> m = strategy.callRaiseOrFold(1);
+        EXPECT_TRUE(m->isFold());
         m = strategy.callRaiseOrFold(1);
-        EXPECT_EQ(Action::Fold, m.first);
+        EXPECT_TRUE(m->isFold());
         m = strategy.callRaiseOrFold(1);
-        EXPECT_EQ(Action::Call, m.first);
+        EXPECT_TRUE(m->isCall());
         m = strategy.callRaiseOrFold(1);
-        EXPECT_EQ(Action::Check, m.first);
+        EXPECT_TRUE(m->isCheck());
         m = strategy.checkOrBet();
-        EXPECT_EQ(Action::Check, m.first);
+        EXPECT_TRUE(m->isCheck());
         EXPECT_THROW(strategy.checkOrBet(), WrongPlayerMoveError);
         file.close();
     }

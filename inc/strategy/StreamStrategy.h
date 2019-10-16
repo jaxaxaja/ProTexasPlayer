@@ -12,8 +12,8 @@ class StreamStrategy : public StrategyImpl
 
 public:
     StreamStrategy(std::istream& ins) : ins_(ins) {}
-    virtual Move checkOrBet() override;
-    virtual Move callRaiseOrFold(const float bb) override;
+    virtual std::unique_ptr<Move> checkOrBet() override;
+    virtual std::unique_ptr<Move> callRaiseOrFold(const float bb) override;
     virtual ~StreamStrategy() = default;
 };
 

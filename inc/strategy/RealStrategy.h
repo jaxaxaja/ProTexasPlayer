@@ -6,8 +6,8 @@
 class RealStrategy : public StrategyImpl
 {
 public:
-    virtual Move checkOrBet() override;
-    virtual Move callRaiseOrFold(const float bb) override;
+    virtual std::unique_ptr<Move> checkOrBet() override;
+    virtual std::unique_ptr<Move> callRaiseOrFold(const float bb) override;
     virtual ~RealStrategy() = default;
 };
 
