@@ -2,17 +2,19 @@
 #define HAND_H
 
 #include "Card.h"
+#include <utility>
 #include <string>
-#include <map>
 
 class Hand
 {
 private:
-    std::string hand_;
+    Card a_ = Card::Unknown;
+    Card b_ = Card::Unknown;
 public:
-    Hand() { Hand(Card::Unknown, Card::Unknown); }
-    Hand(Card a, Card b);
-    const std::string& getHand() const;
+    Hand() = default;
+    Hand(Card a, Card b) : a_(a), b_(b) {}
+    std::pair<Card, Card> getHand() const { return std::make_pair(a_, b_); }
+    std::string show() const;
 };
 
 #endif // HAND_H

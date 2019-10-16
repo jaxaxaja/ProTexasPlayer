@@ -1,18 +1,13 @@
 #include "Hand.h"
 #include <sstream>
 
-Hand::Hand(Card a, Card b)
+std::string Hand::show() const
 {
     std::stringstream cards;
-    if (a < b)
-        cards << a << b;
+    if (a_ < b_)
+        cards << a_ << b_;
     else
-        cards << b << a;
+        cards << b_ << a_;
 
-    hand_ = cards.str();
-}
-
-const std::string& Hand::getHand() const
-{
-    return hand_;
+    return cards.str();
 }

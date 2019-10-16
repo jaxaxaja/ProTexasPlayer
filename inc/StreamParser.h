@@ -3,6 +3,7 @@
 
 #include "Hand.h"
 #include <move/Move.h>
+#include <map>
 #include <vector>
 
 class StreamParser

@@ -43,31 +43,31 @@ TEST(StreamParserTest, HandFromString)
 
     std::stringstream str1("KdKh");
     EXPECT_TRUE(parser.parsePlayerHand(&str1, h));
-    EXPECT_EQ("KhKd", h.getHand());
+    EXPECT_EQ("KhKd", h.show());
 
     std::stringstream str2("3c6d");
     EXPECT_TRUE(parser.parsePlayerHand(&str2, h));
-    EXPECT_EQ("6d3c", h.getHand());
+    EXPECT_EQ("6d3c", h.show());
 
     std::stringstream str3("8c7d");
     EXPECT_TRUE(parser.parsePlayerHand(&str3, h));
-    EXPECT_EQ("8c7d", h.getHand());
+    EXPECT_EQ("8c7d", h.show());
 
     std::stringstream str4("9cJs");
     EXPECT_TRUE(parser.parsePlayerHand(&str4, h));
-    EXPECT_EQ("Js9c", h.getHand());
+    EXPECT_EQ("Js9c", h.show());
 
     std::stringstream str5("Qh4h");
     EXPECT_TRUE(parser.parsePlayerHand(&str5, h));
-    EXPECT_EQ("Qh4h", h.getHand());
+    EXPECT_EQ("Qh4h", h.show());
 
     std::stringstream str6("TsxTd");
     EXPECT_FALSE(parser.parsePlayerHand(&str6, h));
-    EXPECT_EQ("TsUnknown", h.getHand());
+    EXPECT_EQ("TsUnknown", h.show());
 
     std::stringstream str7("");
     EXPECT_FALSE(parser.parsePlayerHand(&str7, h));
-    EXPECT_EQ("UnknownUnknown", h.getHand());
+    EXPECT_EQ("UnknownUnknown", h.show());
 }
 
 TEST(StreamParserTest, FlopFromString)

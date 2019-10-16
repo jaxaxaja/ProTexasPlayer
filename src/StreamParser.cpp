@@ -84,7 +84,7 @@ bool StreamParser::parsePlayerHand(std::istream* const istr, Hand& h)
     *istr >> hand;
     h = HandFromString(hand);
 
-    if (h.getHand().find("Unknown") != std::string::npos)
+    if (h.show().find("Unknown") != std::string::npos)
     {
         spdlog::error("Got unknown hand when parsing string: {}", hand);
         return false;

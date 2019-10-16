@@ -15,7 +15,7 @@ void StreamDeck::dealCardsToPlayer(Player* player)
         throw PlayerHandParsingError();
     }
 
-    spdlog::info("Dealt hand {} to player {}", h.getHand(), player->getName());
+    spdlog::info("Dealt hand {} to player {}", player->showHand(), player->getName());
     player->setHand(h);
 }
 
