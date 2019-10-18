@@ -13,7 +13,7 @@ private:
 public:
     Hand() = default;
     Hand(Card a, Card b) : a_(a), b_(b) {}
-    std::pair<Card, Card> getHand() const { return std::make_pair(a_, b_); }
+    std::pair<Card, Card> get() const { return std::make_pair(a_, b_); }
     std::string show() const;
 };
 

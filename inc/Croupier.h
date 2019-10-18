@@ -15,7 +15,7 @@ class Croupier
     std::queue<Player*> playersToAct_;
     std::vector<Player*> hypotheticalPlayers_ToAct_;
     void initializeSbAndBb(Position sb, Position bb);
-    void evaluateHandsAndChooseWinner();
+    void evaluateHands(const std::vector<Player*>& players);
 
     FRIEND_TEST(CroupierTest, PreparePlayersToAct1);
     FRIEND_TEST(CroupierTest, PreparePlayersToAct2);
@@ -31,6 +31,7 @@ public:
     void dealTurnCards();
     void dealRiverCards();
     void askPlayers(float bb = 0);
+    void chooseWinner();
     size_t activePlayers();
     void preparePreFlopPlayersToAct();
     void preparePostFlopPlayersToAct();

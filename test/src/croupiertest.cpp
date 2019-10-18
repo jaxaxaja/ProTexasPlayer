@@ -254,7 +254,7 @@ TEST(CroupierTest, AskPlayers2)
     EXPECT_FLOAT_EQ(173+46, board.pot_);
     EXPECT_FLOAT_EQ(0, player1.getStackSize());
     EXPECT_FLOAT_EQ(82, player3.getStackSize());
-    EXPECT_FLOAT_EQ(0, player4.getStackSize());
+    EXPECT_FLOAT_EQ(173+46, player4.getStackSize());
     EXPECT_EQ(0, croupier.activePlayers());
     EXPECT_FALSE(player1.isActive());
     EXPECT_FALSE(player3.isActive());

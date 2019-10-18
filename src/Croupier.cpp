@@ -2,6 +2,7 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
 #include "Exceptions.h"
+#include "HandEvaluator.h"
 
 Croupier::Croupier(Board& board, const std::vector<Player*> &players, std::unique_ptr<DeckImpl> deck)
     : board_(board), players_(players), deck_(std::move(deck)) {}
@@ -60,22 +61,8 @@ void Croupier::askPlayers(float bb)
 
     hypotheticalPlayers_ToAct_.clear();
 
-    if (activePlayers() <= 1) //end of a Hand, rest of Players have folded or are allin
-    {
-        auto isAllin = [](const Player* player){ return player->getStackSize() <= 0; };
-        auto allinPlayer = std::find_if(players_.begin(), players_.end(), isAllin);
-
-        if (allinPlayer != players_.end())
-            return evaluateHandsAndChooseWinner();
-
-        auto isActive = [](const Player* player){ return player->isActive(); };
-        auto winner = std::find_if(players_.begin(), players_.end(), isActive);
-
-        if (winner == players_.end())   //there is no allin player nor active one!
-            throw NoActivePlayerFoundError();
-
-        (*winner)->adjustStack(board_.pot_);
-    }
+    if (activePlayers() <= 1) //hand has finished before river, choose winner
+        chooseWinner();
 }
 
 size_t Croupier::activePlayers()
@@ -102,10 +89,50 @@ void Croupier::initializeSbAndBb(Position sb, Position bb)
     (*bbPlayer)->setBbBetSize();
 }
 
-void Croupier::evaluateHandsAndChooseWinner()
+void Croupier::evaluateHands(const std::vector<Player*>& players)
 {
-    std::vector<Player*> toEvaluate;
-    //std::transform(players_.begin(), players_.end())
+    HandStrength theBestHand;
+    std::vector<Player*> winners;
+
+    for (auto pl : players)
+    {
+        HandStrength currentHand = HandEvaluator::getInstance().getHandStrength(pl->getHand(), board_.flop_, board_.turn_, board_.river_);
+
+        if (currentHand == theBestHand)
+            winners.push_back(pl);
+        else if (currentHand > theBestHand) //we can have multiple winners
+        {
+            theBestHand = currentHand;
+            winners.clear();
+            winners.push_back(pl);
+        }
+    }
+
+    for (auto pl : winners)
+        pl->adjustStack(board_.pot_ / winners.size());
+}
+
+void Croupier::chooseWinner()
+{
+    auto isAllin = [](const Player* player){ return player->getStackSize() <= 0; };
+    auto allinPlayer = std::find_if(players_.begin(), players_.end(), isAllin);
+
+    auto isActive = [](const Player* player){ return player->isActive(); };
+    int activePlayers = std::count_if(players_.begin(), players_.end(), isActive);
+
+    if (allinPlayer != players_.end() || activePlayers >= 2) //we have allin or at least 2 active players
+    {
+        std::vector<Player*> toEvaluate;
+        std::copy_if(players_.begin(), players_.end(), std::back_inserter(toEvaluate), [](const Player* p){ return p->getStackSize() <= 0 || p->isActive(); });
+        return evaluateHands(toEvaluate);
+    }
+
+    auto winner = std::find_if(players_.begin(), players_.end(), isActive); // here we have only one player, rest have folded
+
+    if (winner == players_.end())   //there is no allin player nor active one!
+        throw NoActivePlayerFoundError();
+
+    (*winner)->adjustStack(board_.pot_);
 }
 
 void Croupier::preparePreFlopPlayersToAct()

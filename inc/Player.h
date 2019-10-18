@@ -32,7 +32,7 @@ public:
     void setBbBetSize() { betSize_ = 1; bigBlinds_ -= 1; }
     float betSize() const { return betSize_; }
     std::string showHand() const { return hand_.show(); }
-    std::pair<Card, Card> getHand() const { return hand_.getHand(); }
+    Hand getHand() const { return hand_; }
     Position getPosition() const { return position_; }
     float getStackSize() const { return bigBlinds_; }
     void adjustStack(const float size) { bigBlinds_ += size; }

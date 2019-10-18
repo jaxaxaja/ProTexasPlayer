@@ -8,6 +8,7 @@ set(SOURCES src/handtest.cpp
             src/streamparsertest.cpp
             src/streamdecktest.cpp
             src/streamstrategytest.cpp
+            src/handevaluatortest.cpp
             src/playertest.cpp
             src/croupiertest.cpp
             src/main.cpp
@@ -15,6 +16,7 @@ set(SOURCES src/handtest.cpp
             ../src/Hand.cpp
             ../src/deck/RealDeck.cpp
             ../src/StreamParser.cpp
+            ../src/HandEvaluator.cpp
             ../src/deck/StreamDeck.cpp
             ../src/game/Game.cpp
             ../src/Croupier.cpp

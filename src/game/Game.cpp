@@ -19,7 +19,7 @@ void Game::playHand()
     try {
         spdlog::info("Start of a hand! Playing hand number: {} on stake {}", handNumber_, stake_);
         setGameState(new PreFlop());
-        while (croupier_.activePlayers() > 1)
+        while (croupier_.activePlayers() > 1 && gameState_)
         {
             spdlog::debug("Number of active players: {}", croupier_.activePlayers());
             gameState_->dealCards(croupier_);

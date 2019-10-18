@@ -11,6 +11,7 @@ set(SOURCES src/Card.cpp
             src/deck/AhkDeck.cpp
             src/StreamParser.cpp
             src/Position.cpp
+            src/HandEvaluator.cpp
             src/game/Game.cpp
             src/game/PreFlop.cpp
             src/game/Flop.cpp

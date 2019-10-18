@@ -15,6 +15,7 @@ public:
     virtual void askPlayers(Croupier& croupier) override
     {
         croupier.askPlayers();
+        croupier.chooseWinner();
     }
     virtual void nextState(Game* game) override
     {
