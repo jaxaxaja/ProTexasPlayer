@@ -169,155 +169,173 @@ TEST(CroupierTest, PreparePlayersToAct4)
 TEST(CroupierTest, AskPlayers1)
 {
     Board board;
-    std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/Hand1");
-    Player player1("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file));
-    Player player2("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file));
-    Player player3("Pawel", board, 100, Position::EP, std::make_unique<StreamStrategy>(file));
-    Player player4("Marcin", board, 100, Position::BU, std::make_unique<StreamStrategy>(file));
-    std::vector<Player*> players = {&player1, &player2, &player3, &player4};
-    std::unique_ptr<DeckImpl> deck = std::make_unique<StreamDeck>(file);
-    Croupier croupier(board, players, std::move(deck));
+    try {
+        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/Hand1");
+        Player player1("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file));
+        Player player2("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file));
+        Player player3("Pawel", board, 100, Position::EP, std::make_unique<StreamStrategy>(file));
+        Player player4("Marcin", board, 100, Position::BU, std::make_unique<StreamStrategy>(file));
+        std::vector<Player*> players = {&player1, &player2, &player3, &player4};
+        std::unique_ptr<DeckImpl> deck = std::make_unique<StreamDeck>(file);
+        Croupier croupier(board, players, std::move(deck));
 
-    //PREFLOP
-    EXPECT_EQ(4, croupier.activePlayers());
-    croupier.dealCardsToPlayers();
-    EXPECT_FLOAT_EQ(1.5, board.pot_);
-    croupier.preparePreFlopPlayersToAct();
-    EXPECT_EQ(4, croupier.playersToAct_.size());
-    croupier.askPlayers(1);
-    EXPECT_FLOAT_EQ(2, board.pot_);
-    EXPECT_FLOAT_EQ(99, player1.getStackSize());
-    EXPECT_FLOAT_EQ(99, player2.getStackSize());
-    EXPECT_FLOAT_EQ(100, player3.getStackSize());
-    EXPECT_FLOAT_EQ(100, player4.getStackSize());
-    EXPECT_EQ(2, croupier.activePlayers());
-    EXPECT_TRUE(player1.isActive());
-    EXPECT_TRUE(player2.isActive());
-    //FLOP
-    croupier.dealFlopCards();
-    croupier.preparePostFlopPlayersToAct();
-    EXPECT_EQ(2, croupier.playersToAct_.size());
-    croupier.askPlayers();
-    EXPECT_FLOAT_EQ(32, board.pot_);
-    EXPECT_FLOAT_EQ(84, player1.getStackSize());
-    EXPECT_FLOAT_EQ(84, player2.getStackSize());
-    EXPECT_EQ(2, croupier.activePlayers());
-    EXPECT_TRUE(player1.isActive());
-    EXPECT_TRUE(player2.isActive());
-    //TURN
-    croupier.dealTurnCards();
-    croupier.preparePostFlopPlayersToAct();
-    EXPECT_EQ(2, croupier.playersToAct_.size());
-    croupier.askPlayers();
-    EXPECT_FLOAT_EQ(57, board.pot_);
-    EXPECT_FLOAT_EQ(84, player1.getStackSize());
-    EXPECT_FLOAT_EQ(116, player2.getStackSize());
-    EXPECT_EQ(1, croupier.activePlayers());
-    EXPECT_FALSE(player1.isActive());
-    EXPECT_TRUE(player2.isActive());
+        //PREFLOP
+        EXPECT_EQ(4, croupier.activePlayers());
+        croupier.dealCardsToPlayers();
+        EXPECT_FLOAT_EQ(1.5, board.pot_);
+        croupier.preparePreFlopPlayersToAct();
+        EXPECT_EQ(4, croupier.playersToAct_.size());
+        croupier.askPlayers(1);
+        EXPECT_FLOAT_EQ(2, board.pot_);
+        EXPECT_FLOAT_EQ(99, player1.getStackSize());
+        EXPECT_FLOAT_EQ(99, player2.getStackSize());
+        EXPECT_FLOAT_EQ(100, player3.getStackSize());
+        EXPECT_FLOAT_EQ(100, player4.getStackSize());
+        EXPECT_EQ(2, croupier.activePlayers());
+        EXPECT_TRUE(player1.isActive());
+        EXPECT_TRUE(player2.isActive());
+        //FLOP
+        croupier.dealFlopCards();
+        croupier.preparePostFlopPlayersToAct();
+        EXPECT_EQ(2, croupier.playersToAct_.size());
+        croupier.askPlayers();
+        EXPECT_FLOAT_EQ(32, board.pot_);
+        EXPECT_FLOAT_EQ(84, player1.getStackSize());
+        EXPECT_FLOAT_EQ(84, player2.getStackSize());
+        EXPECT_EQ(2, croupier.activePlayers());
+        EXPECT_TRUE(player1.isActive());
+        EXPECT_TRUE(player2.isActive());
+        //TURN
+        croupier.dealTurnCards();
+        croupier.preparePostFlopPlayersToAct();
+        EXPECT_EQ(2, croupier.playersToAct_.size());
+        croupier.askPlayers();
+        EXPECT_FLOAT_EQ(57, board.pot_);
+        EXPECT_FLOAT_EQ(84, player1.getStackSize());
+        EXPECT_FLOAT_EQ(116, player2.getStackSize());
+        EXPECT_EQ(1, croupier.activePlayers());
+        EXPECT_FALSE(player1.isActive());
+        EXPECT_TRUE(player2.isActive());
+    }
+    catch(const std::exception& e)
+    {
+        std::cout<< e.what();
+    }
 }
 
 TEST(CroupierTest, AskPlayers2)
 {
     Board board;
-    std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/Hand2");
-    Player player1("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file));
-    Player player2("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file));
-    Player player3("Pawel", board, 100, Position::EP, std::make_unique<StreamStrategy>(file));
-    Player player4("Marcin", board, 100, Position::BU, std::make_unique<StreamStrategy>(file));
-    std::vector<Player*> players = {&player1, &player2, &player3, &player4};
-    std::unique_ptr<DeckImpl> deck = std::make_unique<StreamDeck>(file);
-    Croupier croupier(board, players, std::move(deck));
+    try {
+        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/Hand2");
+        Player player1("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file));
+        Player player2("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file));
+        Player player3("Pawel", board, 100, Position::EP, std::make_unique<StreamStrategy>(file));
+        Player player4("Marcin", board, 100, Position::BU, std::make_unique<StreamStrategy>(file));
+        std::vector<Player*> players = {&player1, &player2, &player3, &player4};
+        std::unique_ptr<DeckImpl> deck = std::make_unique<StreamDeck>(file);
+        Croupier croupier(board, players, std::move(deck));
 
-    //PREFLOP
-    EXPECT_EQ(4, croupier.activePlayers());
-    croupier.dealCardsToPlayers();
-    EXPECT_FLOAT_EQ(1.5, board.pot_);
-    croupier.preparePreFlopPlayersToAct();
-    EXPECT_EQ(4, croupier.playersToAct_.size());
-    croupier.askPlayers(1);
-    EXPECT_FLOAT_EQ(46, board.pot_);
-    EXPECT_FLOAT_EQ(85, player1.getStackSize());
-    EXPECT_FLOAT_EQ(99, player2.getStackSize());
-    EXPECT_FLOAT_EQ(85, player3.getStackSize());
-    EXPECT_FLOAT_EQ(85, player4.getStackSize());
-    EXPECT_EQ(3, croupier.activePlayers());
-    EXPECT_TRUE(player1.isActive());
-    EXPECT_FALSE(player2.isActive());
-    EXPECT_TRUE(player3.isActive());
-    EXPECT_TRUE(player4.isActive());
-    //FLOP
-    croupier.dealFlopCards();
-    croupier.preparePostFlopPlayersToAct();
-    EXPECT_EQ(3, croupier.playersToAct_.size());
-    croupier.askPlayers();
-    EXPECT_FLOAT_EQ(173+46, board.pot_);
-    EXPECT_FLOAT_EQ(0, player1.getStackSize());
-    EXPECT_FLOAT_EQ(82, player3.getStackSize());
-    EXPECT_FLOAT_EQ(173+46, player4.getStackSize());
-    EXPECT_EQ(0, croupier.activePlayers());
-    EXPECT_FALSE(player1.isActive());
-    EXPECT_FALSE(player3.isActive());
-    EXPECT_FALSE(player4.isActive());
+        //PREFLOP
+        EXPECT_EQ(4, croupier.activePlayers());
+        croupier.dealCardsToPlayers();
+        EXPECT_FLOAT_EQ(1.5, board.pot_);
+        croupier.preparePreFlopPlayersToAct();
+        EXPECT_EQ(4, croupier.playersToAct_.size());
+        croupier.askPlayers(1);
+        EXPECT_FLOAT_EQ(46, board.pot_);
+        EXPECT_FLOAT_EQ(85, player1.getStackSize());
+        EXPECT_FLOAT_EQ(99, player2.getStackSize());
+        EXPECT_FLOAT_EQ(85, player3.getStackSize());
+        EXPECT_FLOAT_EQ(85, player4.getStackSize());
+        EXPECT_EQ(3, croupier.activePlayers());
+        EXPECT_TRUE(player1.isActive());
+        EXPECT_FALSE(player2.isActive());
+        EXPECT_TRUE(player3.isActive());
+        EXPECT_TRUE(player4.isActive());
+        //FLOP
+        croupier.dealFlopCards();
+        croupier.preparePostFlopPlayersToAct();
+        EXPECT_EQ(3, croupier.playersToAct_.size());
+        croupier.askPlayers();
+        EXPECT_FLOAT_EQ(173+46, board.pot_);
+        EXPECT_FLOAT_EQ(0, player1.getStackSize());
+        EXPECT_FLOAT_EQ(82, player3.getStackSize());
+        EXPECT_FLOAT_EQ(173+46, player4.getStackSize());
+        EXPECT_EQ(0, croupier.activePlayers());
+        EXPECT_FALSE(player1.isActive());
+        EXPECT_FALSE(player3.isActive());
+        EXPECT_FALSE(player4.isActive());
+    }
+    catch(const std::exception& e)
+    {
+        std::cout<< e.what();
+    }
 }
 
 TEST(CroupierTest, AskPlayers3)
 {
     Board board;
-    std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/Hand3");
-    Player player1("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file));
-    Player player2("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file));
-    Player player3("Pawel", board, 100, Position::BU, std::make_unique<StreamStrategy>(file));
-    std::vector<Player*> players = {&player1, &player2, &player3};
-    std::unique_ptr<DeckImpl> deck = std::make_unique<StreamDeck>(file);
-    Croupier croupier(board, players, std::move(deck));
+    try {
+        std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/Hand3");
+        Player player1("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file));
+        Player player2("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file));
+        Player player3("Pawel", board, 100, Position::BU, std::make_unique<StreamStrategy>(file));
+        std::vector<Player*> players = {&player1, &player2, &player3};
+        std::unique_ptr<DeckImpl> deck = std::make_unique<StreamDeck>(file);
+        Croupier croupier(board, players, std::move(deck));
 
-    //PREFLOP
-    EXPECT_EQ(3, croupier.activePlayers());
-    croupier.dealCardsToPlayers();
-    EXPECT_FLOAT_EQ(1.5, board.pot_);
-    croupier.preparePreFlopPlayersToAct();
-    EXPECT_EQ(3, croupier.playersToAct_.size());
-    croupier.askPlayers(1);
-    EXPECT_FLOAT_EQ(4.5, board.pot_);
-    EXPECT_FLOAT_EQ(99.5, player1.getStackSize());
-    EXPECT_FLOAT_EQ(98, player2.getStackSize());
-    EXPECT_FLOAT_EQ(98, player3.getStackSize());
-    EXPECT_EQ(2, croupier.activePlayers());
-    EXPECT_FALSE(player1.isActive());
-    EXPECT_TRUE(player2.isActive());
-    EXPECT_TRUE(player3.isActive());
-    //FLOP
-    croupier.dealFlopCards();
-    croupier.preparePostFlopPlayersToAct();
-    EXPECT_EQ(2, croupier.playersToAct_.size());
-    croupier.askPlayers();
-    EXPECT_FLOAT_EQ(4.5+2*10.5, board.pot_);
-    EXPECT_FLOAT_EQ(87.5, player2.getStackSize());
-    EXPECT_FLOAT_EQ(87.5, player3.getStackSize());
-    EXPECT_EQ(2, croupier.activePlayers());
-    EXPECT_TRUE(player2.isActive());
-    EXPECT_TRUE(player3.isActive());
-    //TURN
-    croupier.dealTurnCards();
-    croupier.preparePostFlopPlayersToAct();
-    EXPECT_EQ(2, croupier.playersToAct_.size());
-    croupier.askPlayers();
-    EXPECT_FLOAT_EQ(4.5+2*10.5+2*18.1, board.pot_);
-    EXPECT_FLOAT_EQ(87.5-18.1, player2.getStackSize());
-    EXPECT_FLOAT_EQ(87.5-18.1, player3.getStackSize());
-    EXPECT_EQ(2, croupier.activePlayers());
-    EXPECT_TRUE(player2.isActive());
-    EXPECT_TRUE(player3.isActive());
-    //RIVER
-    croupier.dealRiverCards();
-    croupier.preparePostFlopPlayersToAct();
-    EXPECT_EQ(2, croupier.playersToAct_.size());
-    croupier.askPlayers();
-    EXPECT_FLOAT_EQ(4.5+2*10.5+2*18.1, board.pot_);
-    EXPECT_FLOAT_EQ(87.5-18.1, player2.getStackSize());
-    EXPECT_FLOAT_EQ(87.5-18.1, player3.getStackSize());
-    EXPECT_EQ(2, croupier.activePlayers());
-    EXPECT_TRUE(player2.isActive());
-    EXPECT_TRUE(player3.isActive());
+        //PREFLOP
+        EXPECT_EQ(3, croupier.activePlayers());
+        croupier.dealCardsToPlayers();
+        EXPECT_FLOAT_EQ(1.5, board.pot_);
+        croupier.preparePreFlopPlayersToAct();
+        EXPECT_EQ(3, croupier.playersToAct_.size());
+        croupier.askPlayers(1);
+        EXPECT_FLOAT_EQ(4.5, board.pot_);
+        EXPECT_FLOAT_EQ(99.5, player1.getStackSize());
+        EXPECT_FLOAT_EQ(98, player2.getStackSize());
+        EXPECT_FLOAT_EQ(98, player3.getStackSize());
+        EXPECT_EQ(2, croupier.activePlayers());
+        EXPECT_FALSE(player1.isActive());
+        EXPECT_TRUE(player2.isActive());
+        EXPECT_TRUE(player3.isActive());
+        //FLOP
+        croupier.dealFlopCards();
+        croupier.preparePostFlopPlayersToAct();
+        EXPECT_EQ(2, croupier.playersToAct_.size());
+        croupier.askPlayers();
+        EXPECT_FLOAT_EQ(4.5+2*10.5, board.pot_);
+        EXPECT_FLOAT_EQ(87.5, player2.getStackSize());
+        EXPECT_FLOAT_EQ(87.5, player3.getStackSize());
+        EXPECT_EQ(2, croupier.activePlayers());
+        EXPECT_TRUE(player2.isActive());
+        EXPECT_TRUE(player3.isActive());
+        //TURN
+        croupier.dealTurnCards();
+        croupier.preparePostFlopPlayersToAct();
+        EXPECT_EQ(2, croupier.playersToAct_.size());
+        croupier.askPlayers();
+        EXPECT_FLOAT_EQ(4.5+2*10.5+2*18.1, board.pot_);
+        EXPECT_FLOAT_EQ(87.5-18.1, player2.getStackSize());
+        EXPECT_FLOAT_EQ(87.5-18.1, player3.getStackSize());
+        EXPECT_EQ(2, croupier.activePlayers());
+        EXPECT_TRUE(player2.isActive());
+        EXPECT_TRUE(player3.isActive());
+        //RIVER
+        croupier.dealRiverCards();
+        croupier.preparePostFlopPlayersToAct();
+        EXPECT_EQ(2, croupier.playersToAct_.size());
+        croupier.askPlayers();
+        EXPECT_FLOAT_EQ(4.5+2*10.5+2*18.1, board.pot_);
+        EXPECT_FLOAT_EQ(87.5-18.1, player2.getStackSize());
+        EXPECT_FLOAT_EQ(87.5-18.1, player3.getStackSize());
+        EXPECT_EQ(2, croupier.activePlayers());
+        EXPECT_TRUE(player2.isActive());
+        EXPECT_TRUE(player3.isActive());
+    }
+    catch(const std::exception& e)
+    {
+        std::cout<< e.what();
+    }
 }
