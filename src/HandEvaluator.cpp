@@ -40,16 +40,28 @@ HandStrength HandEvaluator::getHandStrength(Hand playerHand, const std::vector<C
     ++cardSuits_[static_cast<size_t>(turn)%4];
     ++cardSuits_[static_cast<size_t>(river)%4];
 
+    std::vector<Card> cards = {playerHand.get().first, playerHand.get().second, turn, river, flop.front(), flop.at(1), flop.back()};
+    std::sort(cards.begin(), cards.end());
     HandEvaluator::StrengthType result;
 
-    if ((result = isStreightFlush()).first)
+    if ((result = isStreightFlush(cards)).first)
         return HandStrength(HandStrength::StraightFlush, result.second);
     if ((result = isQuads()).first)
         return HandStrength(HandStrength::Quads, result.second);
     if ((result = isFullHouse()).first)
         return HandStrength(HandStrength::FullHouse, result.second);
     if ((result = isFlush()).first)
-        return HandStrength(HandStrength::Flush, result.second);
+    {
+        size_t flushType = result.second.front(); //0 - spades, 1 - hearts, 2 - diamonds, 3 - clubs
+        std::vector<size_t> res;
+
+        for (const auto& card : cards)
+        {
+            if (res.size() < 5 && static_cast<size_t>(card)%4 == flushType)
+                res.push_back(static_cast<size_t>(card)/4);
+        }
+        return HandStrength(HandStrength::Flush, res);
+    }
     if ((result = isStreight()).first)
         return HandStrength(HandStrength::Streight, result.second);
     if ((result = isTriple()).first)
@@ -62,10 +74,36 @@ HandStrength HandEvaluator::getHandStrength(Hand playerHand, const std::vector<C
     return HandStrength(HandStrength::HighCard, {highCard(1), highCard(2), highCard(3), highCard(4), highCard(5)});
 }
 
-HandEvaluator::StrengthType HandEvaluator::isStreightFlush()
+HandEvaluator::StrengthType HandEvaluator::isStreightFlush(const std::vector<Card> &v)
 {
+    size_t count = 1;
+    std::vector<Card>::const_iterator lastToCompare = v.begin();
+    std::vector<Card>::const_iterator it = v.begin()+1;
+    std::vector<size_t> res = {static_cast<size_t>(*lastToCompare)/4};
 
-    return std::make_pair(false, std::vector<size_t>());
+    for (; it != v.end(); ++it)
+    {
+        bool rankMatch = static_cast<size_t>(*it)/4 == static_cast<size_t>(*lastToCompare)/4+1;
+        bool suitMatch = static_cast<size_t>(*it)%4 == static_cast<size_t>(*lastToCompare)%4;
+
+        if (rankMatch && suitMatch) //consecutive card in the same color
+        {
+            ++count;
+            lastToCompare = it;
+            res.push_back(static_cast<size_t>(*lastToCompare)/4);
+        }
+        else if (static_cast<size_t>(*it)/4 > static_cast<size_t>(*lastToCompare)/4+1)
+        {
+            lastToCompare = it;
+            count = 1;
+            res.clear();
+            res.push_back(static_cast<size_t>(*lastToCompare)/4);
+        }
+
+        if (count == 5) //we have streight flush
+            break;
+    }
+    return std::make_pair(count == 5, res);
 }
 
 HandEvaluator::StrengthType HandEvaluator::isQuads()
@@ -106,8 +144,9 @@ HandEvaluator::StrengthType HandEvaluator::isFlush()
 
     if (flush != cardSuits_.end())
     {
-
-        return std::make_pair(true, std::vector<size_t>());
+        size_t flushRanking = std::distance(cardSuits_.begin(), flush);
+        std::vector<size_t> v = {flushRanking};
+        return std::make_pair(true, v);
     }
 
     return std::make_pair(false, std::vector<size_t>());

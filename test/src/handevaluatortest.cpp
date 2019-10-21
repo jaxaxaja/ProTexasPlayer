@@ -42,8 +42,13 @@ TEST(HandEvaluatorTest, HandStrength1)
 
     hand = HandEvaluator::getInstance().getHandStrength(Hand(Card::Js, Card::SevenS), flop, Card::NineC, Card::EightS);
     EXPECT_EQ(HandStrength::Flush, hand.strength_);
-    //EXPECT_EQ(1, hand.handStrength_.first);
-    //EXPECT_EQ(0, hand.handStrength_.second);
+    res = {3, 4, 6, 7, 12};
+    EXPECT_EQ(res, hand.handStrength_);
+
+    hand = HandEvaluator::getInstance().getHandStrength(Hand(Card::As, Card::SevenS), flop, Card::Ks, Card::EightS);
+    EXPECT_EQ(HandStrength::Flush, hand.strength_);
+    res = {0, 1, 4, 6, 7};
+    EXPECT_EQ(res, hand.handStrength_);
 
     hand = HandEvaluator::getInstance().getHandStrength(Hand(Card::Tc, Card::Td), flop, Card::NineC, Card::Th);
     EXPECT_EQ(HandStrength::Quads, hand.strength_);
@@ -74,6 +79,17 @@ TEST(HandEvaluatorTest, HandStrength1)
     hand = HandEvaluator::getInstance().getHandStrength(Hand(Card::As, Card::Ah), flop, Card::Tc, Card::FiveD);
     EXPECT_EQ(HandStrength::Quads, hand.strength_);
     res = {0,0,0,0,4};
+    EXPECT_EQ(res, hand.handStrength_);
+
+    flop = {Card::Ac, Card::Qc, Card::Tc};
+    hand = HandEvaluator::getInstance().getHandStrength(Hand(Card::Kc, Card::Jc), flop, Card::Td, Card::Jd);
+    EXPECT_EQ(HandStrength::StraightFlush, hand.strength_);
+    res = {0,1,2,3,4};
+    EXPECT_EQ(res, hand.handStrength_);
+
+    hand = HandEvaluator::getInstance().getHandStrength(Hand(Card::NineC, Card::Jc), flop, Card::EightC, Card::Jd);
+    EXPECT_EQ(HandStrength::StraightFlush, hand.strength_);
+    res = {2,3,4,5,6};
     EXPECT_EQ(res, hand.handStrength_);
 }
 
