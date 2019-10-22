@@ -211,6 +211,7 @@ TEST(CroupierTest, AskPlayers1)
         EXPECT_EQ(2, croupier.playersToAct_.size());
         croupier.askPlayers();
         EXPECT_FLOAT_EQ(57, board.pot_);
+        croupier.chooseWinner();
         EXPECT_FLOAT_EQ(84, player1.getStackSize());
         EXPECT_FLOAT_EQ(116, player2.getStackSize());
         EXPECT_EQ(1, croupier.activePlayers());
@@ -259,6 +260,7 @@ TEST(CroupierTest, AskPlayers2)
         EXPECT_EQ(3, croupier.playersToAct_.size());
         croupier.askPlayers();
         EXPECT_FLOAT_EQ(173+46, board.pot_);
+        croupier.chooseWinner();
         EXPECT_FLOAT_EQ(0, player1.getStackSize());
         EXPECT_FLOAT_EQ(82, player3.getStackSize());
         EXPECT_FLOAT_EQ(173+46, player4.getStackSize());
@@ -328,8 +330,9 @@ TEST(CroupierTest, AskPlayers3)
         EXPECT_EQ(2, croupier.playersToAct_.size());
         croupier.askPlayers();
         EXPECT_FLOAT_EQ(4.5+2*10.5+2*18.1, board.pot_);
+        croupier.chooseWinner();
         EXPECT_FLOAT_EQ(87.5-18.1, player2.getStackSize());
-        EXPECT_FLOAT_EQ(87.5-18.1, player3.getStackSize());
+        EXPECT_FLOAT_EQ(87.5-18.1+board.pot_, player3.getStackSize());
         EXPECT_EQ(2, croupier.activePlayers());
         EXPECT_TRUE(player2.isActive());
         EXPECT_TRUE(player3.isActive());

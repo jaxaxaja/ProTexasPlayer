@@ -60,15 +60,18 @@ void Croupier::askPlayers(float bb)
     }
 
     hypotheticalPlayers_ToAct_.clear();
-
-    if (activePlayers() <= 1) //hand has finished before river, choose winner
-        chooseWinner();
 }
 
 size_t Croupier::activePlayers()
 {
     auto active = [](const Player* player) { return player->isActive(); };
     return std::count_if(players_.begin(), players_.end(), active);
+}
+
+size_t Croupier::allInPlayers()
+{
+    auto isAllin = [](const Player* player){ return player->getStackSize() <= 0; };
+    return std::count_if(players_.begin(), players_.end(), isAllin);
 }
 
 void Croupier::initializeSbAndBb(Position sb, Position bb)
@@ -114,20 +117,16 @@ void Croupier::evaluateHands(const std::vector<Player*>& players)
 
 void Croupier::chooseWinner()
 {
-    auto isAllin = [](const Player* player){ return player->getStackSize() <= 0; };
-    auto allinPlayer = std::find_if(players_.begin(), players_.end(), isAllin);
+    auto isActiveOrAllin = [](const Player* player) { return player->isActive() || player->getStackSize() <= 0; };
 
-    auto isActive = [](const Player* player){ return player->isActive(); };
-    int activePlayers = std::count_if(players_.begin(), players_.end(), isActive);
-
-    if (allinPlayer != players_.end() || activePlayers >= 2) //we have allin or at least 2 active players
+    if (allInPlayers() + activePlayers() >= 2) //we have at least 2 players to choose winner
     {
         std::vector<Player*> toEvaluate;
-        std::copy_if(players_.begin(), players_.end(), std::back_inserter(toEvaluate), [](const Player* p){ return p->getStackSize() <= 0 || p->isActive(); });
+        std::copy_if(players_.begin(), players_.end(), std::back_inserter(toEvaluate), isActiveOrAllin);
         return evaluateHands(toEvaluate);
     }
 
-    auto winner = std::find_if(players_.begin(), players_.end(), isActive); // here we have only one player, rest have folded
+    auto winner = std::find_if(players_.begin(), players_.end(), isActiveOrAllin); // here we have only one player, rest have folded
 
     if (winner == players_.end())   //there is no allin player nor active one!
         throw NoActivePlayerFoundError();

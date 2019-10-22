@@ -16,6 +16,7 @@ class Game
     std::vector<Player*> players_;
     Croupier croupier_;
     GameState* gameState_ = nullptr;
+    size_t playersInHand();
 
     FRIEND_TEST(GameTest, activePlayers);
 

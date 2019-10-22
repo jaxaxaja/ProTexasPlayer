@@ -33,6 +33,7 @@ public:
     void askPlayers(float bb = 0);
     void chooseWinner();
     size_t activePlayers();
+    size_t allInPlayers();
     void preparePreFlopPlayersToAct();
     void preparePostFlopPlayersToAct();
 };

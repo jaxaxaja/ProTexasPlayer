@@ -5,12 +5,17 @@
 Game::Game(const std::string& stake, const std::vector<Player*> &players, std::unique_ptr<DeckImpl> deck)
     : stake_(stake), players_(players), croupier_(board_, players_, std::move(deck))
 {
-    //stworzyc numOfPlayers graczy z odpowiednimi parametrami
+
 }
 
 void Game::setGameState(GameState* state)
 {
     gameState_ = state;
+}
+
+size_t Game::playersInHand()
+{
+    return croupier_.activePlayers() + croupier_.allInPlayers();
 }
 
 void Game::playHand()
@@ -19,13 +24,14 @@ void Game::playHand()
     try {
         spdlog::info("Start of a hand! Playing hand number: {} on stake {}", handNumber_, stake_);
         setGameState(new PreFlop());
-        while (croupier_.activePlayers() > 1 && gameState_)
+        while (playersInHand() > 1 && gameState_)
         {
             spdlog::debug("Number of active players: {}", croupier_.activePlayers());
             gameState_->dealCards(croupier_);
             gameState_->askPlayers(croupier_);
             gameState_->nextState(this);
         }
+        croupier_.chooseWinner();
     }
     catch (const std::exception& e)
     {
