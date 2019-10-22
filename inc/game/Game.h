@@ -13,15 +13,13 @@ class Game
     long handNumber_ = 0;
     Board board_;
     std::string stake_;
-    std::vector<Player*> players_;
+    std::vector<std::unique_ptr<Player>> players_;
     Croupier croupier_;
     GameState* gameState_ = nullptr;
     size_t playersInHand();
 
-    FRIEND_TEST(GameTest, activePlayers);
-
 public:
-    Game(const std::string& stake, const std::vector<Player*> &players, std::unique_ptr<DeckImpl> deck);
+    Game(const std::string& stake, std::unique_ptr<DeckImpl> &deck);
     ~Game();
     void playHand();
     void setGameState(GameState* state);

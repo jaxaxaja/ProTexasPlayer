@@ -2,8 +2,8 @@
 #include <game/PreFlop.h>
 #include <spdlog/spdlog.h>
 
-Game::Game(const std::string& stake, const std::vector<Player*> &players, std::unique_ptr<DeckImpl> deck)
-    : stake_(stake), players_(players), croupier_(board_, players_, std::move(deck))
+Game::Game(const std::string& stake, std::unique_ptr<DeckImpl>& deck)
+    : stake_(stake), croupier_(board_, players_, deck)
 {
 
 }

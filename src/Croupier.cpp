@@ -4,7 +4,7 @@
 #include "Exceptions.h"
 #include "HandEvaluator.h"
 
-Croupier::Croupier(Board& board, const std::vector<Player*> &players, std::unique_ptr<DeckImpl> deck)
+Croupier::Croupier(Board& board, std::vector<std::unique_ptr<Player>> &players, std::unique_ptr<DeckImpl> &deck)
     : board_(board), players_(players), deck_(std::move(deck)) {}
 
 void Croupier::dealCardsToPlayers()
@@ -64,20 +64,20 @@ void Croupier::askPlayers(float bb)
 
 size_t Croupier::activePlayers()
 {
-    auto active = [](const Player* player) { return player->isActive(); };
+    auto active = [](const std::unique_ptr<Player>& player) { return player->isActive(); };
     return std::count_if(players_.begin(), players_.end(), active);
 }
 
 size_t Croupier::allInPlayers()
 {
-    auto isAllin = [](const Player* player){ return player->getStackSize() <= 0; };
+    auto isAllin = [](const std::unique_ptr<Player>& player){ return player->getStackSize() <= 0; };
     return std::count_if(players_.begin(), players_.end(), isAllin);
 }
 
 void Croupier::initializeSbAndBb(Position sb, Position bb)
 {
-    auto isSbPlayer = [&sb](const Player* player){ return player->getPosition() == sb; };
-    auto isBbPlayer = [&bb](const Player* player){ return player->getPosition() == bb; };
+    auto isSbPlayer = [&sb](const std::unique_ptr<Player>& player){ return player->getPosition() == sb; };
+    auto isBbPlayer = [&bb](const std::unique_ptr<Player>& player){ return player->getPosition() == bb; };
 
     auto sbPlayer = std::find_if(players_.begin(), players_.end(), isSbPlayer);
     auto bbPlayer = std::find_if(players_.begin(), players_.end(), isBbPlayer);
@@ -117,12 +117,17 @@ void Croupier::evaluateHands(const std::vector<Player*>& players)
 
 void Croupier::chooseWinner()
 {
-    auto isActiveOrAllin = [](const Player* player) { return player->isActive() || player->getStackSize() <= 0; };
+    auto isActiveOrAllin = [](const std::unique_ptr<Player>& player) { return player->isActive() || player->getStackSize() <= 0; };
 
     if (allInPlayers() + activePlayers() >= 2) //we have at least 2 players to choose winner
     {
         std::vector<Player*> toEvaluate;
-        std::copy_if(players_.begin(), players_.end(), std::back_inserter(toEvaluate), isActiveOrAllin);
+        //std::copy_if(players_.begin(), players_.end(), std::back_inserter(toEvaluate), isActiveOrAllin);
+        for (const auto& ptr : players_)
+        {
+            if (isActiveOrAllin(ptr))
+                toEvaluate.push_back(ptr.get());
+        }
         return evaluateHands(toEvaluate);
     }
 
@@ -136,20 +141,20 @@ void Croupier::chooseWinner()
 
 void Croupier::preparePreFlopPlayersToAct()
 {
-    auto isEpPlayer = [](const Player* player){ return player->getPosition() == Position::EP; };
+    auto isEpPlayer = [](const std::unique_ptr<Player>& player){ return player->getPosition() == Position::EP; };
     auto firstPlayer = std::find_if(players_.begin(), players_.end(), isEpPlayer);
 
     if (firstPlayer == players_.end()) //there is no EP player so we have less than 4 players
     {
         if (players_.size() == 3) //BU is first to act
         {
-            auto isBuPlayer = [](const Player* player){ return player->getPosition() == Position::BU; };
+            auto isBuPlayer = [](const std::unique_ptr<Player>& player){ return player->getPosition() == Position::BU; };
             firstPlayer = std::find_if(players_.begin(), players_.end(), isBuPlayer);
             initializeSbAndBb(Position::SB, Position::BB);
         }
         else //SB is first to act
         {
-            auto isSbPlayer = [](const Player* player){ return player->getPosition() == Position::SB; };
+            auto isSbPlayer = [](const std::unique_ptr<Player>& player){ return player->getPosition() == Position::SB; };
             firstPlayer = std::find_if(players_.begin(), players_.end(), isSbPlayer);
             initializeSbAndBb(Position::BU, Position::SB);
         }
@@ -163,7 +168,7 @@ void Croupier::preparePreFlopPlayersToAct()
     else
         initializeSbAndBb(Position::SB, Position::BB);
 
-    playersToAct_.push(*firstPlayer);
+    playersToAct_.push(firstPlayer->get());
     auto nextPlayer = firstPlayer+1;
 
     while (nextPlayer != firstPlayer)
@@ -173,14 +178,14 @@ void Croupier::preparePreFlopPlayersToAct()
             nextPlayer = players_.begin();
             continue;
         }
-        playersToAct_.push(*nextPlayer);
+        playersToAct_.push(nextPlayer->get());
         ++nextPlayer;
     }
 }
 
 void Croupier::preparePostFlopPlayersToAct()
 {
-    auto isSbPlayer = [](const Player* player){ return player->getPosition() == Position::SB; };
+    auto isSbPlayer = [](const std::unique_ptr<Player>& player){ return player->getPosition() == Position::SB; };
     auto firstPlayer = std::find_if(players_.begin(), players_.end(), isSbPlayer);
 
     if (firstPlayer == players_.end()) //there is no SB player so we have less than 2 players, this is abnormal situation
@@ -191,7 +196,7 @@ void Croupier::preparePostFlopPlayersToAct()
 
     if ((*firstPlayer)->isActive())
     {
-        playersToAct_.push(*firstPlayer);
+        playersToAct_.push(firstPlayer->get());
         (*firstPlayer)->setBetSize(0);
     }
 
@@ -207,7 +212,7 @@ void Croupier::preparePostFlopPlayersToAct()
 
         if ((*nextPlayer)->isActive())
         {
-            playersToAct_.push(*nextPlayer);
+            playersToAct_.push(nextPlayer->get());
             (*nextPlayer)->setBetSize(0);
         }
         ++nextPlayer;

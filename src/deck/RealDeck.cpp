@@ -32,7 +32,7 @@ Card RealDeck::getRandomCard() //jak deck bedzie vectorem to mozna shuffle zrobi
     return c;
 }
 
-void RealDeck::dealCardsToPlayer(Player* player)
+void RealDeck::dealCardsToPlayer(std::unique_ptr<Player> &player)
 {
     player->setHand({getRandomCard(), getRandomCard()});
     spdlog::info("Dealt hand {} to player {}", player->showHand(), player->getName());

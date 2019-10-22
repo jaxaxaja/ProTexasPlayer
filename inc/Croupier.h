@@ -11,7 +11,7 @@ class Croupier
 {
     std::unique_ptr<DeckImpl> deck_;
     Board& board_;
-    std::vector<Player*> players_;
+    std::vector<std::unique_ptr<Player>>& players_;
     std::queue<Player*> playersToAct_;
     std::vector<Player*> hypotheticalPlayers_ToAct_;
     void initializeSbAndBb(Position sb, Position bb);
@@ -25,7 +25,7 @@ class Croupier
     FRIEND_TEST(CroupierTest, AskPlayers3);
 
 public:
-    Croupier(Board& board, const std::vector<Player*> &players, std::unique_ptr<DeckImpl> deck);
+    Croupier(Board& board, std::vector<std::unique_ptr<Player> > &players, std::unique_ptr<DeckImpl>& deck);
     void dealCardsToPlayers();
     void dealFlopCards();
     void dealTurnCards();

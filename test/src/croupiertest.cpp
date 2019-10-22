@@ -9,20 +9,20 @@
 TEST(CroupierTest, DealCardsFromRealDeck)
 {
     Board board;
-    Player player1("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
-    Player player2("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin));
-    Player player3("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin));
-    Player player4("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin));
-    std::vector<Player*> players = {&player1, &player2, &player3, &player4};
+    std::vector<std::unique_ptr<Player>> players;
+    players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin)));
+    players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin)));
+    players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin)));
+    players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin)));
     std::unique_ptr<DeckImpl> deck = std::make_unique<RealDeck>();
-    Croupier croupier(board, players, std::move(deck));
+    Croupier croupier(board, players, deck);
 
     EXPECT_EQ(4, croupier.activePlayers());
     croupier.dealCardsToPlayers();
-    EXPECT_EQ(4, player1.showHand().size());
-    EXPECT_EQ(4, player2.showHand().size());
-    EXPECT_EQ(4, player3.showHand().size());
-    EXPECT_EQ(4, player4.showHand().size());
+    EXPECT_EQ(4, players.front()->showHand().size());
+    EXPECT_EQ(4, players.at(1)->showHand().size());
+    EXPECT_EQ(4, players.at(2)->showHand().size());
+    EXPECT_EQ(4, players.back()->showHand().size());
     EXPECT_EQ(0, board.flop_.size());
     croupier.dealFlopCards();
     EXPECT_EQ(3, board.flop_.size());
@@ -40,18 +40,18 @@ TEST(CroupierTest, DealCardsFromFile)
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamDeck1");
         std::unique_ptr<DeckImpl> deck = std::make_unique<StreamDeck>(file);
         Board board;
-        Player player1("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
-        Player player2("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin));
-        Player player3("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin));
-        Player player4("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin));
-        std::vector<Player*> players = {&player1, &player2, &player3, &player4};
-        Croupier croupier(board, players, std::move(deck));
+        std::vector<std::unique_ptr<Player>> players;
+        players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin)));
+        players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin)));;
+        players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin)));
+        players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin)));
+        Croupier croupier(board, players, deck);
 
         croupier.dealCardsToPlayers();
-        EXPECT_EQ("Ah2s", player1.showHand());
-        EXPECT_EQ("KcJd", player2.showHand());
-        EXPECT_EQ("TsTc", player3.showHand());
-        EXPECT_EQ("8h4h", player4.showHand());
+        EXPECT_EQ("Ah2s", players.front()->showHand());
+        EXPECT_EQ("KcJd", players.at(1)->showHand());
+        EXPECT_EQ("TsTc", players.at(2)->showHand());
+        EXPECT_EQ("8h4h", players.back()->showHand());
 
         croupier.dealFlopCards();
         ASSERT_EQ(3, board.flop_.size());
@@ -75,15 +75,15 @@ TEST(CroupierTest, DealCardsFromFile)
 TEST(CroupierTest, PreparePlayersToAct1)
 {
     Board board;
-    Player player1("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
-    Player player2("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin));
-    Player player3("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin));
-    Player player4("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin));
-    Player player5("Marcin", board, 100, Position::MP, std::make_unique<StreamStrategy>(std::cin));
-    Player player6("Marcin", board, 100, Position::CO, std::make_unique<StreamStrategy>(std::cin));
-    std::vector<Player*> players = {&player1, &player2, &player3, &player4, &player5, &player6};
+    std::vector<std::unique_ptr<Player>> players;
+    players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin)));
+    players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin)));
+    players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin)));
+    players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin)));
+    players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::MP, std::make_unique<StreamStrategy>(std::cin)));
+    players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::CO, std::make_unique<StreamStrategy>(std::cin)));
     std::unique_ptr<DeckImpl> deck = std::make_unique<RealDeck>();
-    Croupier croupier(board, players, std::move(deck));
+    Croupier croupier(board, players, deck);
 
     croupier.preparePreFlopPlayersToAct();
     ASSERT_EQ(6, croupier.playersToAct_.size());
@@ -105,12 +105,12 @@ TEST(CroupierTest, PreparePlayersToAct1)
 TEST(CroupierTest, PreparePlayersToAct2)
 {
     Board board;
-    Player player1("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
-    Player player2("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin));
-    Player player3("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin));
-    std::vector<Player*> players = {&player1, &player2, &player3};
+    std::vector<std::unique_ptr<Player>> players;
+    players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin)));
+    players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin)));
+    players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin)));
     std::unique_ptr<DeckImpl> deck = std::make_unique<RealDeck>();
-    Croupier croupier(board, players, std::move(deck));
+    Croupier croupier(board, players, deck);
 
     croupier.preparePreFlopPlayersToAct();
     ASSERT_EQ(3, croupier.playersToAct_.size());
@@ -132,11 +132,11 @@ TEST(CroupierTest, PreparePlayersToAct2)
 TEST(CroupierTest, PreparePlayersToAct3)
 {
     Board board;
-    Player player1("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
-    Player player2("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin));
-    std::vector<Player*> players = {&player1, &player2};
+    std::vector<std::unique_ptr<Player>> players;
+    players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin)));
+    players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin)));
     std::unique_ptr<DeckImpl> deck = std::make_unique<RealDeck>();
-    Croupier croupier(board, players, std::move(deck));
+    Croupier croupier(board, players, deck);
 
     croupier.preparePreFlopPlayersToAct();
     ASSERT_EQ(2, croupier.playersToAct_.size());
@@ -158,10 +158,10 @@ TEST(CroupierTest, PreparePlayersToAct3)
 TEST(CroupierTest, PreparePlayersToAct4)
 {
     Board board;
-    Player player1("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
-    std::vector<Player*> players = {&player1};
+    std::vector<std::unique_ptr<Player>> players;
+    players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin)));
     std::unique_ptr<DeckImpl> deck = std::make_unique<RealDeck>();
-    Croupier croupier(board, players, std::move(deck));
+    Croupier croupier(board, players, deck);
 
     EXPECT_THROW(croupier.preparePreFlopPlayersToAct(), NoPlayerFoundError);
 }
@@ -171,13 +171,13 @@ TEST(CroupierTest, AskPlayers1)
     Board board;
     try {
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/Hand1");
-        Player player1("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file));
-        Player player2("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file));
-        Player player3("Pawel", board, 100, Position::EP, std::make_unique<StreamStrategy>(file));
-        Player player4("Marcin", board, 100, Position::BU, std::make_unique<StreamStrategy>(file));
-        std::vector<Player*> players = {&player1, &player2, &player3, &player4};
+        std::vector<std::unique_ptr<Player>> players;
+        players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file)));
+        players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file)));
+        players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::EP, std::make_unique<StreamStrategy>(file)));
+        players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::BU, std::make_unique<StreamStrategy>(file)));
         std::unique_ptr<DeckImpl> deck = std::make_unique<StreamDeck>(file);
-        Croupier croupier(board, players, std::move(deck));
+        Croupier croupier(board, players, deck);
 
         //PREFLOP
         EXPECT_EQ(4, croupier.activePlayers());
@@ -187,24 +187,24 @@ TEST(CroupierTest, AskPlayers1)
         EXPECT_EQ(4, croupier.playersToAct_.size());
         croupier.askPlayers(1);
         EXPECT_FLOAT_EQ(2, board.pot_);
-        EXPECT_FLOAT_EQ(99, player1.getStackSize());
-        EXPECT_FLOAT_EQ(99, player2.getStackSize());
-        EXPECT_FLOAT_EQ(100, player3.getStackSize());
-        EXPECT_FLOAT_EQ(100, player4.getStackSize());
+        EXPECT_FLOAT_EQ(99, players.front()->getStackSize());
+        EXPECT_FLOAT_EQ(99, players.at(1)->getStackSize());
+        EXPECT_FLOAT_EQ(100, players.at(2)->getStackSize());
+        EXPECT_FLOAT_EQ(100, players.back()->getStackSize());
         EXPECT_EQ(2, croupier.activePlayers());
-        EXPECT_TRUE(player1.isActive());
-        EXPECT_TRUE(player2.isActive());
+        EXPECT_TRUE(players.front()->isActive());
+        EXPECT_TRUE(players.at(1)->isActive());
         //FLOP
         croupier.dealFlopCards();
         croupier.preparePostFlopPlayersToAct();
         EXPECT_EQ(2, croupier.playersToAct_.size());
         croupier.askPlayers();
         EXPECT_FLOAT_EQ(32, board.pot_);
-        EXPECT_FLOAT_EQ(84, player1.getStackSize());
-        EXPECT_FLOAT_EQ(84, player2.getStackSize());
+        EXPECT_FLOAT_EQ(84, players.front()->getStackSize());
+        EXPECT_FLOAT_EQ(84, players.at(1)->getStackSize());
         EXPECT_EQ(2, croupier.activePlayers());
-        EXPECT_TRUE(player1.isActive());
-        EXPECT_TRUE(player2.isActive());
+        EXPECT_TRUE(players.front()->isActive());
+        EXPECT_TRUE(players.at(1)->isActive());
         //TURN
         croupier.dealTurnCards();
         croupier.preparePostFlopPlayersToAct();
@@ -212,11 +212,11 @@ TEST(CroupierTest, AskPlayers1)
         croupier.askPlayers();
         EXPECT_FLOAT_EQ(57, board.pot_);
         croupier.chooseWinner();
-        EXPECT_FLOAT_EQ(84, player1.getStackSize());
-        EXPECT_FLOAT_EQ(116, player2.getStackSize());
+        EXPECT_FLOAT_EQ(84, players.front()->getStackSize());
+        EXPECT_FLOAT_EQ(116, players.at(1)->getStackSize());
         EXPECT_EQ(1, croupier.activePlayers());
-        EXPECT_FALSE(player1.isActive());
-        EXPECT_TRUE(player2.isActive());
+        EXPECT_FALSE(players.front()->isActive());
+        EXPECT_TRUE(players.at(1)->isActive());
     }
     catch(const std::exception& e)
     {
@@ -229,13 +229,13 @@ TEST(CroupierTest, AskPlayers2)
     Board board;
     try {
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/Hand2");
-        Player player1("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file));
-        Player player2("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file));
-        Player player3("Pawel", board, 100, Position::EP, std::make_unique<StreamStrategy>(file));
-        Player player4("Marcin", board, 100, Position::BU, std::make_unique<StreamStrategy>(file));
-        std::vector<Player*> players = {&player1, &player2, &player3, &player4};
+        std::vector<std::unique_ptr<Player>> players;
+        players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file)));
+        players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file)));
+        players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::EP, std::make_unique<StreamStrategy>(file)));
+        players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::BU, std::make_unique<StreamStrategy>(file)));
         std::unique_ptr<DeckImpl> deck = std::make_unique<StreamDeck>(file);
-        Croupier croupier(board, players, std::move(deck));
+        Croupier croupier(board, players, deck);
 
         //PREFLOP
         EXPECT_EQ(4, croupier.activePlayers());
@@ -245,15 +245,15 @@ TEST(CroupierTest, AskPlayers2)
         EXPECT_EQ(4, croupier.playersToAct_.size());
         croupier.askPlayers(1);
         EXPECT_FLOAT_EQ(46, board.pot_);
-        EXPECT_FLOAT_EQ(85, player1.getStackSize());
-        EXPECT_FLOAT_EQ(99, player2.getStackSize());
-        EXPECT_FLOAT_EQ(85, player3.getStackSize());
-        EXPECT_FLOAT_EQ(85, player4.getStackSize());
+        EXPECT_FLOAT_EQ(85, players.front()->getStackSize());
+        EXPECT_FLOAT_EQ(99, players.at(1)->getStackSize());
+        EXPECT_FLOAT_EQ(85, players.at(2)->getStackSize());
+        EXPECT_FLOAT_EQ(85, players.back()->getStackSize());
         EXPECT_EQ(3, croupier.activePlayers());
-        EXPECT_TRUE(player1.isActive());
-        EXPECT_FALSE(player2.isActive());
-        EXPECT_TRUE(player3.isActive());
-        EXPECT_TRUE(player4.isActive());
+        EXPECT_TRUE(players.front()->isActive());
+        EXPECT_FALSE(players.at(1)->isActive());
+        EXPECT_TRUE(players.at(2)->isActive());
+        EXPECT_TRUE(players.back()->isActive());
         //FLOP
         croupier.dealFlopCards();
         croupier.preparePostFlopPlayersToAct();
@@ -261,13 +261,13 @@ TEST(CroupierTest, AskPlayers2)
         croupier.askPlayers();
         EXPECT_FLOAT_EQ(173+46, board.pot_);
         croupier.chooseWinner();
-        EXPECT_FLOAT_EQ(0, player1.getStackSize());
-        EXPECT_FLOAT_EQ(82, player3.getStackSize());
-        EXPECT_FLOAT_EQ(173+46, player4.getStackSize());
+        EXPECT_FLOAT_EQ(0, players.front()->getStackSize());
+        EXPECT_FLOAT_EQ(82, players.at(2)->getStackSize());
+        EXPECT_FLOAT_EQ(173+46, players.back()->getStackSize());
         EXPECT_EQ(0, croupier.activePlayers());
-        EXPECT_FALSE(player1.isActive());
-        EXPECT_FALSE(player3.isActive());
-        EXPECT_FALSE(player4.isActive());
+        EXPECT_FALSE(players.front()->isActive());
+        EXPECT_FALSE(players.at(2)->isActive());
+        EXPECT_FALSE(players.back()->isActive());
     }
     catch(const std::exception& e)
     {
@@ -280,12 +280,12 @@ TEST(CroupierTest, AskPlayers3)
     Board board;
     try {
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/Hand3");
-        Player player1("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file));
-        Player player2("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file));
-        Player player3("Pawel", board, 100, Position::BU, std::make_unique<StreamStrategy>(file));
-        std::vector<Player*> players = {&player1, &player2, &player3};
+        std::vector<std::unique_ptr<Player>> players;
+        players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file)));
+        players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file)));
+        players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::BU, std::make_unique<StreamStrategy>(file)));
         std::unique_ptr<DeckImpl> deck = std::make_unique<StreamDeck>(file);
-        Croupier croupier(board, players, std::move(deck));
+        Croupier croupier(board, players, deck);
 
         //PREFLOP
         EXPECT_EQ(3, croupier.activePlayers());
@@ -295,35 +295,35 @@ TEST(CroupierTest, AskPlayers3)
         EXPECT_EQ(3, croupier.playersToAct_.size());
         croupier.askPlayers(1);
         EXPECT_FLOAT_EQ(4.5, board.pot_);
-        EXPECT_FLOAT_EQ(99.5, player1.getStackSize());
-        EXPECT_FLOAT_EQ(98, player2.getStackSize());
-        EXPECT_FLOAT_EQ(98, player3.getStackSize());
+        EXPECT_FLOAT_EQ(99.5, players.front()->getStackSize());
+        EXPECT_FLOAT_EQ(98, players.at(1)->getStackSize());
+        EXPECT_FLOAT_EQ(98, players.at(2)->getStackSize());
         EXPECT_EQ(2, croupier.activePlayers());
-        EXPECT_FALSE(player1.isActive());
-        EXPECT_TRUE(player2.isActive());
-        EXPECT_TRUE(player3.isActive());
+        EXPECT_FALSE(players.front()->isActive());
+        EXPECT_TRUE(players.at(1)->isActive());
+        EXPECT_TRUE(players.at(2)->isActive());
         //FLOP
         croupier.dealFlopCards();
         croupier.preparePostFlopPlayersToAct();
         EXPECT_EQ(2, croupier.playersToAct_.size());
         croupier.askPlayers();
         EXPECT_FLOAT_EQ(4.5+2*10.5, board.pot_);
-        EXPECT_FLOAT_EQ(87.5, player2.getStackSize());
-        EXPECT_FLOAT_EQ(87.5, player3.getStackSize());
+        EXPECT_FLOAT_EQ(87.5, players.at(1)->getStackSize());
+        EXPECT_FLOAT_EQ(87.5, players.at(2)->getStackSize());
         EXPECT_EQ(2, croupier.activePlayers());
-        EXPECT_TRUE(player2.isActive());
-        EXPECT_TRUE(player3.isActive());
+        EXPECT_TRUE(players.at(1)->isActive());
+        EXPECT_TRUE(players.at(2)->isActive());
         //TURN
         croupier.dealTurnCards();
         croupier.preparePostFlopPlayersToAct();
         EXPECT_EQ(2, croupier.playersToAct_.size());
         croupier.askPlayers();
         EXPECT_FLOAT_EQ(4.5+2*10.5+2*18.1, board.pot_);
-        EXPECT_FLOAT_EQ(87.5-18.1, player2.getStackSize());
-        EXPECT_FLOAT_EQ(87.5-18.1, player3.getStackSize());
+        EXPECT_FLOAT_EQ(87.5-18.1, players.at(1)->getStackSize());
+        EXPECT_FLOAT_EQ(87.5-18.1, players.at(2)->getStackSize());
         EXPECT_EQ(2, croupier.activePlayers());
-        EXPECT_TRUE(player2.isActive());
-        EXPECT_TRUE(player3.isActive());
+        EXPECT_TRUE(players.at(1)->isActive());
+        EXPECT_TRUE(players.at(2)->isActive());
         //RIVER
         croupier.dealRiverCards();
         croupier.preparePostFlopPlayersToAct();
@@ -331,11 +331,11 @@ TEST(CroupierTest, AskPlayers3)
         croupier.askPlayers();
         EXPECT_FLOAT_EQ(4.5+2*10.5+2*18.1, board.pot_);
         croupier.chooseWinner();
-        EXPECT_FLOAT_EQ(87.5-18.1, player2.getStackSize());
-        EXPECT_FLOAT_EQ(87.5-18.1+board.pot_, player3.getStackSize());
+        EXPECT_FLOAT_EQ(87.5-18.1, players.at(1)->getStackSize());
+        EXPECT_FLOAT_EQ(87.5-18.1+board.pot_, players.at(2)->getStackSize());
         EXPECT_EQ(2, croupier.activePlayers());
-        EXPECT_TRUE(player2.isActive());
-        EXPECT_TRUE(player3.isActive());
+        EXPECT_TRUE(players.at(1)->isActive());
+        EXPECT_TRUE(players.at(2)->isActive());
     }
     catch(const std::exception& e)
     {

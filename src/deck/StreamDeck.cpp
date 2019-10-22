@@ -3,7 +3,7 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
 
-void StreamDeck::dealCardsToPlayer(Player* player)
+void StreamDeck::dealCardsToPlayer(std::unique_ptr<Player> &player)
 {
     if (&ins_ == &std::cin)
         std::cout << "Specify cards for player " << player->getName() << ": ";

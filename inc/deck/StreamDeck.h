@@ -12,7 +12,7 @@ class StreamDeck : public DeckImpl
 
 public:
     StreamDeck(std::istream &ins) : ins_(ins) {}
-    virtual void dealCardsToPlayer(Player *player) override;
+    virtual void dealCardsToPlayer(std::unique_ptr<Player>& player) override;
     virtual void dealFlopCards(Board& board) override;
     virtual void dealTurnCards(Board& board) override;
     virtual void dealRiverCards(Board& board) override;
