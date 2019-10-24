@@ -43,4 +43,9 @@ struct WrongPlayerMoveError : public std::exception
     virtual const char* what() const noexcept override {"Wrong player move error";}
 };
 
+struct WrongUserInputError : public std::exception
+{
+    virtual const char* what() const noexcept override {"Wrong user input error";}
+};
+
 #endif //EXCEPTIONS_H

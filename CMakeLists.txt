@@ -6,6 +6,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
 
 set(SOURCES src/Card.cpp
             src/Hand.cpp
+            src/deck/DeckImpl.cpp
             src/deck/RealDeck.cpp
             src/deck/StreamDeck.cpp
             src/deck/AhkDeck.cpp
@@ -24,6 +25,7 @@ set(SOURCES src/Card.cpp
             src/move/Call.cpp
             src/move/Bet.cpp
             src/move/Raise.cpp
+            src/strategy/StrategyImpl.cpp
             src/strategy/AhkStrategy.cpp
             src/strategy/StreamStrategy.cpp
             src/strategy/RealStrategy.cpp
