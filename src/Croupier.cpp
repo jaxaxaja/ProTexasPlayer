@@ -122,7 +122,6 @@ void Croupier::chooseWinner()
     if (allInPlayers() + activePlayers() >= 2) //we have at least 2 players to choose winner
     {
         std::vector<Player*> toEvaluate;
-        //std::copy_if(players_.begin(), players_.end(), std::back_inserter(toEvaluate), isActiveOrAllin);
         for (const auto& ptr : players_)
         {
             if (isActiveOrAllin(ptr))
@@ -217,4 +216,7 @@ void Croupier::preparePostFlopPlayersToAct()
         }
         ++nextPlayer;
     }
+
+    if (playersToAct_.size() == 1) //we have allin and still active player, but hand is over
+        playersToAct_.pop();
 }

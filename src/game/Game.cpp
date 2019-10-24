@@ -2,10 +2,10 @@
 #include <game/PreFlop.h>
 #include <spdlog/spdlog.h>
 
-Game::Game(const std::string& stake, std::unique_ptr<DeckImpl>& deck)
+Game::Game(const std::string& stake, std::unique_ptr<DeckImpl>& deck, std::unique_ptr<GameFactory>& gameFactory)
     : stake_(stake), croupier_(board_, players_, deck)
 {
-
+    players_ = gameFactory->createPlayers(board_);
 }
 
 void Game::setGameState(GameState* state)

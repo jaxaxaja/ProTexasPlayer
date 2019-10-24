@@ -5,6 +5,7 @@
 #include "Croupier.h"
 #include "Board.h"
 #include <game/GameState.h>
+#include <game/GameFactory.h>
 #include <vector>
 #include <gtest/gtest.h>
 
@@ -19,7 +20,7 @@ class Game
     size_t playersInHand();
 
 public:
-    Game(const std::string& stake, std::unique_ptr<DeckImpl> &deck);
+    Game(const std::string& stake, std::unique_ptr<DeckImpl>& deck, std::unique_ptr<GameFactory>& gameFactory);
     ~Game();
     void playHand();
     void setGameState(GameState* state);

@@ -10,16 +10,16 @@ Player::Player(const std::string& name, const Board& board, float bigBlinds, Pos
 
 std::unique_ptr<Move> Player::makeMove(const float bb)
 {
-    std::unique_ptr<Move> m;
+    std::unique_ptr<Move> move;
 
     if (bb > 0)
-        m = strategy_->callRaiseOrFold(bb);
+        move = strategy_->callRaiseOrFold(bb);
     else
-        m = strategy_->checkOrBet();
+        move = strategy_->checkOrBet();
 
-    spdlog::info("Player {} on position {} makes a move {}", getName(), getPosition(), *m);
+    spdlog::info("Player {} on position {} makes a move {}", getName(), getPosition(), *move);
 
-    m->updatePlayer(this, bb);
+    move->updatePlayer(this, bb);
 
-    return m;
+    return move;
 }

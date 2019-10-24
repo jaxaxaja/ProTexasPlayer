@@ -25,7 +25,7 @@ class Croupier
     FRIEND_TEST(CroupierTest, AskPlayers3);
 
 public:
-    Croupier(Board& board, std::vector<std::unique_ptr<Player> > &players, std::unique_ptr<DeckImpl>& deck);
+    Croupier(Board& board, std::vector<std::unique_ptr<Player>>& players, std::unique_ptr<DeckImpl>& deck);
     void dealCardsToPlayers();
     void dealFlopCards();
     void dealTurnCards();
