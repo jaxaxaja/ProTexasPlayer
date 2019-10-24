@@ -6,11 +6,15 @@
 #include <strategy/AhkStrategy.h>
 #include <strategy/RealStrategy.h>
 #include <deck/AhkDeck.h>
+#include <fstream>
 
 class GameSimulationFactory : public GameFactory
 {
-    virtual std::unique_ptr<StrategyImpl> createHeroStrategy() override;
-    virtual std::unique_ptr<StrategyImpl> createPlayerStrategy() override;
+    std::string strategy_;
+    std::string file_;
+    std::ifstream ins_;
+    virtual std::unique_ptr<StrategyImpl> createHeroStrategy() override {}
+    virtual std::unique_ptr<StrategyImpl> createPlayerStrategy(const std::string &playerName = "") override;
 public:
     virtual std::unique_ptr<DeckImpl> createDeck() override;
     virtual std::vector<std::unique_ptr<Player>> createPlayers(Board& board) override;

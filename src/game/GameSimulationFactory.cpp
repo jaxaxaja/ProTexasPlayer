@@ -1,29 +1,98 @@
 #include <game/GameSimulationFactory.h>
+#include <strategy/StrategyImpl.h>
+#include <deck/DeckImpl.h>
+#include <iostream>
+#include <spdlog/spdlog.h>
 
-std::unique_ptr<StrategyImpl> GameSimulationFactory::createHeroStrategy()
+std::unique_ptr<StrategyImpl> GameSimulationFactory::createPlayerStrategy(const std::string& playerName)
 {
-    //stdin, file or real
-    //zapytaj uzytkownika jaka strategia
-    //dodac factory method do strategy
-}
+    if (strategy_ == "F")
+        return StrategyImpl::createStrategy(strategy_, ins_);
 
-std::unique_ptr<StrategyImpl> GameSimulationFactory::createPlayerStrategy()
-{
-    //zawsze to samo co wyzej
+    bool error = true;
+    std::unique_ptr<StrategyImpl> strategy;
+
+    while (error)
+    {
+        error = false;
+        std::cout << "What is strategy for " << playerName << "?: R - real, S - standard input";
+        std::string str;
+        std::cin >> str;
+
+        try {
+            strategy = StrategyImpl::createStrategy(str);
+        }
+        catch (const std::exception& e)
+        {
+            error = true;
+            spdlog::error(e.what());
+        }
+    }
+
+    return strategy;
 }
 
 std::unique_ptr<DeckImpl> GameSimulationFactory::createDeck()
 {
-    //zawsze to samo co wyzej
-    //moze najlepiej pytac o to
-    //jak file to strategy tez file
-    //jak real deck to reszta stdin
+    bool error = true;
+    std::unique_ptr<DeckImpl> deck;
 
+    while (error)
+    {
+        error = false;
+        std::cout << "What is deck implementation?: R - real, S - standard input, F - file";
+        std::cin >> strategy_;
+
+        try {
+            if (strategy_ == "F")
+            {
+                std::cout << "Provide file location: ";
+                std::cin >> file_;
+                ins_.open(file_);
+                deck = DeckImpl::createDeck(strategy_, ins_);
+            }
+            deck = DeckImpl::createDeck(strategy_);
+        }
+        catch (const std::exception& e)
+        {
+            error = true;
+            spdlog::error(e.what());
+        }
+    }
+
+    return deck;
 }
 
 std::vector<std::unique_ptr<Player>> GameSimulationFactory::createPlayers(Board& board)
 {
-    //zawsze to samo co wyzej
-    //jak deck jest file to playersi tez file
-    //jak deck jest real to playersi z stdin
+    std::vector<std::unique_ptr<Player>> players;
+    int num;
+    std::string name, pos;
+    float bb;
+
+    if (strategy_ == "F")
+    {
+        ins_ >> num;
+        while (num--)
+        {
+            ins_ >> name >> pos >> bb;
+            Position position = pos == "BU" ? Position::BU : pos == "SB" ? Position::SB : pos == "BB" ? Position::BB
+                                           : pos == "EP" ? Position::EP : pos == "MP" ? Position::MP : Position ::CO;
+            players.emplace_back(std::make_unique<Player>(name, board, bb, position, createPlayerStrategy()));
+        }
+    }
+
+    std::cout << "How many Players?: 1..6";
+    std::cin >> num;
+    std::cout << "Specify players in this way (PlayerName Position howManyBB) e.g.: Player1 BU 100";
+
+    while (num--)
+    {
+        std::cin >> name >> pos >> bb;
+        Position position = pos == "BU" ? Position::BU : pos == "SB" ? Position::SB : pos == "BB" ? Position::BB
+                                       : pos == "EP" ? Position::EP : pos == "MP" ? Position::MP : Position ::CO;
+        players.emplace_back(std::make_unique<Player>(name, board, bb, position, createPlayerStrategy(name)));
+    }
+
+    return players;
 }

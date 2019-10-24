@@ -9,7 +9,7 @@ class TestGameFactory : public GameFactory
 {
     std::ifstream file;
     virtual std::unique_ptr<StrategyImpl> createHeroStrategy() override {}
-    virtual std::unique_ptr<StrategyImpl> createPlayerStrategy() override { return std::make_unique<StreamStrategy>(file); }
+    virtual std::unique_ptr<StrategyImpl> createPlayerStrategy(const std::string &playerName = "") override { return std::make_unique<StreamStrategy>(file); }
 public:
     TestGameFactory(const std::string& path) : file(path) {}
     virtual std::unique_ptr<DeckImpl> createDeck() override { return std::make_unique<StreamDeck>(file); }

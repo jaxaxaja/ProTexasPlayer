@@ -8,7 +8,7 @@
 class GameFactory
 {
     virtual std::unique_ptr<StrategyImpl> createHeroStrategy() = 0;
-    virtual std::unique_ptr<StrategyImpl> createPlayerStrategy() = 0;
+    virtual std::unique_ptr<StrategyImpl> createPlayerStrategy(const std::string &playerName = "") = 0;
 public:
     virtual std::unique_ptr<DeckImpl> createDeck() = 0;
     virtual std::vector<std::unique_ptr<Player>> createPlayers(Board& board) = 0;

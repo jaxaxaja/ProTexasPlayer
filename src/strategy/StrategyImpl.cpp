@@ -3,7 +3,7 @@
 #include <strategy/StreamStrategy.h>
 #include "Exceptions.h"
 
-std::unique_ptr<StrategyImpl> createStrategy(const std::string& strategy, std::istream &ins)
+std::unique_ptr<StrategyImpl> StrategyImpl::createStrategy(const std::string& strategy, std::istream &ins)
 {
     if (strategy == "R")
         return std::make_unique<RealStrategy>();
