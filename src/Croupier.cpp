@@ -37,7 +37,7 @@ void Croupier::dealRiverCards()
 
 void Croupier::askPlayers(float bb)
 {
-    while (!playersToAct_.empty())
+    while (!playersToAct_.empty() && (activePlayers()+allInPlayers() > 1))
     {
         Player* playerToAct = playersToAct_.front();
         playersToAct_.pop();
@@ -88,6 +88,8 @@ void Croupier::initializeSbAndBb(Position sb, Position bb)
         throw NoPlayerFoundError();
     }
 
+    spdlog::debug("{} is small blind on position {}", (*sbPlayer)->getName(), (*sbPlayer)->getPosition());
+    spdlog::debug("{} is big blind on position {}", (*bbPlayer)->getName(), (*bbPlayer)->getPosition());
     (*sbPlayer)->setSbBetSize();
     (*bbPlayer)->setBbBetSize();
 }
@@ -100,6 +102,7 @@ void Croupier::evaluateHands(const std::vector<Player*>& players)
     for (auto pl : players)
     {
         HandStrength currentHand = HandEvaluator::getInstance().getHandStrength(pl->getHand(), board_.flop_, board_.turn_, board_.river_);
+        spdlog::info("{} shows: {}", pl->getName(), currentHand);
 
         if (currentHand == theBestHand)
             winners.push_back(pl);
@@ -112,11 +115,15 @@ void Croupier::evaluateHands(const std::vector<Player*>& players)
     }
 
     for (auto pl : winners)
+    {
         pl->adjustStack(board_.pot_ / winners.size());
+        spdlog::info("{} won the pot: {}", pl->getName(), board_.pot_ / winners.size());
+    }
 }
 
 void Croupier::chooseWinner()
 {
+    spdlog::debug("End of hand. Choosing winner...");
     auto isActiveOrAllin = [](const std::unique_ptr<Player>& player) { return player->isActive() || player->getStackSize() <= 0; };
 
     if (allInPlayers() + activePlayers() >= 2) //we have at least 2 players to choose winner
@@ -127,6 +134,7 @@ void Croupier::chooseWinner()
             if (isActiveOrAllin(ptr))
                 toEvaluate.push_back(ptr.get());
         }
+        spdlog::info("Hand played to showdown. Evaluating players hands...");
         return evaluateHands(toEvaluate);
     }
 
@@ -136,37 +144,35 @@ void Croupier::chooseWinner()
         throw NoActivePlayerFoundError();
 
     (*winner)->adjustStack(board_.pot_);
+    spdlog::info("Hand finished before showdown. {} won the pot: {}", (*winner)->getName(), board_.pot_);
 }
 
 void Croupier::preparePreFlopPlayersToAct()
 {
+    spdlog::debug("Preparing pre flop players to act...");
     auto isEpPlayer = [](const std::unique_ptr<Player>& player){ return player->getPosition() == Position::EP; };
     auto firstPlayer = std::find_if(players_.begin(), players_.end(), isEpPlayer);
 
     if (firstPlayer == players_.end()) //there is no EP player so we have less than 4 players
     {
-        if (players_.size() == 3) //BU is first to act
-        {
-            auto isBuPlayer = [](const std::unique_ptr<Player>& player){ return player->getPosition() == Position::BU; };
-            firstPlayer = std::find_if(players_.begin(), players_.end(), isBuPlayer);
-            initializeSbAndBb(Position::SB, Position::BB);
-        }
-        else //SB is first to act
-        {
-            auto isSbPlayer = [](const std::unique_ptr<Player>& player){ return player->getPosition() == Position::SB; };
-            firstPlayer = std::find_if(players_.begin(), players_.end(), isSbPlayer);
-            initializeSbAndBb(Position::BU, Position::SB);
-        }
+        auto isBuPlayer = [](const std::unique_ptr<Player>& player){ return player->getPosition() == Position::BU; };
+        firstPlayer = std::find_if(players_.begin(), players_.end(), isBuPlayer);
 
-        if (firstPlayer == players_.end()) //there is no SB nor BB player so we have less than 2 players, this is abnormal situation
+        if (firstPlayer == players_.end()) //there is no BU player, this is abnormal situation
         {
-            spdlog::error("Cannot find Button nor SB player!");
+            spdlog::error("Cannot find Button player!");
             throw NoPlayerFoundError();
         }
+
+        if (players_.size() == 3)
+            initializeSbAndBb(Position::SB, Position::BB);
+        else //we have 2 players
+            initializeSbAndBb(Position::BU, Position::SB);
     }
     else
         initializeSbAndBb(Position::SB, Position::BB);
 
+    spdlog::debug("First player to act is {} on position {}", (*firstPlayer)->getName(), (*firstPlayer)->getPosition());
     playersToAct_.push(firstPlayer->get());
     auto nextPlayer = firstPlayer+1;
 
@@ -177,6 +183,7 @@ void Croupier::preparePreFlopPlayersToAct()
             nextPlayer = players_.begin();
             continue;
         }
+        spdlog::debug("Next player to act is {} on position {}", (*nextPlayer)->getName(), (*nextPlayer)->getPosition());
         playersToAct_.push(nextPlayer->get());
         ++nextPlayer;
     }
@@ -184,6 +191,7 @@ void Croupier::preparePreFlopPlayersToAct()
 
 void Croupier::preparePostFlopPlayersToAct()
 {
+    spdlog::debug("Preparing post flop players to act...");
     auto isSbPlayer = [](const std::unique_ptr<Player>& player){ return player->getPosition() == Position::SB; };
     auto firstPlayer = std::find_if(players_.begin(), players_.end(), isSbPlayer);
 
@@ -195,6 +203,7 @@ void Croupier::preparePostFlopPlayersToAct()
 
     if ((*firstPlayer)->isActive())
     {
+        spdlog::debug("First player to act is {} on position {}", (*firstPlayer)->getName(), (*firstPlayer)->getPosition());
         playersToAct_.push(firstPlayer->get());
         (*firstPlayer)->setBetSize(0);
     }
@@ -211,6 +220,7 @@ void Croupier::preparePostFlopPlayersToAct()
 
         if ((*nextPlayer)->isActive())
         {
+            spdlog::debug("Next player to act is {} on position {}", (*nextPlayer)->getName(), (*nextPlayer)->getPosition());
             playersToAct_.push(nextPlayer->get());
             (*nextPlayer)->setBetSize(0);
         }

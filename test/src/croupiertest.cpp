@@ -141,9 +141,9 @@ TEST(CroupierTest, PreparePlayersToAct3)
     croupier.preparePreFlopPlayersToAct();
     ASSERT_EQ(2, croupier.playersToAct_.size());
     Player* first = croupier.playersToAct_.front();
-    EXPECT_EQ(Position::SB, first->getPosition());
+    EXPECT_EQ(Position::BU, first->getPosition());
     Player* last = croupier.playersToAct_.back();
-    EXPECT_EQ(Position::BU, last->getPosition());
+    EXPECT_EQ(Position::SB, last->getPosition());
 
     std::queue<Player*> empty;
     std::swap(croupier.playersToAct_, empty);

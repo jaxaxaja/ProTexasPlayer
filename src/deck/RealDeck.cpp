@@ -35,23 +35,19 @@ Card RealDeck::getRandomCard() //jak deck bedzie vectorem to mozna shuffle zrobi
 void RealDeck::dealCardsToPlayer(std::unique_ptr<Player> &player)
 {
     player->setHand({getRandomCard(), getRandomCard()});
-    spdlog::info("Dealt hand {} to player {}", player->showHand(), player->getName());
 }
 
 void RealDeck::dealFlopCards(Board &board)
 {
     board.flop_ = {getRandomCard(), getRandomCard(), getRandomCard()};
-    spdlog::info("Dealt flop cards: {}{}{}", board.flop_.front(), board.flop_.at(1), board.flop_.back());
 }
 
 void RealDeck::dealTurnCards(Board &board)
 {
     board.turn_ = getRandomCard();
-    spdlog::info("Dealt turn card: {}", board.turn_);
 }
 
 void RealDeck::dealRiverCards(Board &board)
 {
     board.river_  = getRandomCard();
-    spdlog::info("Dealt river card: {}", board.river_);
 }

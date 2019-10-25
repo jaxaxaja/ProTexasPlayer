@@ -15,7 +15,7 @@ std::unique_ptr<StrategyImpl> GameSimulationFactory::createPlayerStrategy(const 
     while (error)
     {
         error = false;
-        std::cout << "What is strategy for " << playerName << "?: R - real, S - standard input";
+        std::cout << "What is strategy for " << playerName << "?: R - real, S - standard input" << std::endl;
         std::string str;
         std::cin >> str;
 
@@ -40,7 +40,7 @@ std::unique_ptr<DeckImpl> GameSimulationFactory::createDeck()
     while (error)
     {
         error = false;
-        std::cout << "What is deck implementation?: R - real, S - standard input, F - file";
+        std::cout << "What is deck implementation?: R - real, S - standard input, F - file" << std::endl;
         std::cin >> strategy_;
 
         try {
@@ -51,7 +51,8 @@ std::unique_ptr<DeckImpl> GameSimulationFactory::createDeck()
                 ins_.open(file_);
                 deck = DeckImpl::createDeck(strategy_, ins_);
             }
-            deck = DeckImpl::createDeck(strategy_);
+            else
+                deck = DeckImpl::createDeck(strategy_);
         }
         catch (const std::exception& e)
         {
@@ -81,17 +82,19 @@ std::vector<std::unique_ptr<Player>> GameSimulationFactory::createPlayers(Board&
             players.emplace_back(std::make_unique<Player>(name, board, bb, position, createPlayerStrategy()));
         }
     }
-
-    std::cout << "How many Players?: 1..6";
-    std::cin >> num;
-    std::cout << "Specify players in this way (PlayerName Position howManyBB) e.g.: Player1 BU 100";
-
-    while (num--)
+    else
     {
-        std::cin >> name >> pos >> bb;
-        Position position = pos == "BU" ? Position::BU : pos == "SB" ? Position::SB : pos == "BB" ? Position::BB
-                                       : pos == "EP" ? Position::EP : pos == "MP" ? Position::MP : Position ::CO;
-        players.emplace_back(std::make_unique<Player>(name, board, bb, position, createPlayerStrategy(name)));
+        std::cout << "How many Players?: 1..6" << std::endl;
+        std::cin >> num;
+        std::cout << "Specify players in this way (PlayerName Position howManyBB) e.g.: Player1 BU 100" << std::endl;
+
+        while (num--)
+        {
+            std::cin >> name >> pos >> bb;
+            Position position = pos == "BU" ? Position::BU : pos == "SB" ? Position::SB : pos == "BB" ? Position::BB
+                                                                                                      : pos == "EP" ? Position::EP : pos == "MP" ? Position::MP : Position ::CO;
+            players.emplace_back(std::make_unique<Player>(name, board, bb, position, createPlayerStrategy(name)));
+        }
     }
 
     return players;

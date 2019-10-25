@@ -20,6 +20,15 @@ bool HandStrength::operator>(const HandStrength& rhs)
     return strength_ > rhs.strength_;
 }
 
+std::ostream& operator<<(std::ostream &out, const HandStrength& h)
+{
+    out << (h.strength_ == HandStrength::HighCard ? "High Card" : h.strength_ == HandStrength::Pair ? "Pair" :
+           h.strength_ == HandStrength::TwoPair ? "Two Pairs" : h.strength_ == HandStrength::Triple ? "Trips" :
+           h.strength_ == HandStrength::Streight ? "Streight" : h.strength_ == HandStrength::Flush ? "Flush" :
+           h.strength_ == HandStrength::FullHouse ? "Full House" : h.strength_ == HandStrength::Quads ? "Quads" : "StraightFlush");
+    return out;
+}
+
 HandStrength HandEvaluator::getHandStrength(Hand playerHand, const std::vector<Card>& flop, Card turn, Card river)
 {
     std::fill(cardRanks_.begin(), cardRanks_.end(), 0);

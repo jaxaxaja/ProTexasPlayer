@@ -11,6 +11,7 @@ Player::Player(const std::string& name, const Board& board, float bigBlinds, Pos
 std::unique_ptr<Move> Player::makeMove(const float bb)
 {
     std::unique_ptr<Move> move;
+    spdlog::debug("{} it's your move...", this->getName());
 
     if (bb > 0)
         move = strategy_->callRaiseOrFold(bb);

@@ -14,6 +14,7 @@ public:
     HandStrength(Strength s, const std::vector<size_t>& v) : strength_(s), handStrength_(v) {}
     bool operator==(const HandStrength& rhs);
     bool operator>(const HandStrength& rhs);
+    friend std::ostream& operator<<(std::ostream &out, const HandStrength& h);
 
 private:
     Strength strength_;

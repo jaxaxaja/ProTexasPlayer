@@ -15,7 +15,6 @@ void StreamDeck::dealCardsToPlayer(std::unique_ptr<Player> &player)
         throw PlayerHandParsingError();
     }
 
-    spdlog::info("Dealt hand {} to player {}", player->showHand(), player->getName());
     player->setHand(h);
 }
 
@@ -31,7 +30,6 @@ void StreamDeck::dealFlopCards(Board &board)
         throw FlopParsingError();
     }
 
-    spdlog::info("Dealt flop cards: {}{}{}", v.front(), v.at(1), v.back());
     board.flop_ = v;
 }
 
@@ -47,7 +45,6 @@ void StreamDeck::dealTurnCards(Board &board)
         throw TurnParsingError();
     }
 
-    spdlog::info("Dealt turn card: {}", c);
     board.turn_ = c;
 }
 
@@ -63,6 +60,5 @@ void StreamDeck::dealRiverCards(Board &board)
         throw RiverParsingError();
     }
 
-    spdlog::info("Dealt river card: {}", c);
     board.river_ = c;
 }
