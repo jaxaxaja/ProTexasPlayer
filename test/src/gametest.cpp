@@ -37,7 +37,7 @@ TEST(GameTest, GameSimulation1)
     try {
         std::unique_ptr<GameFactory> factory = std::make_unique<TestGameFactory>("/home/sg222629/repos/ProTexasPlayer/test/files/Game1");
         std::unique_ptr<DeckImpl> deck = factory->createDeck();
-        Game game("0.5/1", deck, factory);
+        Game game(deck, factory);
         EXPECT_NO_THROW(game.playHand());
     }
     catch (const std::exception& e)
@@ -52,7 +52,7 @@ TEST(GameTest, GameSimulation2)
     try {
         std::unique_ptr<GameFactory> factory = std::make_unique<TestGameFactory>("/home/sg222629/repos/ProTexasPlayer/test/files/Game2");
         std::unique_ptr<DeckImpl> deck = factory->createDeck();
-        Game game("0.5/1", deck, factory);
+        Game game(deck, factory);
         EXPECT_NO_THROW(game.playHand());
     }
     catch (const std::exception& e)
@@ -67,7 +67,7 @@ TEST(GameTest, GameSimulation3)
     try {
         std::unique_ptr<GameFactory> factory = std::make_unique<TestGameFactory>("/home/sg222629/repos/ProTexasPlayer/test/files/Game3");
         std::unique_ptr<DeckImpl> deck = factory->createDeck();
-        Game game("0.5/1", deck, factory);
+        Game game(deck, factory);
         EXPECT_NO_THROW(game.playHand());
     }
     catch (const std::exception& e)
@@ -82,7 +82,7 @@ TEST(GameTest, GameSimulation4)
     try {
         std::unique_ptr<GameFactory> factory = std::make_unique<TestGameFactory>("/home/sg222629/repos/ProTexasPlayer/test/files/Game4");
         std::unique_ptr<DeckImpl> deck = factory->createDeck();
-        Game game("0.5/1", deck, factory);
+        Game game(deck, factory);
         EXPECT_NO_THROW(game.playHand());
     }
     catch (const std::exception& e)

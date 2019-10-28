@@ -7,13 +7,16 @@
 #include <game/GameSimulationFactory.h>
 #include <game/RealGameFactory.h>
 
+int printHelpAndExit()
+{
+    std::cout << "Provide starting arguments: 1 - Game simulation, 2 - Real game and stakes e.g.: 0.5/1$" << std::endl;
+    return 0;
+}
+
 int main(int argc, char* argv[])
 {
     if (argc < 3)
-    {
-        std::cout << "Provide starting arguments: 1 - Game simulation, 2 - Real game and stakes e.g.: 0.5/1$" << std::endl;
-        return 0;
-    }
+        return printHelpAndExit();
 
     std::unique_ptr<GameFactory> gameFactory;
     const std::string option = argv[1];
@@ -24,26 +27,34 @@ int main(int argc, char* argv[])
     else if (option == "2")
         gameFactory = std::make_unique<RealGameFactory>();
     else
-    {
-        std::cout << "Provide starting arguments: 1 - Game simulation, 2 - Real game and stakes e.g.: 0.5/1$" << std::endl;
-        return 0;
-    }
+        return printHelpAndExit();
 
     std::shared_ptr<spdlog::logger> stdout_logger = spdlog::stdout_color_mt("stdout");
     spdlog::set_default_logger(stdout_logger);
     spdlog::set_level(spdlog::level::debug);
     spdlog::info("This is beginning of a ProTexasHoldemPlayer logging!");
-    std::unique_ptr<DeckImpl> deck = gameFactory->createDeck();
-    std::unique_ptr<Game> newGame = std::make_unique<Game>(stakes, deck, gameFactory);
+    int handNumber = 0;
+    bool inGoodShape = true;
 
-    try {
-        newGame->playHand();
-    }
-    catch (const std::exception& e)
+    while (inGoodShape)
     {
-        spdlog::critical(e.what());
-        spdlog::critical("Cannot play a hand!");
+        spdlog::info("Start of a hand! Playing hand number: {} on stake {}", ++handNumber, stakes);
+        std::unique_ptr<DeckImpl> deck = gameFactory->createDeck();
+        std::unique_ptr<Game> newGame = std::make_unique<Game>(deck, gameFactory);
+
+        try {
+            newGame->playHand();
+        }
+        catch (const std::exception& e)
+        {
+            spdlog::critical(e.what());
+            spdlog::critical("Cannot play a hand!");
+            inGoodShape = false;
+        }
+        spdlog::info("End of a hand! Hand number: {}", handNumber);
     }
+
+    //mozna dodac klikanie sit out
 
     spdlog::info("End of the ProTexasHoldemPlayer logging!");
     spdlog::shutdown();
