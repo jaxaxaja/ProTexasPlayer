@@ -12,9 +12,11 @@ private:
     Card b_ = Card::Unknown;
 public:
     Hand() = default;
-    Hand(Card a, Card b) : a_(a), b_(b) {}
+    Hand(Card a, Card b);
     std::pair<Card, Card> get() const { return std::make_pair(a_, b_); }
     std::string show() const;
+    bool operator<(const Hand& rhs) const;
+    bool operator==(const Hand& rhs) const;
 };
 
 #endif // HAND_H

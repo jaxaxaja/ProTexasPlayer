@@ -21,7 +21,7 @@ public:
     Game(std::unique_ptr<DeckImpl>& deck, std::unique_ptr<GameFactory>& gameFactory);
     ~Game();
     void playHand();
-    void setGameState(GameState* state);
+    void setGameStreet(GameState* state);
 };
 
 #endif //GAME_H

@@ -20,7 +20,7 @@ public:
     virtual void nextStreet(Game* game) override
     {
         spdlog::info("Finished Pre Flop game state. Setting new state: Flop");
-        game->setGameState(new Flop());
+        game->setGameStreet(new Flop());
         delete this;
     }
     virtual ~PreFlop() = default;

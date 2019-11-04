@@ -29,7 +29,12 @@ set(SOURCES src/Card.cpp
             src/strategy/AhkStrategy.cpp
             src/strategy/StreamStrategy.cpp
             src/strategy/RealStrategy.cpp
-            src/strategy/Range.cpp
+            src/strategy/range/EpStaticRange.cpp
+            src/strategy/range/MpStaticRange.cpp
+            src/strategy/range/CoStaticRange.cpp
+            src/strategy/range/BuStaticRange.cpp
+            src/strategy/range/SbStaticRange.cpp
+            src/strategy/range/BbStaticRange.cpp
             src/Player.cpp
             src/Croupier.cpp
             src/PlayerStatistics.cpp

@@ -24,6 +24,7 @@ TEST(HandTest, brodwayCreation)
     Hand reka9(Card::Jh, Card::Jd);
     EXPECT_EQ("JhJd", reka9.show());
 }
+
 TEST(HandTest, middleHandCreation)
 {
     Hand reka(Card::NineC, Card::NineS);
@@ -43,6 +44,7 @@ TEST(HandTest, middleHandCreation)
     Hand reka7(Card::SixD, Card::SixH);
     EXPECT_EQ("6h6d", reka7.show());
 }
+
 TEST(HandTest, lowHandCreation)
 {
     Hand reka(Card::TwoC, Card::TwoS);
@@ -61,4 +63,30 @@ TEST(HandTest, lowHandCreation)
     EXPECT_EQ("5s5c", reka6.show());
     Hand reka7(Card::FiveH, Card::FiveD);
     EXPECT_EQ("5h5d", reka7.show());
+}
+
+TEST(HandTest, HandOperatorEqual)
+{
+    Hand reka(Card::TwoC, Card::TwoS);
+    Hand reka1(Card::TwoD, Card::TwoH);
+    EXPECT_TRUE(reka1 == reka);
+    Hand reka2(Card::Ah, Card::Kd);
+    Hand reka3(Card::As, Card::Qc);
+    EXPECT_FALSE(reka2 == reka3);
+    Hand reka4(Card::Tc, Card::FiveH);
+    Hand reka5(Card::Td, Card::FiveD);
+    EXPECT_TRUE(reka4 == reka5);
+}
+
+TEST(HandTest, HandOperatorLess)
+{
+    Hand reka(Card::TwoC, Card::TwoS);
+    Hand reka1(Card::TwoD, Card::TwoH);
+    EXPECT_TRUE(reka < reka1);
+    Hand reka2(Card::Ah, Card::Kd);
+    Hand reka3(Card::As, Card::Qc);
+    EXPECT_TRUE(reka3 < reka2);
+    Hand reka4(Card::Tc, Card::FiveH);
+    Hand reka5(Card::EightS, Card::FourH);
+    EXPECT_TRUE(reka5 < reka4);
 }

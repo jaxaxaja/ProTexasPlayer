@@ -19,7 +19,7 @@ public:
     virtual void nextStreet(Game* game) override
     {
         spdlog::info("Finished River game state.");
-        game->setGameState(nullptr);
+        game->setGameStreet(nullptr);
         delete this;
     }
     virtual ~River() = default;

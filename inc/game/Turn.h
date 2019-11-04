@@ -20,7 +20,7 @@ public:
     virtual void nextStreet(Game* game) override
     {
         spdlog::info("Finished Turn game state. Setting new state: River");
-        game->setGameState(new River());
+        game->setGameStreet(new River());
         delete this;
     }
     virtual ~Turn() = default;

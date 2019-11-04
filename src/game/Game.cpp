@@ -8,7 +8,7 @@ Game::Game(std::unique_ptr<DeckImpl>& deck, std::unique_ptr<GameFactory>& gameFa
     players_ = gameFactory->createPlayers(board_);
 }
 
-void Game::setGameState(GameState* state)
+void Game::setGameStreet(GameState* state)
 {
     gameState_ = state;
 }
@@ -20,7 +20,7 @@ size_t Game::playersInHand()
 
 void Game::playHand()
 {
-    setGameState(new PreFlop());
+    setGameStreet(new PreFlop());
 
     while (playersInHand() > 1 && gameState_)
     {
