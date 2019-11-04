@@ -27,7 +27,7 @@ void Game::playHand()
         spdlog::debug("Players in hand: {}", playersInHand());
         gameState_->dealCards(croupier_);
         gameState_->askPlayers(croupier_);
-        gameState_->nextState(this);
+        gameState_->nextStreet(this);
     }
     croupier_.chooseWinner();
 }

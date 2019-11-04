@@ -16,7 +16,7 @@ public:
     {
         croupier.askPlayers();
     }
-    virtual void nextState(Game* game) override
+    virtual void nextStreet(Game* game) override
     {
         spdlog::info("Finished River game state.");
         game->setGameState(nullptr);

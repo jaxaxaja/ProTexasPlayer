@@ -17,7 +17,7 @@ public:
     {
         croupier.askPlayers();
     }
-    virtual void nextState(Game* game) override
+    virtual void nextStreet(Game* game) override
     {
         spdlog::info("Finished Flop game state. Setting new state: Turn");
         game->setGameState(new Turn());
