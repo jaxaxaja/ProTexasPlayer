@@ -16,6 +16,7 @@ public:
     std::pair<Card, Card> get() const { return std::make_pair(a_, b_); }
     std::string show() const;
     bool operator<(const Hand& rhs) const;
+    bool operatorLess(const Hand& rhs) const; //used for comparison in std::set
     bool operator==(const Hand& rhs) const;
 };
 
