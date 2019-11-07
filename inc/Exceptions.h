@@ -48,4 +48,9 @@ struct WrongUserInputError : public std::exception
     virtual const char* what() const noexcept override {"Wrong user input error";}
 };
 
+struct RangeParsingError : public std::exception
+{
+    virtual const char* what() const noexcept override {"Parsing range error";}
+};
+
 #endif //EXCEPTIONS_H

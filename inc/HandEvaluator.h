@@ -3,7 +3,6 @@
 
 #include "Hand.h"
 #include <vector>
-#include <tuple>
 #include <gtest/gtest.h>
 
 class HandStrength
@@ -45,7 +44,6 @@ public:
     HandEvaluator& operator=(HandEvaluator& rhs) = delete;
     static HandEvaluator& getInstance() { static HandEvaluator instance; return instance; }
     HandStrength getHandStrength(Hand playerHand, const std::vector<Card>& flop, Card turn, Card river);
-    ~HandEvaluator() { cardRanks_.clear(); cardSuits_.clear(); }
 };
 
 #endif //HAND_EVALUATOR_H

@@ -11,6 +11,7 @@ set(SOURCES src/handtest.cpp
             src/playertest.cpp
             src/croupiertest.cpp
             src/gametest.cpp
+            src/rangecreatortest.cpp
             src/main.cpp
             ../src/Card.cpp
             ../src/Hand.cpp
@@ -27,7 +28,8 @@ set(SOURCES src/handtest.cpp
             ../src/move/Bet.cpp
             ../src/move/Raise.cpp
             ../src/Position.cpp
-            ../src/strategy/StreamStrategy.cpp)
+            ../src/strategy/StreamStrategy.cpp
+            ../src/strategy/range/RangeCreator.cpp)
 
 add_executable(ProTexasPlayerTest ${SOURCES})
 
@@ -37,4 +39,4 @@ else()
     target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/../lib/gtest/libgtest.a)
 endif()
 
-include_directories(../lib/gtest ../lib/spdlog ../inc)
+include_directories(../lib/gtest ../lib/spdlog ../inc ../lib/boost)

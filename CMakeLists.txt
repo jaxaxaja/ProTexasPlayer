@@ -29,12 +29,8 @@ set(SOURCES src/Card.cpp
             src/strategy/AhkStrategy.cpp
             src/strategy/StreamStrategy.cpp
             src/strategy/RealStrategy.cpp
-            src/strategy/range/EpStaticRange.cpp
-            src/strategy/range/MpStaticRange.cpp
-            src/strategy/range/CoStaticRange.cpp
-            src/strategy/range/BuStaticRange.cpp
-            src/strategy/range/SbStaticRange.cpp
-            src/strategy/range/BbStaticRange.cpp
+            src/strategy/range/PositionalRange.cpp
+            src/strategy/range/RangeCreator.cpp
             src/Player.cpp
             src/Croupier.cpp
             src/PlayerStatistics.cpp
@@ -42,4 +38,4 @@ set(SOURCES src/Card.cpp
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/inc ${CMAKE_CURRENT_SOURCE_DIR}/lib/gtest ${CMAKE_CURRENT_SOURCE_DIR}/lib/spdlog)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/inc ${CMAKE_CURRENT_SOURCE_DIR}/lib/gtest ${CMAKE_CURRENT_SOURCE_DIR}/lib/spdlog ${CMAKE_CURRENT_SOURCE_DIR}/lib/boost)
