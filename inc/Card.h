@@ -21,6 +21,11 @@ enum class Card
 };
 
 Card operator++(Card& x);
+Card operator--(Card& x);
+Card operator+(const Card& x, int y);
+Card operator-(const Card& x, int y);
+size_t operator%(const Card& x, int y);
+size_t operator/(const Card& x, int y);
 std::ostream& operator<<(std::ostream& os, const Card& c);
 
 #endif // CARD_H

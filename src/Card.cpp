@@ -8,6 +8,32 @@ Card operator++(Card& x)
     return x = static_cast<Card>(std::underlying_type<Card>::type(x) + 1);
 }
 
+Card operator--(Card& x)
+{
+    return x = static_cast<Card>(std::underlying_type<Card>::type(x) - 1);
+}
+
+Card operator+(const Card& x, int y)
+{
+    return static_cast<Card>(std::underlying_type<Card>::type(x) + y);
+}
+
+Card operator-(const Card& x, int y)
+{
+    return static_cast<Card>(std::underlying_type<Card>::type(x) - y);
+}
+
+size_t operator%(const Card& x, int y)
+{
+    return static_cast<size_t>(x) % y;
+}
+
+size_t operator/(const Card& x, int y)
+{
+    return static_cast<size_t>(x) / y;
+}
+
+
 std::ostream& operator<<(std::ostream& os, const Card& c)
 {
     static const std::vector<std::string> cardToString = {"As", "Ah", "Ad", "Ac",
