@@ -27,6 +27,6 @@ std::ostream& operator<<(std::ostream& os, const Move& p)
 {
     std::string move;
     move = p.isBet() ? "Bet" : p.isCall() ? "Call" : p.isCheck() ? "Check" : p.isFold() ? "Fold" : "Raise";
-    os << move << (p.isBet() || p.isRaise() ? ": " + std::to_string(p.moveSize()) : "") ;
+    os << move << (p.isBet() || p.isRaise() ? ": " + std::to_string(p.moveSize()) + "BB" : "");
     return os;
 }

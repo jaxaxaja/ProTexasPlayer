@@ -14,9 +14,9 @@ std::unique_ptr<Move> Player::makeMove(const float bb)
     spdlog::debug("{} it's your move...", this->getName());
 
     if (bb > 0)
-        move = strategy_->callRaiseOrFold(bb);
+        move = strategy_->callRaiseOrFold(bb, board_);
     else
-        move = strategy_->checkOrBet();
+        move = strategy_->checkOrBet(board_);
 
     spdlog::info("Player {} on position {} makes a move {}", getName(), getPosition(), *move);
 

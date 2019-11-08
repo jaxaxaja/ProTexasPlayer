@@ -10,8 +10,8 @@ class RealStrategy : public StrategyImpl
     PositionalRange range_;
 public:
     RealStrategy(const Position position) : range_(position) {}
-    virtual std::unique_ptr<Move> checkOrBet() override;
-    virtual std::unique_ptr<Move> callRaiseOrFold(const float bb) override;
+    std::unique_ptr<Move> checkOrBet(const Board &board) override;
+    std::unique_ptr<Move> callRaiseOrFold(const float bb, const Board& board) override;
     virtual ~RealStrategy() = default;
 };
 

@@ -3,44 +3,44 @@
 #include <spdlog/fmt/ostr.h>
 #include "Exceptions.h"
 
-std::unique_ptr<Move> StreamStrategy::callRaiseOrFold(float bb)
+std::unique_ptr<Move> StreamStrategy::callRaiseOrFold(float bb, const Board& board)
 {
     if (&ins_ == &std::cin)
         std::cout << "Specify move (call, raise or fold): ";
 
-    std::unique_ptr<Move> m;
-    if (!parser_.parsePlayerMove(&ins_, m))
+    std::unique_ptr<Move> move;
+    if (!parser_.parsePlayerMove(&ins_, move))
     {
         spdlog::error("Cannot parse player move from stream!");
         throw PlayerMoveParsingError();
     }
 
-    if (m->isBet())
+    if (move->isBet())
     {
-        spdlog::error("Cannot use {} move from stream! Expected call, raise, fold or check for BB!", *m);
+        spdlog::error("Cannot use {} move from stream! Expected call, raise, fold or check for BB!", *move);
         throw WrongPlayerMoveError();
     }
 
-    return m;
+    return move;
 }
 
-std::unique_ptr<Move> StreamStrategy::checkOrBet()
+std::unique_ptr<Move> StreamStrategy::checkOrBet(const Board &board)
 {
     if (&ins_ == &std::cin)
         std::cout << "Specify move (check or bet): ";
 
-    std::unique_ptr<Move> m;
-    if (!parser_.parsePlayerMove(&ins_, m))
+    std::unique_ptr<Move> move;
+    if (!parser_.parsePlayerMove(&ins_, move))
     {
         spdlog::error("Cannot parse player move from steam!");
         throw PlayerMoveParsingError();
     }
 
-    if (m->isRaise() || m->isCall())
+    if (move->isRaise() || move->isCall())
     {
-        spdlog::error("Cannot use {} move from stream! Expected check, bet or fold!", *m);
+        spdlog::error("Cannot use {} move from stream! Expected check, bet or fold!", *move);
         throw WrongPlayerMoveError();
     }
 
-    return m;
+    return move;
 }

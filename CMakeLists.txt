@@ -14,10 +14,6 @@ set(SOURCES src/Card.cpp
             src/Position.cpp
             src/HandEvaluator.cpp
             src/game/Game.cpp
-            src/game/PreFlop.cpp
-            src/game/Flop.cpp
-            src/game/Turn.cpp
-            src/game/River.cpp
             src/game/RealGameFactory.cpp
             src/game/GameSimulationFactory.cpp
             src/move/Move.cpp

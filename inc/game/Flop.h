@@ -8,16 +8,16 @@
 class Flop : public GameState
 {
 public:
-    virtual void dealCards(Croupier &croupier) override
+    void dealCards(Croupier &croupier) override
     {
         croupier.dealFlopCards();
         croupier.preparePostFlopPlayersToAct();
     }
-    virtual void askPlayers(Croupier& croupier) override
+    void askPlayers(Croupier& croupier) override
     {
         croupier.askPlayers();
     }
-    virtual void nextStreet(Game* game) override
+    void nextStreet(Game* game) override
     {
         spdlog::info("Finished Flop game state. Setting new state: Turn");
         game->setGameStreet(new Turn());

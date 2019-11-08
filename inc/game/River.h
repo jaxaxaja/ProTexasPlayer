@@ -7,16 +7,16 @@
 class River : public GameState
 {
 public:
-    virtual void dealCards(Croupier &croupier) override
+    void dealCards(Croupier &croupier) override
     {
         croupier.dealRiverCards();
         croupier.preparePostFlopPlayersToAct();
     }
-    virtual void askPlayers(Croupier& croupier) override
+    void askPlayers(Croupier& croupier) override
     {
         croupier.askPlayers();
     }
-    virtual void nextStreet(Game* game) override
+    void nextStreet(Game* game) override
     {
         spdlog::info("Finished River game state.");
         game->setGameStreet(nullptr);

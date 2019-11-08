@@ -3,14 +3,16 @@
 
 #include <move/Move.h>
 #include "Position.h"
+#include "Board.h"
 #include <iostream>
 
 class StrategyImpl
 {
 public:
-    static std::unique_ptr<StrategyImpl> createStrategy(const std::string& strategy, const Position position, std::istream &ins = std::cin); //factory method
-    virtual std::unique_ptr<Move> checkOrBet() = 0;
-    virtual std::unique_ptr<Move> callRaiseOrFold(float bb) = 0;
+    static std::unique_ptr<StrategyImpl> createStrategy(const std::string& strategy, const Position position,
+                                                        std::istream &ins = std::cin); //factory method
+    virtual std::unique_ptr<Move> checkOrBet(const Board& board = {}) = 0;
+    virtual std::unique_ptr<Move> callRaiseOrFold(float bb, const Board& board = {}) = 0;
     virtual ~StrategyImpl() = default;
 };
 
