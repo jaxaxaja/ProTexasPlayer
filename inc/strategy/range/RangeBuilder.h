@@ -2,10 +2,16 @@
 #define RANGE_BUILDER_H
 
 #include <strategy/range/Range.h>
+#include <strategy/range/RangeCreator.h>
+#include "Position.h"
+#include <memory>
 
 class RangeBuilder
 {
+protected:
+    RangeCreator rangeCreator_;
 public:
+    static std::unique_ptr<RangeBuilder> createBuilder(const Position position);
     virtual Range buildRfiRange() = 0;
     virtual Range buildColdCallRange() = 0;
     virtual Range build3bRange() = 0;

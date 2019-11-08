@@ -9,8 +9,11 @@
 
 class RealGameFactory : public GameFactory
 {
-    virtual std::unique_ptr<StrategyImpl> createHeroStrategy() override { return std::make_unique<RealStrategy>(); }
-    virtual std::unique_ptr<StrategyImpl> createPlayerStrategy(const std::string &playerName = "") override { return std::make_unique<AhkStrategy>(); }
+    virtual std::unique_ptr<StrategyImpl> createHeroStrategy(const Position position) override
+    { return std::make_unique<RealStrategy>(position); }
+    virtual std::unique_ptr<StrategyImpl> createPlayerStrategy(const std::string &playerName = "",
+                                                               const Position position = Position::EP) override
+    { return std::make_unique<AhkStrategy>(); }
 public:
     virtual std::unique_ptr<DeckImpl> createDeck() override { return std::make_unique<AhkDeck>(); }
     virtual std::vector<std::unique_ptr<Player>> createPlayers(Board& board) override;

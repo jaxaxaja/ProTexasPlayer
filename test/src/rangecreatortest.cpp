@@ -41,9 +41,9 @@ TEST(RangeCreatorTest, Pairs)
 
 TEST(RangeCreatorTest, OffAndSuites)
 {
-    RangeCreator rc;
-    Range range;
     try {
+        RangeCreator rc;
+        Range range;
         EXPECT_NO_THROW(range = rc.createRange("AQo"));
         EXPECT_EQ(12, range.combinations());
         EXPECT_TRUE(range.isInRange(Hand(Card::As, Card::Qc)));
@@ -116,9 +116,9 @@ TEST(RangeCreatorTest, OffAndSuites)
 
 TEST(RangeCreatorTest, Combos)
 {
-    RangeCreator rc;
-    Range range;
     try {
+        RangeCreator rc;
+        Range range;
         EXPECT_NO_THROW(range = rc.createRange("JT+"));
         EXPECT_EQ(4*16+3*16+2*16+16, range.combinations());
 
@@ -183,11 +183,15 @@ TEST(RangeCreatorTest, Combos)
 
 TEST(RangeCreatorTest, VariousCombinations)
 {
-    RangeCreator rc;
-    Range range;
     try {
+        RangeCreator rc;
+        Range range;
         EXPECT_NO_THROW(range = rc.createRange("AQo,TT+,JTs"));
         EXPECT_EQ(46, range.combinations());
+
+        Range range1;
+        EXPECT_NO_THROW(range1 = rc.createRange("32+,22+"));
+        EXPECT_EQ(1326, range1.combinations());
 
         Range range2;
         EXPECT_NO_THROW(range2 = rc.createRange("JTo,22+,87s,T9s,89s"));
@@ -196,6 +200,28 @@ TEST(RangeCreatorTest, VariousCombinations)
         Range range3;
         EXPECT_NO_THROW(range3 = rc.createRange("KQ+,88+,45s"));
         EXPECT_EQ(94, range3.combinations());
+
+        Range range4;
+        EXPECT_NO_THROW(range4 = rc.createRange("KQ+,AJ+"));
+        EXPECT_EQ(64, range4.combinations());
+
+        Range range5;
+        EXPECT_NO_THROW(range5 = rc.createRange("AJ+,ATs,A5s,A4s,A3s,A2s,KQ+,KJs,66+,T9s,98s"));
+        EXPECT_EQ(150, range5.combinations());
+
+        Range range6;
+        EXPECT_NO_THROW(range6 = rc.createRange("AT+,A5s,A4s,A3s,A2s,KJ+,KTs,QJs,55+,JTs,T9s,98s,87s,76s"));
+        EXPECT_EQ(200, range6.combinations());
+
+        Range range7;
+        EXPECT_NO_THROW(range7 = rc.createRange("A8+,A7s,A6s,A5s,A4s,A3s,A2s,KT+,K9s,QT+,Q9s,22+,JTs,J9s,T9s,"
+                                                "T8s,98s,97s,87s,86s,76s,75s,65s,64s,54s"));
+        EXPECT_EQ(338, range7.combinations());
+
+        Range range8;
+        EXPECT_NO_THROW(range8 = rc.createRange("A2+,K8+,K7s,K6s,Q9+,Q8s,Q7s,22+,JTs,J9s,J8s,J7s,T9s,T8s,T7s,"
+                                                "98s,97s,96s,87s,86s,85s,76s,75s,74s,65s,64s,54s,53s,43s,42s,32s"));
+        EXPECT_EQ(506, range8.combinations());
     }
     catch (const std::exception& e)
     {

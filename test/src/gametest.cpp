@@ -8,8 +8,10 @@
 class TestGameFactory : public GameFactory
 {
     std::ifstream file;
-    virtual std::unique_ptr<StrategyImpl> createHeroStrategy() override {}
-    virtual std::unique_ptr<StrategyImpl> createPlayerStrategy(const std::string &playerName = "") override { return std::make_unique<StreamStrategy>(file); }
+    virtual std::unique_ptr<StrategyImpl> createHeroStrategy(const Position position) override {}
+    virtual std::unique_ptr<StrategyImpl> createPlayerStrategy(const std::string &playerName = "",
+                                                               const Position position = Position::EP) override
+    { return std::make_unique<StreamStrategy>(file); }
 public:
     TestGameFactory(const std::string& path) : file(path) {}
     virtual std::unique_ptr<DeckImpl> createDeck() override { return std::make_unique<StreamDeck>(file); }

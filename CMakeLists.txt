@@ -31,6 +31,7 @@ set(SOURCES src/Card.cpp
             src/strategy/RealStrategy.cpp
             src/strategy/range/PositionalRange.cpp
             src/strategy/range/RangeCreator.cpp
+            src/strategy/range/RangeBuilder.cpp
             src/Player.cpp
             src/Croupier.cpp
             src/PlayerStatistics.cpp

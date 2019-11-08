@@ -2,7 +2,7 @@
 #define POSITIONAL_RANGE_H
 
 #include <strategy/range/Range.h>
-#include <strategy/range/RangeBuilder.h>
+#include "Position.h"
 #include <memory>
 
 class PositionalRange
@@ -17,7 +17,7 @@ class PositionalRange
     Range broke_;
 
 public:
-    PositionalRange(std::unique_ptr<RangeBuilder> builder);
+    PositionalRange(const Position position);
     bool isInRfi(Hand h) { return rfi_.isInRange(h); }
     bool isInColdCall(Hand h) { return coldCall_.isInRange(h); }
     bool isInThreeBet(Hand h) { return threeBet_.isInRange(h); }

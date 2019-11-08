@@ -4,10 +4,10 @@
 #include <iostream>
 #include <spdlog/spdlog.h>
 
-std::unique_ptr<StrategyImpl> GameSimulationFactory::createPlayerStrategy(const std::string& playerName)
+std::unique_ptr<StrategyImpl> GameSimulationFactory::createPlayerStrategy(const std::string& playerName, const Position position)
 {
     if (strategy_ == "F")
-        return StrategyImpl::createStrategy(strategy_, ins_);
+        return StrategyImpl::createStrategy(strategy_, position, ins_);
 
     bool error = true;
     std::unique_ptr<StrategyImpl> strategy;
@@ -20,7 +20,7 @@ std::unique_ptr<StrategyImpl> GameSimulationFactory::createPlayerStrategy(const 
         std::cin >> str;
 
         try {
-            strategy = StrategyImpl::createStrategy(str);
+            strategy = StrategyImpl::createStrategy(str, position);
         }
         catch (const std::exception& e)
         {
@@ -93,7 +93,7 @@ std::vector<std::unique_ptr<Player>> GameSimulationFactory::createPlayers(Board&
             std::cin >> name >> pos >> bb;
             Position position = pos == "BU" ? Position::BU : pos == "SB" ? Position::SB : pos == "BB" ? Position::BB
                                                                                                       : pos == "EP" ? Position::EP : pos == "MP" ? Position::MP : Position ::CO;
-            players.emplace_back(std::make_unique<Player>(name, board, bb, position, createPlayerStrategy(name)));
+            players.emplace_back(std::make_unique<Player>(name, board, bb, position, createPlayerStrategy(name, position)));
         }
     }
 

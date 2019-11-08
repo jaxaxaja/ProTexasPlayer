@@ -1,7 +1,9 @@
 #include <strategy/range/PositionalRange.h>
+#include <strategy/range/RangeBuilder.h>
 
-PositionalRange::PositionalRange(std::unique_ptr<RangeBuilder> builder)
+PositionalRange::PositionalRange(const Position position)
 {
+    std::unique_ptr<RangeBuilder> builder = RangeBuilder::createBuilder(position);
     rfi_ = builder->buildRfiRange();
     coldCall_ = builder->buildColdCallRange();
     threeBet_ = builder->build3bRange();
