@@ -2,16 +2,17 @@
 #define REAL_STRATEGY_H
 
 #include <strategy/StrategyImpl.h>
-#include <strategy/range/PositionalRange.h>
+#include <strategy/PreFlopStrategy.h>
 #include "Position.h"
 
 class RealStrategy : public StrategyImpl
 {
-    PositionalRange range_;
+    std::unique_ptr<StrategyState> realStrategy_;
+    void createRealStrategy(const Board& board);
 public:
-    RealStrategy(const Position position) : range_(position) {}
-    std::unique_ptr<Move> checkOrBet(const Board &board) override;
-    std::unique_ptr<Move> callRaiseOrFold(const float bb, const Board& board) override;
+    RealStrategy(const Position position) : realStrategy_(std::make_unique<PreFlopStrategy>(position)) {}
+    std::unique_ptr<Move> checkOrBet(const Board &board, const Hand& hand = {}) override;
+    std::unique_ptr<Move> callRaiseOrFold(const float bb, const Board& board, const Hand& hand = {}) override;
     virtual ~RealStrategy() = default;
 };
 

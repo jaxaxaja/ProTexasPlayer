@@ -1,15 +1,25 @@
 #include <strategy/RealStrategy.h>
+#include <strategy/FlopStrategy.h>
+#include <strategy/TurnStrategy.h>
+#include <strategy/RiverStrategy.h>
 #include "Exceptions.h"
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
 
-std::unique_ptr<Move> RealStrategy::callRaiseOrFold(const float bb, const Board &board)
+void RealStrategy::createRealStrategy(const Board& board)
 {
-    std::unique_ptr<Move> move;
+    if (board.river_ != Card::Unknown && !dynamic_cast<RiverStrategy*>(realStrategy_.get()))
+        realStrategy_.reset(new RiverStrategy());
+    else if (board.turn_ != Card::Unknown && !dynamic_cast<TurnStrategy*>(realStrategy_.get()))
+        realStrategy_.reset(new TurnStrategy());
+    else if (!board.flop_.empty() && !dynamic_cast<FlopStrategy*>(realStrategy_.get()))
+        realStrategy_.reset(new FlopStrategy());
+}
 
-    //sprawdzic jaka faza gry, na podstawie dostepnych kart?
-    //stworzyc odpowiednia strategie: preFlop, flop, turn, river
-    //ale nie musi byc za kazdym razem bo jak mamy kolejny ruch do podjecia w tej samej fazie to moze zostac to co bylo
+std::unique_ptr<Move> RealStrategy::callRaiseOrFold(const float bb, const Board& board, const Hand &hand)
+{
+    createRealStrategy(board);
+    std::unique_ptr<Move> move = realStrategy_->callRaiseOrFold(bb, board, hand);
 
     if (move->isBet())
     {
@@ -20,11 +30,10 @@ std::unique_ptr<Move> RealStrategy::callRaiseOrFold(const float bb, const Board 
     return move;
 }
 
-std::unique_ptr<Move> RealStrategy::checkOrBet(const Board& board)
+std::unique_ptr<Move> RealStrategy::checkOrBet(const Board& board, const Hand& hand)
 {
-    std::unique_ptr<Move> move;
-
-    //TODO implementaion
+    createRealStrategy(board);
+    std::unique_ptr<Move> move = realStrategy_->checkOrBet(board, hand);
 
     if (move->isRaise() || move->isCall())
     {

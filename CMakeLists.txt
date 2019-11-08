@@ -25,6 +25,10 @@ set(SOURCES src/Card.cpp
             src/strategy/AhkStrategy.cpp
             src/strategy/StreamStrategy.cpp
             src/strategy/RealStrategy.cpp
+            src/strategy/PreFlopStrategy.cpp
+            src/strategy/FlopStrategy.cpp
+            src/strategy/TurnStrategy.cpp
+            src/strategy/RiverStrategy.cpp
             src/strategy/range/PositionalRange.cpp
             src/strategy/range/RangeCreator.cpp
             src/strategy/range/RangeBuilder.cpp
