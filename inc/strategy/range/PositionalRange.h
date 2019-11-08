@@ -3,18 +3,19 @@
 
 #include <strategy/range/Range.h>
 #include "Position.h"
-#include <memory>
+#include <map>
 
 class PositionalRange
 {
     Range rfi_;
-    Range coldCall_;
-    Range threeBet_;
-    Range vs3betCall_;
+    Range coldCall_; //j.n.
+    /*std::map<Position,*/ Range/*>*/ threeBet_; //to powinno byc z podzialem vs konkretna pozycja
+    Range vs3betCall_; //j.w itd.
     Range vsSqzCall_;
     Range fourBet_;
     Range vs4betCall_;
     Range broke_;
+    float rfiSize_;
 
 public:
     PositionalRange(const Position position);
@@ -26,6 +27,7 @@ public:
     bool isInFourBet(Hand h) { return fourBet_.isInRange(h); }
     bool isInVs4betCall(Hand h) { return vs4betCall_.isInRange(h); }
     bool isInBroke(Hand h) { return broke_.isInRange(h); }
+    float getRfiSize() const { return rfiSize_; }
 };
 
 #endif //POSITIONAL_RANGE_H

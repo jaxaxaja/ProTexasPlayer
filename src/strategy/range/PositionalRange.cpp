@@ -12,4 +12,5 @@ PositionalRange::PositionalRange(const Position position)
     fourBet_ = builder->build4bRange();
     vs4betCall_ = builder->buildVs4bCallRange();
     broke_ = builder->buildBrokeRange();
+    rfiSize_ = builder->getRfiSize();
 }

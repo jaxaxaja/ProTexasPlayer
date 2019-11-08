@@ -15,8 +15,38 @@ std::vector<Hand> RangeCreator::createPairs(const Card& c)
 {
     std::vector<Hand> result;
 
+    for (Card left = c; left >= c-3; --left)
+    {
+        for (Card right = left+1; right <= c; ++right)
+            result.emplace_back(left, right);
+    }
+
+    return result;
+}
+
+std::vector<Hand> RangeCreator::createPairsPlus(const Card& c)
+{
+    std::vector<Hand> result;
+
     Card border;
     for (Card left = c; left >= Card::As; --left)
+    {
+        if (left % 4 == 3)
+            border = left;
+
+        for (Card right = left+1; right <= border; ++right)
+            result.emplace_back(left, right);
+    }
+
+    return result;
+}
+
+std::vector<Hand> RangeCreator::createPairsRange(const Card& c, const Card& d)
+{
+    std::vector<Hand> result;
+
+    Card border;
+    for (Card left = d; left >= c-3; --left)
     {
         if (left % 4 == 3)
             border = left;
@@ -72,17 +102,24 @@ std::vector<Hand> RangeCreator::createCombos(const Card& c, const Card& d)
 
 std::vector<Hand> RangeCreator::ranger(const std::string& s)
 {
-    if (s.size() != 3)
+    if (s.size() == 3 && s.back() != 's' && s.back() != 'o' && s.back() != '+')
         throw RangeParsingError();
-
-    if (s.back() != 's' && s.back() != 'o' && s.back() != '+')
+    if (s.size() == 5 && s.at(2) != '-')
         throw RangeParsingError();
 
     Card a;
     Card b;
     try {
-        a = stringToGeneralCardMap_.at(s.front());
-        b = stringToGeneralCardMap_.at(s.at(1));
+        if (s.size() != 5)
+        {
+            a = stringToGeneralCardMap_.at(s.front());
+            b = stringToGeneralCardMap_.at(s.at(1));
+        }
+        else
+        {
+            a = stringToGeneralCardMap_.at(s.front());
+            b = stringToGeneralCardMap_.at(s.at(3));
+        }
         spdlog::debug("Converted string {} to general card: {}", s.front(), a);
         spdlog::debug("Converted string {} to general card: {}", s.at(1), b);
     }
@@ -93,10 +130,16 @@ std::vector<Hand> RangeCreator::ranger(const std::string& s)
         throw;
     }
 
+    if (s.size() == 2)
+        return createPairs(a);
+
+    if (s.size() == 5)
+        return createPairsRange(a, b);
+
     if (s.back() == '+')
     {
         if (a == b)
-            return createPairs(a);
+            return createPairsPlus(a);
         else
             return createCombos(a, b);
     }

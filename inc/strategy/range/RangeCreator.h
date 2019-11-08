@@ -9,6 +9,8 @@ class RangeCreator
 {
     static const std::map<char, Card> stringToGeneralCardMap_;
     std::vector<Hand> createPairs(const Card& c);
+    std::vector<Hand> createPairsPlus(const Card& c);
+    std::vector<Hand> createPairsRange(const Card& c, const Card& d);
     std::vector<Hand> createSuitedCombos(const Card& c, const Card& d);
     std::vector<Hand> createOffSuitCombos(const Card& c, const Card& d);
     std::vector<Hand> createCombos(const Card& c, const Card& d);

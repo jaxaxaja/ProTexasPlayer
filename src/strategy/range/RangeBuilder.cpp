@@ -6,7 +6,7 @@
 #include <strategy/range/SbRangeBuilder.h>
 #include <strategy/range/BbRangeBuilder.h>
 
-std::unique_ptr<RangeBuilder> RangeBuilder::createBuilder(const Position position)
+std::unique_ptr<RangeBuilder> RangeBuilder::createBuilder(const Position& position)
 {
     switch (position) {
     case Position::EP:

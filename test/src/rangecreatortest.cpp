@@ -31,6 +31,28 @@ TEST(RangeCreatorTest, Pairs)
         Range range4;
         EXPECT_NO_THROW(range4 = rc.createRange("22+"));
         EXPECT_EQ(78, range4.combinations());
+
+        Range range5;
+        EXPECT_NO_THROW(range5 = rc.createRange("QQ"));
+        EXPECT_EQ(6, range5.combinations());
+        EXPECT_TRUE(range5.isInRange(Hand(Card::Qs, Card::Qh)));
+        EXPECT_TRUE(range5.isInRange(Hand(Card::Qs, Card::Qd)));
+        EXPECT_TRUE(range5.isInRange(Hand(Card::Qs, Card::Qc)));
+        EXPECT_TRUE(range5.isInRange(Hand(Card::Qh, Card::Qd)));
+        EXPECT_TRUE(range5.isInRange(Hand(Card::Qh, Card::Qc)));
+        EXPECT_TRUE(range5.isInRange(Hand(Card::Qd, Card::Qc)));
+
+        Range range6;
+        EXPECT_NO_THROW(range6 = rc.createRange("33"));
+        EXPECT_EQ(6, range6.combinations());
+
+        Range range7;
+        EXPECT_NO_THROW(range7 = rc.createRange("QQ-66"));
+        EXPECT_EQ(42, range7.combinations());
+
+        Range range8;
+        EXPECT_NO_THROW(range8 = rc.createRange("88-55"));
+        EXPECT_EQ(24, range8.combinations());
     }
     catch (const std::exception& e)
     {

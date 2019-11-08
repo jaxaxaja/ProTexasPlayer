@@ -6,6 +6,7 @@
 class MpRangeBuilder : public RangeBuilder
 {
 public:
+    MpRangeBuilder() : RangeBuilder(2.5) {}
     Range buildRfiRange() override { rangeCreator_.createRange("AT+,A5s,A4s,A3s,A2s,KJ+,KTs,QJs,55+,JTs,T9s,98s,87s,76s"); }
     Range buildColdCallRange() override {}
     Range build3bRange() override {}
