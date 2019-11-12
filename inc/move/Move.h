@@ -9,6 +9,7 @@ class Croupier;
 
 class Move
 {
+protected:
     float size_ = 0;
 public:
     Move(float size) : size_(size) {}
@@ -20,7 +21,6 @@ public:
     virtual bool isCheck() const { return false; }
     virtual bool isCall() const {return false; }
     float moveSize() const { return size_; }
-    void adjustSize(const float f) { size_ = f; }
     virtual ~Move() = default;
 };
 

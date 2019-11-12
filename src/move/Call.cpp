@@ -3,8 +3,8 @@
 
 void Call::updatePlayer(Player* player, const float bb)
 {
-    this->adjustSize(bb - player->betSize());
-    player->adjustStack(-this->moveSize());
+    size_ = bb - player->betSize();
+    player->adjustStack(-size_);
     player->setBetSize(bb);
 
     if (player->getStackSize() <= 0)
