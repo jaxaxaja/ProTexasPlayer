@@ -26,8 +26,8 @@ class HandEvaluator
     HandEvaluator() : cardRanks_(rankSize_), cardSuits_(suitSize_) {}
     const size_t rankSize_ = 13;
     const size_t suitSize_ = 4;
-    std::vector<size_t> cardRanks_; //A, K, Q, J, T, 9, 8 etc.
-    std::vector<size_t> cardSuits_; //Spades, Hearts, Diamond, Clubs
+    std::vector<int> cardRanks_; //A, K, Q, J, T, 9, 8 etc.
+    std::vector<int> cardSuits_; //Spades, Hearts, Diamond, Clubs
     using StrengthType = std::pair<bool, std::vector<size_t>>;
     StrengthType isStreightFlush(const std::vector<Card>& v);
     StrengthType isQuads();
