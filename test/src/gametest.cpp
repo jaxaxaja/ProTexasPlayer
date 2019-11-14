@@ -15,7 +15,7 @@ class TestGameFactory : public GameFactory
 public:
     TestGameFactory(const std::string& path) : file(path) {}
     virtual std::unique_ptr<DeckImpl> createDeck() override { return std::make_unique<StreamDeck>(file); }
-    virtual std::vector<std::unique_ptr<Player>> createPlayers(Board& board) override
+    virtual std::vector<std::unique_ptr<Player>> createPlayers(const Board& board, std::vector<PlayerMoveInfo>& playersMoveInfo) override
     {
         std::vector<std::unique_ptr<Player>> res;
         int num;
@@ -27,7 +27,7 @@ public:
             file >> name >> pos >> bb;
             Position position = pos == "BU" ? Position::BU : pos == "SB" ? Position::SB : pos == "BB" ? Position::BB
                                            : pos == "EP" ? Position::EP : pos == "MP" ? Position::MP : Position ::CO;
-            res.emplace_back(std::make_unique<Player>(name, board, bb, position, createPlayerStrategy()));
+            res.emplace_back(std::make_unique<Player>(name, board, bb, position, createPlayerStrategy(), playersMoveInfo));
         }
         return res;
     }

@@ -6,12 +6,13 @@
 TEST(PlayerTest, makeMove1)
 {
     Board board;
+    std::vector<PlayerMoveInfo> playersMoveInfo;
     try {
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/PlayerMove1");
-        std::unique_ptr<Player> player1 = std::make_unique<Player>("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file));
-        std::unique_ptr<Player> player2 = std::make_unique<Player>("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file));
-        std::unique_ptr<Player> player3 = std::make_unique<Player>("Pawel", board, 100, Position::CO, std::make_unique<StreamStrategy>(file));
-        std::unique_ptr<Player> player4 = std::make_unique<Player>("Marcin", board, 100, Position::BU, std::make_unique<StreamStrategy>(file));
+        std::unique_ptr<Player> player1 = std::make_unique<Player>("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file), playersMoveInfo);
+        std::unique_ptr<Player> player2 = std::make_unique<Player>("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file), playersMoveInfo);
+        std::unique_ptr<Player> player3 = std::make_unique<Player>("Pawel", board, 100, Position::CO, std::make_unique<StreamStrategy>(file), playersMoveInfo);
+        std::unique_ptr<Player> player4 = std::make_unique<Player>("Marcin", board, 100, Position::BU, std::make_unique<StreamStrategy>(file), playersMoveInfo);
 
         //PREFLOP
         player1->setSbBetSize();
@@ -33,7 +34,18 @@ TEST(PlayerTest, makeMove1)
         EXPECT_FLOAT_EQ(99, player2->getStackSize());
         player1->setBetSize(0);
         player2->setBetSize(0);
+        EXPECT_EQ(2, playersMoveInfo.size());
+        EXPECT_EQ(MoveType::Call, playersMoveInfo.front().moveType_);
+        EXPECT_EQ(Position::SB, playersMoveInfo.front().position_);
+        EXPECT_EQ(1, playersMoveInfo.front().size_);
+        EXPECT_EQ(99, playersMoveInfo.front().stackLeft_);
+        EXPECT_EQ(MoveType::Check, playersMoveInfo.back().moveType_);
+        EXPECT_EQ(Position::BB, playersMoveInfo.back().position_);
+        EXPECT_EQ(1, playersMoveInfo.back().size_);
+        EXPECT_EQ(99, playersMoveInfo.back().stackLeft_);
+
         //FLOP
+        playersMoveInfo.clear();
         m = player1->makeMove(0);
         EXPECT_TRUE(m->isBet());
         EXPECT_FLOAT_EQ(94, player1->getStackSize());
@@ -46,7 +58,21 @@ TEST(PlayerTest, makeMove1)
         EXPECT_FLOAT_EQ(84, player1->getStackSize());
         player1->setBetSize(0);
         player2->setBetSize(0);
+        EXPECT_EQ(3, playersMoveInfo.size());
+        EXPECT_EQ(MoveType::Bet, playersMoveInfo.front().moveType_);
+        EXPECT_EQ(Position::SB, playersMoveInfo.front().position_);
+        EXPECT_EQ(5, playersMoveInfo.front().size_);
+        EXPECT_EQ(94, playersMoveInfo.front().stackLeft_);
+        EXPECT_EQ(MoveType::Raise, playersMoveInfo.at(1).moveType_);
+        EXPECT_EQ(Position::BB, playersMoveInfo.at(1).position_);
+        EXPECT_EQ(15, playersMoveInfo.at(1).size_);
+        EXPECT_EQ(84, playersMoveInfo.at(1).stackLeft_);
+        EXPECT_EQ(MoveType::Call, playersMoveInfo.back().moveType_);
+        EXPECT_EQ(Position::SB, playersMoveInfo.back().position_);
+        EXPECT_EQ(15, playersMoveInfo.back().size_);
+        EXPECT_EQ(84, playersMoveInfo.back().stackLeft_);
         //TURN
+        playersMoveInfo.clear();
         m = player1->makeMove(0);
         EXPECT_TRUE(m->isCheck());
         EXPECT_FLOAT_EQ(84, player1->getStackSize());
@@ -56,6 +82,15 @@ TEST(PlayerTest, makeMove1)
         m = player1->makeMove(25);
         EXPECT_TRUE(m->isFold());
         EXPECT_FLOAT_EQ(84, player1->getStackSize());
+        EXPECT_EQ(2, playersMoveInfo.size());
+        EXPECT_EQ(MoveType::Check, playersMoveInfo.front().moveType_);
+        EXPECT_EQ(Position::SB, playersMoveInfo.front().position_);
+        EXPECT_EQ(0, playersMoveInfo.front().size_);
+        EXPECT_EQ(84, playersMoveInfo.front().stackLeft_);
+        EXPECT_EQ(MoveType::Bet, playersMoveInfo.back().moveType_);
+        EXPECT_EQ(Position::BB, playersMoveInfo.back().position_);
+        EXPECT_EQ(25, playersMoveInfo.back().size_);
+        EXPECT_EQ(59, playersMoveInfo.back().stackLeft_);
     }
     catch(const std::exception& e)
     {
@@ -66,12 +101,13 @@ TEST(PlayerTest, makeMove1)
 TEST(PlayerTest, makeMove2)
 {
     Board board;
+    std::vector<PlayerMoveInfo> playersMoveInfo;
     try {
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/PlayerMove2");
-        std::unique_ptr<Player> player1 = std::make_unique<Player>("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file));
-        std::unique_ptr<Player> player2 = std::make_unique<Player>("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file));
-        std::unique_ptr<Player> player3 = std::make_unique<Player>("Pawel", board, 100, Position::CO, std::make_unique<StreamStrategy>(file));
-        std::unique_ptr<Player> player4 = std::make_unique<Player>("Marcin", board, 100, Position::BU, std::make_unique<StreamStrategy>(file));
+        std::unique_ptr<Player> player1 = std::make_unique<Player>("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file), playersMoveInfo);
+        std::unique_ptr<Player> player2 = std::make_unique<Player>("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file), playersMoveInfo);
+        std::unique_ptr<Player> player3 = std::make_unique<Player>("Pawel", board, 100, Position::CO, std::make_unique<StreamStrategy>(file), playersMoveInfo);
+        std::unique_ptr<Player> player4 = std::make_unique<Player>("Marcin", board, 100, Position::BU, std::make_unique<StreamStrategy>(file), playersMoveInfo);
 
         //PREFLOP
         player1->setSbBetSize();
@@ -129,11 +165,12 @@ TEST(PlayerTest, makeMove2)
 TEST(PlayerTest, makeMove3)
 {
     Board board;
+    std::vector<PlayerMoveInfo> playersMoveInfo;
     try {
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/PlayerMove3");
-        std::unique_ptr<Player> player1 = std::make_unique<Player>("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file));
-        std::unique_ptr<Player> player2 = std::make_unique<Player>("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file));
-        std::unique_ptr<Player> player3 = std::make_unique<Player>("Pawel", board, 100, Position::BU, std::make_unique<StreamStrategy>(file));
+        std::unique_ptr<Player> player1 = std::make_unique<Player>("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file), playersMoveInfo);
+        std::unique_ptr<Player> player2 = std::make_unique<Player>("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file), playersMoveInfo);
+        std::unique_ptr<Player> player3 = std::make_unique<Player>("Pawel", board, 100, Position::BU, std::make_unique<StreamStrategy>(file), playersMoveInfo);
 
         //PREFLOP
         player1->setSbBetSize();

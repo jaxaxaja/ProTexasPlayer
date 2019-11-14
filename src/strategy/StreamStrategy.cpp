@@ -3,7 +3,7 @@
 #include <spdlog/fmt/ostr.h>
 #include "Exceptions.h"
 
-std::unique_ptr<Move> StreamStrategy::callRaiseOrFold(float, const Board&, const Hand&)
+std::unique_ptr<Move> StreamStrategy::callRaiseOrFold(float, const Board&, const Hand&, const std::vector<PlayerMoveInfo>&)
 {
     if (&ins_ == &std::cin)
         std::cout << "Specify move (call, raise or fold): ";
@@ -24,7 +24,7 @@ std::unique_ptr<Move> StreamStrategy::callRaiseOrFold(float, const Board&, const
     return move;
 }
 
-std::unique_ptr<Move> StreamStrategy::checkOrBet(const Board&, const Hand&)
+std::unique_ptr<Move> StreamStrategy::checkOrBet(const Board&, const Hand&, const std::vector<PlayerMoveInfo>&)
 {
     if (&ins_ == &std::cin)
         std::cout << "Specify move (check or bet): ";

@@ -12,10 +12,11 @@ TEST(StreamDeckTest, DealPlayersAndStreets)
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamDeck1");
         StreamDeck deck(file);
         Board board;
-        std::unique_ptr<Player> player1 = std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
-        std::unique_ptr<Player> player2 = std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin));
-        std::unique_ptr<Player> player3 = std::make_unique<Player>("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin));
-        std::unique_ptr<Player> player4 = std::make_unique<Player>("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin));
+        std::vector<PlayerMoveInfo> playersMoveInfo;
+        std::unique_ptr<Player> player1 = std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo);
+        std::unique_ptr<Player> player2 = std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo);
+        std::unique_ptr<Player> player3 = std::make_unique<Player>("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo);
+        std::unique_ptr<Player> player4 = std::make_unique<Player>("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo);
 
         deck.dealCardsToPlayer(player1);
         EXPECT_EQ("Ah2s", player1->showHand());
@@ -51,7 +52,8 @@ TEST(StreamDeckTest, BrokenPlayerCards)
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamDeck2");
         StreamDeck deck(file);
         Board board;
-        std::unique_ptr<Player> player1 = std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
+        std::vector<PlayerMoveInfo> playersMoveInfo;
+        std::unique_ptr<Player> player1 = std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo);
 
         EXPECT_THROW(deck.dealCardsToPlayer(player1), PlayerHandParsingError);
         file.close();
@@ -68,10 +70,11 @@ TEST(StreamDeckTest, BrokenFlop)
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamDeck3");
         StreamDeck deck(file);
         Board board;
-        std::unique_ptr<Player> player1 = std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
-        std::unique_ptr<Player> player2 = std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin));
-        std::unique_ptr<Player> player3 = std::make_unique<Player>("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin));
-        std::unique_ptr<Player> player4 = std::make_unique<Player>("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin));
+        std::vector<PlayerMoveInfo> playersMoveInfo;
+        std::unique_ptr<Player> player1 = std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo);
+        std::unique_ptr<Player> player2 = std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo);
+        std::unique_ptr<Player> player3 = std::make_unique<Player>("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo);
+        std::unique_ptr<Player> player4 = std::make_unique<Player>("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo);
 
         deck.dealCardsToPlayer(player1);
         deck.dealCardsToPlayer(player2);
@@ -92,10 +95,11 @@ TEST(StreamDeckTest, BrokenTurn)
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamDeck4");
         StreamDeck deck(file);
         Board board;
-        std::unique_ptr<Player> player1 = std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
-        std::unique_ptr<Player> player2 = std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin));
-        std::unique_ptr<Player> player3 = std::make_unique<Player>("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin));
-        std::unique_ptr<Player> player4 = std::make_unique<Player>("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin));
+        std::vector<PlayerMoveInfo> playersMoveInfo;
+        std::unique_ptr<Player> player1 = std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo);
+        std::unique_ptr<Player> player2 = std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo);
+        std::unique_ptr<Player> player3 = std::make_unique<Player>("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo);
+        std::unique_ptr<Player> player4 = std::make_unique<Player>("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo);
 
         deck.dealCardsToPlayer(player1);
         deck.dealCardsToPlayer(player2);
@@ -117,10 +121,11 @@ TEST(StreamDeckTest, BrokenRiver)
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamDeck5");
         StreamDeck deck(file);
         Board board;
-        std::unique_ptr<Player> player1 = std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin));
-        std::unique_ptr<Player> player2 = std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin));
-        std::unique_ptr<Player> player3 = std::make_unique<Player>("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin));
-        std::unique_ptr<Player> player4 = std::make_unique<Player>("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin));
+        std::vector<PlayerMoveInfo> playersMoveInfo;
+        std::unique_ptr<Player> player1 = std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo);
+        std::unique_ptr<Player> player2 = std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo);
+        std::unique_ptr<Player> player3 = std::make_unique<Player>("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo);
+        std::unique_ptr<Player> player4 = std::make_unique<Player>("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo);
 
         deck.dealCardsToPlayer(player1);
         deck.dealCardsToPlayer(player2);

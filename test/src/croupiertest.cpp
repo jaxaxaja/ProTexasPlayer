@@ -9,11 +9,12 @@
 TEST(CroupierTest, DealCardsFromRealDeck)
 {
     Board board;
+    std::vector<PlayerMoveInfo> playersMoveInfo;
     std::vector<std::unique_ptr<Player>> players;
-    players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin)));
-    players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin)));
-    players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin)));
-    players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin)));
+    players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
+    players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
+    players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
+    players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
     std::unique_ptr<DeckImpl> deck = std::make_unique<RealDeck>();
     Croupier croupier(board, players, deck);
 
@@ -40,11 +41,12 @@ TEST(CroupierTest, DealCardsFromFile)
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/StreamDeck1");
         std::unique_ptr<DeckImpl> deck = std::make_unique<StreamDeck>(file);
         Board board;
+        std::vector<PlayerMoveInfo> playersMoveInfo;
         std::vector<std::unique_ptr<Player>> players;
-        players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin)));
-        players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin)));;
-        players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin)));
-        players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin)));
+        players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
+        players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));;
+        players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
+        players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
         Croupier croupier(board, players, deck);
 
         croupier.dealCardsToPlayers();
@@ -75,13 +77,14 @@ TEST(CroupierTest, DealCardsFromFile)
 TEST(CroupierTest, PreparePlayersToAct1)
 {
     Board board;
+    std::vector<PlayerMoveInfo> playersMoveInfo;
     std::vector<std::unique_ptr<Player>> players;
-    players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin)));
-    players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin)));
-    players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin)));
-    players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin)));
-    players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::MP, std::make_unique<StreamStrategy>(std::cin)));
-    players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::CO, std::make_unique<StreamStrategy>(std::cin)));
+    players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
+    players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
+    players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
+    players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
+    players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::MP, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
+    players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::CO, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
     std::unique_ptr<DeckImpl> deck = std::make_unique<RealDeck>();
     Croupier croupier(board, players, deck);
 
@@ -105,10 +108,11 @@ TEST(CroupierTest, PreparePlayersToAct1)
 TEST(CroupierTest, PreparePlayersToAct2)
 {
     Board board;
+    std::vector<PlayerMoveInfo> playersMoveInfo;
     std::vector<std::unique_ptr<Player>> players;
-    players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin)));
-    players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin)));
-    players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin)));
+    players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
+    players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
+    players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
     std::unique_ptr<DeckImpl> deck = std::make_unique<RealDeck>();
     Croupier croupier(board, players, deck);
 
@@ -132,9 +136,10 @@ TEST(CroupierTest, PreparePlayersToAct2)
 TEST(CroupierTest, PreparePlayersToAct3)
 {
     Board board;
+    std::vector<PlayerMoveInfo> playersMoveInfo;
     std::vector<std::unique_ptr<Player>> players;
-    players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin)));
-    players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin)));
+    players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
+    players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
     std::unique_ptr<DeckImpl> deck = std::make_unique<RealDeck>();
     Croupier croupier(board, players, deck);
 
@@ -158,8 +163,9 @@ TEST(CroupierTest, PreparePlayersToAct3)
 TEST(CroupierTest, PreparePlayersToAct4)
 {
     Board board;
+    std::vector<PlayerMoveInfo> playersMoveInfo;
     std::vector<std::unique_ptr<Player>> players;
-    players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin)));
+    players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
     std::unique_ptr<DeckImpl> deck = std::make_unique<RealDeck>();
     Croupier croupier(board, players, deck);
 
@@ -169,13 +175,14 @@ TEST(CroupierTest, PreparePlayersToAct4)
 TEST(CroupierTest, AskPlayers1)
 {
     Board board;
+    std::vector<PlayerMoveInfo> playersMoveInfo;
     try {
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/Hand1");
         std::vector<std::unique_ptr<Player>> players;
-        players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file)));
-        players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file)));
-        players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::EP, std::make_unique<StreamStrategy>(file)));
-        players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::BU, std::make_unique<StreamStrategy>(file)));
+        players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file), playersMoveInfo));
+        players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file), playersMoveInfo));
+        players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::EP, std::make_unique<StreamStrategy>(file), playersMoveInfo));
+        players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::BU, std::make_unique<StreamStrategy>(file), playersMoveInfo));
         std::unique_ptr<DeckImpl> deck = std::make_unique<StreamDeck>(file);
         Croupier croupier(board, players, deck);
 
@@ -227,13 +234,14 @@ TEST(CroupierTest, AskPlayers1)
 TEST(CroupierTest, AskPlayers2)
 {
     Board board;
+    std::vector<PlayerMoveInfo> playersMoveInfo;
     try {
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/Hand2");
         std::vector<std::unique_ptr<Player>> players;
-        players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file)));
-        players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file)));
-        players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::EP, std::make_unique<StreamStrategy>(file)));
-        players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::BU, std::make_unique<StreamStrategy>(file)));
+        players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file), playersMoveInfo));
+        players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file), playersMoveInfo));
+        players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::EP, std::make_unique<StreamStrategy>(file), playersMoveInfo));
+        players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::BU, std::make_unique<StreamStrategy>(file), playersMoveInfo));
         std::unique_ptr<DeckImpl> deck = std::make_unique<StreamDeck>(file);
         Croupier croupier(board, players, deck);
 
@@ -278,12 +286,13 @@ TEST(CroupierTest, AskPlayers2)
 TEST(CroupierTest, AskPlayers3)
 {
     Board board;
+    std::vector<PlayerMoveInfo> playersMoveInfo;
     try {
         std::ifstream file("/home/sg222629/repos/ProTexasPlayer/test/files/Hand3");
         std::vector<std::unique_ptr<Player>> players;
-        players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file)));
-        players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file)));
-        players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::BU, std::make_unique<StreamStrategy>(file)));
+        players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::SB, std::make_unique<StreamStrategy>(file), playersMoveInfo));
+        players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::BB, std::make_unique<StreamStrategy>(file), playersMoveInfo));
+        players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::BU, std::make_unique<StreamStrategy>(file), playersMoveInfo));
         std::unique_ptr<DeckImpl> deck = std::make_unique<StreamDeck>(file);
         Croupier croupier(board, players, deck);
 
