@@ -9,17 +9,26 @@
 void RealStrategy::createRealStrategy(const Board& board)
 {
     if (board.river_ != Card::Unknown && !dynamic_cast<RiverStrategy*>(realStrategy_.get()))
+    {
+        spdlog::info("Creating river strategy.");
         realStrategy_.reset(new RiverStrategy());
+    }
     else if (board.turn_ != Card::Unknown && !dynamic_cast<TurnStrategy*>(realStrategy_.get()))
+    {
+        spdlog::info("Creating turn strategy.");
         realStrategy_.reset(new TurnStrategy());
+    }
     else if (!board.flop_.empty() && !dynamic_cast<FlopStrategy*>(realStrategy_.get()))
+    {
+        spdlog::info("Creating flop strategy.");
         realStrategy_.reset(new FlopStrategy());
+    }
 }
 
-std::unique_ptr<Move> RealStrategy::callRaiseOrFold(const float bb, const Board& board, const Hand &hand)
+std::unique_ptr<Move> RealStrategy::callRaiseOrFold(const float bb, const Board& board, const Hand &hand, const std::vector<PlayerMoveInfo> &playersMoveInfo)
 {
     createRealStrategy(board);
-    std::unique_ptr<Move> move = realStrategy_->callRaiseOrFold(bb, board, hand);
+    std::unique_ptr<Move> move = realStrategy_->play(bb, board, hand, playersMoveInfo);
 
     if (move->isBet())
     {
@@ -30,10 +39,10 @@ std::unique_ptr<Move> RealStrategy::callRaiseOrFold(const float bb, const Board&
     return move;
 }
 
-std::unique_ptr<Move> RealStrategy::checkOrBet(const Board& board, const Hand& hand)
+std::unique_ptr<Move> RealStrategy::checkOrBet(const Board& board, const Hand& hand, const std::vector<PlayerMoveInfo>& playersMoveInfo)
 {
     createRealStrategy(board);
-    std::unique_ptr<Move> move = realStrategy_->checkOrBet(board, hand);
+    std::unique_ptr<Move> move = realStrategy_->play(0, board, hand, playersMoveInfo);
 
     if (move->isRaise() || move->isCall())
     {

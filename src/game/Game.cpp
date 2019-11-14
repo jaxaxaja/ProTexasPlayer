@@ -5,7 +5,7 @@
 Game::Game(std::unique_ptr<DeckImpl>& deck, std::unique_ptr<GameFactory>& gameFactory)
     : croupier_(board_, players_, deck)
 {
-    players_ = gameFactory->createPlayers(board_);
+    players_ = gameFactory->createPlayers(board_, playersMoveInfo_);
 }
 
 void Game::setGameStreet(GameState* state)

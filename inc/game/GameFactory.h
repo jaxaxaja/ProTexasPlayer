@@ -12,7 +12,7 @@ class GameFactory
                                                                const Position position = Position::EP) = 0;
 public:
     virtual std::unique_ptr<DeckImpl> createDeck() = 0;
-    virtual std::vector<std::unique_ptr<Player>> createPlayers(Board& board) = 0;
+    virtual std::vector<std::unique_ptr<Player>> createPlayers(const Board& board, std::vector<PlayerMoveInfo>& playersMoveInfo) = 0;
     virtual ~GameFactory() = default;
 };
 

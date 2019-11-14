@@ -64,7 +64,7 @@ std::unique_ptr<DeckImpl> GameSimulationFactory::createDeck()
     return deck;
 }
 
-std::vector<std::unique_ptr<Player>> GameSimulationFactory::createPlayers(Board& board)
+std::vector<std::unique_ptr<Player>> GameSimulationFactory::createPlayers(const Board& board, std::vector<PlayerMoveInfo> &playersMoveInfo)
 {
     std::vector<std::unique_ptr<Player>> players;
     int num;
@@ -79,7 +79,7 @@ std::vector<std::unique_ptr<Player>> GameSimulationFactory::createPlayers(Board&
             ins_ >> name >> pos >> bb;
             Position position = pos == "BU" ? Position::BU : pos == "SB" ? Position::SB : pos == "BB" ? Position::BB
                                            : pos == "EP" ? Position::EP : pos == "MP" ? Position::MP : Position ::CO;
-            players.emplace_back(std::make_unique<Player>(name, board, bb, position, createPlayerStrategy()));
+            players.emplace_back(std::make_unique<Player>(name, board, bb, position, createPlayerStrategy(), playersMoveInfo));
         }
     }
     else
@@ -93,7 +93,7 @@ std::vector<std::unique_ptr<Player>> GameSimulationFactory::createPlayers(Board&
             std::cin >> name >> pos >> bb;
             Position position = pos == "BU" ? Position::BU : pos == "SB" ? Position::SB : pos == "BB" ? Position::BB
                                                                                                       : pos == "EP" ? Position::EP : pos == "MP" ? Position::MP : Position ::CO;
-            players.emplace_back(std::make_unique<Player>(name, board, bb, position, createPlayerStrategy(name, position)));
+            players.emplace_back(std::make_unique<Player>(name, board, bb, position, createPlayerStrategy(name, position), playersMoveInfo));
         }
     }
 

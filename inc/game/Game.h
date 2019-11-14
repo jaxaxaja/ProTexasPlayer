@@ -6,6 +6,7 @@
 #include "Board.h"
 #include <game/GameState.h>
 #include <game/GameFactory.h>
+#include <move/PlayerMoveInfo.h>
 #include <vector>
 #include <gtest/gtest.h>
 
@@ -13,6 +14,7 @@ class Game
 {
     Board board_;
     std::vector<std::unique_ptr<Player>> players_;
+    std::vector<PlayerMoveInfo> playersMoveInfo_;
     Croupier croupier_;
     GameState* gameState_ = nullptr;
     size_t playersInHand();

@@ -18,7 +18,7 @@ class GameSimulationFactory : public GameFactory
                                                                const Position position = Position::EP) override;
 public:
     virtual std::unique_ptr<DeckImpl> createDeck() override;
-    virtual std::vector<std::unique_ptr<Player>> createPlayers(Board& board) override;
+    virtual std::vector<std::unique_ptr<Player>> createPlayers(const Board &board, std::vector<PlayerMoveInfo>& playersMoveInfo) override;
     virtual ~GameSimulationFactory() = default;
 };
 

@@ -6,7 +6,7 @@
 #include <strategy/StrategyImpl.h>
 #include "PlayerStatistics.h"
 #include "Position.h"
-#include <move/Move.h>
+#include <move/PlayerMoveInfo.h>
 #include <string>
 
 class Player
@@ -20,9 +20,11 @@ class Player
     bool isActive_ = true;              //still plays his hand
     const Board& board_;
     Position position_ = Position::Unknown;
+    std::vector<PlayerMoveInfo>& playersMoveInfo_;
 
 public:
-    Player(const std::string& name, const Board& board, float bigBlinds, Position position, std::unique_ptr<StrategyImpl> strategy);
+    Player(const std::string& name, const Board& board, float bigBlinds, Position position,
+           std::unique_ptr<StrategyImpl> strategy, std::vector<PlayerMoveInfo>& playersMoveInfo);
     bool isActive() const { return isActive_; }
     void fold() { isActive_ = false; }
     const std::string& getName() const { return name_; }

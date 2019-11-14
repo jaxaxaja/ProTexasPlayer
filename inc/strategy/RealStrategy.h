@@ -11,8 +11,10 @@ class RealStrategy : public StrategyImpl
     void createRealStrategy(const Board& board);
 public:
     RealStrategy(const Position position) : realStrategy_(std::make_unique<PreFlopStrategy>(position)) {}
-    std::unique_ptr<Move> checkOrBet(const Board &board, const Hand& hand = {}) override;
-    std::unique_ptr<Move> callRaiseOrFold(const float bb, const Board& board, const Hand& hand = {}) override;
+    std::unique_ptr<Move> checkOrBet(const Board &board, const Hand& hand = {},
+                                     const std::vector<PlayerMoveInfo>& playersMoveInfo = {}) override;
+    std::unique_ptr<Move> callRaiseOrFold(const float bb, const Board& board, const Hand& hand = {},
+                                          const std::vector<PlayerMoveInfo>& playersMoveInfo = {}) override;
     virtual ~RealStrategy() = default;
 };
 

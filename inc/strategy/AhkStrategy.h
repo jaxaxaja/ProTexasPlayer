@@ -6,8 +6,10 @@
 class AhkStrategy : public StrategyImpl
 {
 public:
-    std::unique_ptr<Move> checkOrBet(const Board& board = {}, const Hand& hand = {}) override;
-    std::unique_ptr<Move> callRaiseOrFold(const float bb, const Board& board = {}, const Hand& hand = {}) override;
+    std::unique_ptr<Move> checkOrBet(const Board& board = {}, const Hand& hand = {},
+                                     const std::vector<PlayerMoveInfo>& playersMoveInfo = {}) override;
+    std::unique_ptr<Move> callRaiseOrFold(const float bb, const Board& board = {}, const Hand& hand = {},
+                                          const std::vector<PlayerMoveInfo>& playersMoveInfo = {}) override;
     virtual ~AhkStrategy() = default;
 };
 

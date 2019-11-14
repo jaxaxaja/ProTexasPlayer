@@ -16,7 +16,7 @@ class RealGameFactory : public GameFactory
     { return std::make_unique<AhkStrategy>(); }
 public:
     virtual std::unique_ptr<DeckImpl> createDeck() override { return std::make_unique<AhkDeck>(); }
-    virtual std::vector<std::unique_ptr<Player>> createPlayers(Board& board) override;
+    virtual std::vector<std::unique_ptr<Player>> createPlayers(const Board &board, std::vector<PlayerMoveInfo> &playersMoveInfo) override;
     virtual ~RealGameFactory() = default;
 };
 

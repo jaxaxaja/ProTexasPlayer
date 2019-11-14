@@ -12,8 +12,10 @@ class StreamStrategy : public StrategyImpl
 
 public:
     StreamStrategy(std::istream& ins) : ins_(ins) {}
-    std::unique_ptr<Move> checkOrBet(const Board& board = {}, const Hand& hand = {}) override;
-    std::unique_ptr<Move> callRaiseOrFold(const float bb, const Board& board = {}, const Hand& hand = {}) override;
+    std::unique_ptr<Move> checkOrBet(const Board& board = {}, const Hand& hand = {},
+                                     const std::vector<PlayerMoveInfo>& playersMoveInfo = {}) override;
+    std::unique_ptr<Move> callRaiseOrFold(const float bb, const Board& board = {}, const Hand& hand = {},
+                                          const std::vector<PlayerMoveInfo>& playersMoveInfo = {}) override;
     virtual ~StreamStrategy() = default;
 };
 
