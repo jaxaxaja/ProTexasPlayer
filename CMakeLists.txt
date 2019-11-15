@@ -21,10 +21,12 @@ set(SOURCES src/Card.cpp
             src/move/Call.cpp
             src/move/Bet.cpp
             src/move/Raise.cpp
+            src/move/PlayerMoveInfo.cpp
             src/strategy/StrategyImpl.cpp
             src/strategy/AhkStrategy.cpp
             src/strategy/StreamStrategy.cpp
             src/strategy/RealStrategy.cpp
+            src/strategy/StrategyState.cpp
             src/strategy/PreFlopStrategy.cpp
             src/strategy/FlopStrategy.cpp
             src/strategy/TurnStrategy.cpp
@@ -32,6 +34,7 @@ set(SOURCES src/Card.cpp
             src/strategy/range/PositionalRange.cpp
             src/strategy/range/RangeCreator.cpp
             src/strategy/range/RangeBuilder.cpp
+            src/strategy/range/EpRangeBuilder.cpp
             src/Player.cpp
             src/Croupier.cpp
             src/PlayerStatistics.cpp

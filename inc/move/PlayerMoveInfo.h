@@ -6,6 +6,8 @@
 
 enum class MoveType {Check, Call, Bet, Raise};
 
+std::ostream& operator<<(std::ostream& os, const MoveType& move);
+
 struct PlayerMoveInfo
 {
     PlayerMoveInfo(const std::unique_ptr<Move>& move, Position position, float size, float stackLeft) :
