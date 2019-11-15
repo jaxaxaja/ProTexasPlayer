@@ -12,6 +12,7 @@ set(SOURCES src/handtest.cpp
             src/croupiertest.cpp
             src/gametest.cpp
             src/rangecreatortest.cpp
+            src/realstrategytest.cpp
             src/main.cpp
             ../src/Card.cpp
             ../src/Hand.cpp
@@ -27,9 +28,19 @@ set(SOURCES src/handtest.cpp
             ../src/move/Call.cpp
             ../src/move/Bet.cpp
             ../src/move/Raise.cpp
+            ../src/move/PlayerMoveInfo.cpp
             ../src/Position.cpp
             ../src/strategy/StreamStrategy.cpp
-            ../src/strategy/range/RangeCreator.cpp)
+            ../src/strategy/RealStrategy.cpp
+            ../src/strategy/StrategyState.cpp
+            ../src/strategy/PreFlopStrategy.cpp
+            ../src/strategy/FlopStrategy.cpp
+            ../src/strategy/TurnStrategy.cpp
+            ../src/strategy/RiverStrategy.cpp
+            ../src/strategy/range/RangeCreator.cpp
+            ../src/strategy/range/PositionalRange.cpp
+            ../src/strategy/range/RangeBuilder.cpp
+            ../src/strategy/range/EpRangeBuilder.cpp)
 
 add_executable(ProTexasPlayerTest ${SOURCES})
 

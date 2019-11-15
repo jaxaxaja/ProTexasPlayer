@@ -53,4 +53,14 @@ struct RangeParsingError : public std::exception
     virtual const char* what() const noexcept override {"Parsing range error";}
 };
 
+struct NoCounterPlayFoundError : public std::exception
+{
+    virtual const char* what() const noexcept override {"Cound not find counter play vs other players error";}
+};
+
+struct WrongCounterPlayFoundError : public std::exception
+{
+    virtual const char* what() const noexcept override {"Found wrong counter play vs other players error";}
+};
+
 #endif //EXCEPTIONS_H
