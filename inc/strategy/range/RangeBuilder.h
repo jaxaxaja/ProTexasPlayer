@@ -26,6 +26,8 @@ public:
     virtual std::map<Position, Range> buildVs4bCallRange() = 0;
     virtual std::map<Position, Range> buildBrokeRange() = 0;
     float getRfiSize() const { return rfiSize_; }
+    float get3BetSize() const { return threeBetSize_; }
+    float get4BetSize() const { return fourBetSize_; }
     virtual ~RangeBuilder() = default;
 };
 

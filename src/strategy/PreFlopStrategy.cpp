@@ -96,7 +96,7 @@ std::unique_ptr<Move> PreFlopStrategy::vsXBet(std::vector<PlayerMoveInfo>::const
     spdlog::info("PreFlopStrategy: Playing according to vsXBet move");
 
     if (range_.isInBroke(hand_, (*it).position_))
-        return std::make_unique<Raise>(1000);
+        return std::make_unique<Raise>(1000); //we simply want to go allin, we probably need to do it other way than raise (1000)
     else
         return std::make_unique<Fold>();
 }

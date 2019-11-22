@@ -13,7 +13,7 @@ std::unique_ptr<Move> StrategyState::play()
     spdlog::info("Calculating vsMove play...");
 
     const auto it = std::max_element(playersMoveInfo_.begin(), playersMoveInfo_.end(),
-                                     [](const PlayerMoveInfo& lhs, const PlayerMoveInfo& rhs){ return lhs.moveType_ > rhs.moveType_; });
+                                     [](const PlayerMoveInfo& lhs, const PlayerMoveInfo& rhs){ return lhs.size_ < rhs.size_; });
     MoveType highestMove = it != playersMoveInfo_.end() ? (*it).moveType_ : MoveType::Check;
     size_t highestMoveNumber = std::count_if(playersMoveInfo_.begin(), playersMoveInfo_.end(),
                                              [&highestMove](const PlayerMoveInfo& move){ return move.moveType_ == highestMove; });

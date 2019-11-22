@@ -23,7 +23,8 @@ std::unique_ptr<Move> FlopStrategy::vsDonk(std::vector<PlayerMoveInfo>::const_it
     //evaluate hand
     //evaluate draws
     //if ir->size_ <= 0.5 board.pot_
-        //call
+        //small raise if at least  2overcards
+        //what calling here? 2nd pair +?
 }
 
 std::unique_ptr<Move> FlopStrategy::vsBet(std::vector<PlayerMoveInfo>::const_iterator it)
