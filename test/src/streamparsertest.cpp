@@ -137,7 +137,7 @@ TEST(StreamParserTest, MoveFromString)
     std::stringstream str10("B 3.87");
     EXPECT_TRUE(parser.parsePlayerMove(&str10, m));
     EXPECT_TRUE(m->isBet());
-    EXPECT_FLOAT_EQ(3.87, m->moveSize());
+    EXPECT_FLOAT_EQ(3.87f, m->moveSize());
 
     std::stringstream str6("CB");
     EXPECT_FALSE(parser.parsePlayerMove(&str6, m));

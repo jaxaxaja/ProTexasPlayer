@@ -9,7 +9,7 @@ class Raise : public Move
     Raise(const float size) : Move(size) {}
     virtual void updatePlayer(Player* player, const float) override;
     virtual bool isRaise() const override {return true; }
-    virtual ~Raise() = default;
+    ~Raise() override = default;
 };
 
 #endif //RAISE_H

@@ -23,7 +23,7 @@ public:
         game->setGameStreet(new River());
         delete this;
     }
-    virtual ~Turn() = default;
+    ~Turn() override = default;
 };
 
 #endif //TURN_H

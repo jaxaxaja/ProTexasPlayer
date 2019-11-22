@@ -9,7 +9,7 @@ class Call : public Move
     Call() : Move(0) {}
     virtual void updatePlayer(Player* player, const float bb) override;
     virtual bool isCall() const override { return true; }
-    virtual ~Call() = default;
+    ~Call() override = default;
 };
 
 #endif //CALL_H

@@ -9,7 +9,7 @@ class Fold : public Move
     Fold() : Move(0) {}
     virtual void updatePlayer(Player* player, const float) override;
     virtual bool isFold() const override { return true; }
-    virtual ~Fold() = default;
+    ~Fold() override = default;
 };
 
 #endif //FOLD_H

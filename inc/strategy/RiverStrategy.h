@@ -16,7 +16,7 @@ protected:
 public:
     RiverStrategy(const float bb, const Board& board, const Hand& hand,
                   const std::vector<PlayerMoveInfo>& playersMoveInfo);
-    virtual ~RiverStrategy() = default;
+    ~RiverStrategy() override = default;
 };
 
 #endif //RIVER_STRATEGY_H

@@ -18,7 +18,7 @@ protected:
 public:
     PreFlopStrategy(const Position& position, const float bb, const Board& board,
                     const Hand& hand, const std::vector<PlayerMoveInfo>& playersMoveInfo);
-    virtual ~PreFlopStrategy() = default;
+    ~PreFlopStrategy() override = default;
 };
 
 #endif //PRE_FLOP_STRATEGY_H

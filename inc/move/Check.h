@@ -9,7 +9,7 @@ class Check : public Move
     Check() : Move(0) {}
     virtual void updatePlayer(Player*, const float) override {}
     virtual bool isCheck() const override { return true; }
-    virtual ~Check() = default;
+    ~Check() override = default;
 };
 
 #endif //CHECK_H

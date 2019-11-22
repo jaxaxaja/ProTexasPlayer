@@ -22,7 +22,7 @@ public:
         game->setGameStreet(nullptr);
         delete this;
     }
-    virtual ~River() = default;
+    ~River() override = default;
 };
 
 #endif //RIVER_H

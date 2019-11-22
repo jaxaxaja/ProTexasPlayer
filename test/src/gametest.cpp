@@ -8,9 +8,9 @@
 class TestGameFactory : public GameFactory
 {
     std::ifstream file;
-    virtual std::unique_ptr<StrategyImpl> createHeroStrategy(const Position position) override {}
-    virtual std::unique_ptr<StrategyImpl> createPlayerStrategy(const std::string &playerName = "",
-                                                               const Position position = Position::EP) override
+    std::unique_ptr<StrategyImpl> createHeroStrategy(const Position) override { return {}; }
+    std::unique_ptr<StrategyImpl> createPlayerStrategy(const std::string &playerName = "",
+                                                       const Position position = Position::EP) override
     { return std::make_unique<StreamStrategy>(file); }
 public:
     TestGameFactory(const std::string& path) : file(path) {}
@@ -20,6 +20,7 @@ public:
         std::vector<std::unique_ptr<Player>> res;
         int num;
         file >> num;
+
         while (num--)
         {
             std::string name, pos;
@@ -31,7 +32,7 @@ public:
         }
         return res;
     }
-    virtual ~TestGameFactory() = default;
+    ~TestGameFactory() override = default;
 };
 
 TEST(GameTest, GameSimulation1)

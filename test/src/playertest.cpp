@@ -206,20 +206,20 @@ TEST(PlayerTest, makeMove3)
         //TURN
         m = player2->makeMove(0);
         EXPECT_TRUE(m->isBet());
-        EXPECT_FLOAT_EQ(69.4, player2->getStackSize());
-        m = player3->makeMove(18.1);
+        EXPECT_FLOAT_EQ(69.4f, player2->getStackSize());
+        m = player3->makeMove(18.1f);
         EXPECT_TRUE(m->isCall());
-        EXPECT_FLOAT_EQ(18.1, m->moveSize());
-        EXPECT_FLOAT_EQ(69.4, player3->getStackSize());
+        EXPECT_FLOAT_EQ(18.1f, m->moveSize());
+        EXPECT_FLOAT_EQ(69.4f, player3->getStackSize());
         player2->setBetSize(0);
         player3->setBetSize(0);
         //RIVER
         m = player2->makeMove(0);
         EXPECT_TRUE(m->isCheck());
-        EXPECT_FLOAT_EQ(69.4, player2->getStackSize());
+        EXPECT_FLOAT_EQ(69.4f, player2->getStackSize());
         m = player3->makeMove(0);
         EXPECT_TRUE(m->isCheck());
-        EXPECT_FLOAT_EQ(69.4, player3->getStackSize());
+        EXPECT_FLOAT_EQ(69.4f, player3->getStackSize());
     }
     catch(const std::exception& e)
     {

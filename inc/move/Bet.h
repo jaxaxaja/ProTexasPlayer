@@ -9,7 +9,7 @@ class Bet : public Move
     Bet(const float size) : Move(size) {}
     virtual void updatePlayer(Player* player, const float) override;
     virtual bool isBet() const override { return true; }
-    virtual ~Bet() = default;
+    ~Bet() override = default;
 };
 
 #endif //BET_H

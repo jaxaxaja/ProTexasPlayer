@@ -8,13 +8,13 @@
 class PositionalRange
 {
     Range rfi_;
-    std::map<Position, Range> coldCall_; //we wont call much v EP open, but it might be wider v CO, BBvBU&SB is quite a nice range
-    std::map<Position, Range> threeBet_; //3b BU v EP is more value oriented than BU v CO
-    std::map<Position, Range> vs3betCall_; //we can call wider CO v BU 3bIP than MP v BB
-    std::map<Position, Range> vsSqzCall_; //we will call wider CO,BU v BB sqz than EP,MP v CO,BU sqz
-    std::map<Position, Range> fourBet_; //we will 4b wider in SB v BB 3b than MP v BB
-    std::map<Position, Range> vs4betCall_; //BBvSB 4b is wider call than CO,BU v EP 4b
-    std::map<Position, Range> broke_; //wider on SB v BB or BB v BU than CO v EP
+    std::map<Position, Range> coldCall_;
+    std::map<Position, Range> threeBet_;
+    std::map<Position, Range> vs3betCall_;
+    std::map<Position, Range> vsSqzCall_;
+    std::map<Position, Range> fourBet_;
+    std::map<Position, Range> vs4betCall_;
+    std::map<Position, Range> broke_;
     float rfiSize_;
     float threeBetSize_;
     float fourBetSize_;

@@ -44,7 +44,7 @@ TEST(CroupierTest, DealCardsFromFile)
         std::vector<PlayerMoveInfo> playersMoveInfo;
         std::vector<std::unique_ptr<Player>> players;
         players.emplace_back(std::make_unique<Player>("Lukasz", board, 100, Position::BU, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
-        players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));;
+        players.emplace_back(std::make_unique<Player>("Damian", board, 100, Position::SB, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
         players.emplace_back(std::make_unique<Player>("Pawel", board, 100, Position::BB, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
         players.emplace_back(std::make_unique<Player>("Marcin", board, 100, Position::EP, std::make_unique<StreamStrategy>(std::cin), playersMoveInfo));
         Croupier croupier(board, players, deck);

@@ -23,7 +23,7 @@ public:
         game->setGameStreet(new Turn());
         delete this;
     }
-    virtual ~Flop() = default;
+    ~Flop() override = default;
 };
 
 #endif //FLOP_H

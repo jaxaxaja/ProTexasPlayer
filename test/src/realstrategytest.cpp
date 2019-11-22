@@ -71,7 +71,7 @@ TEST(RealStrategyTest, EpPreFlopStrategy)
     //vs3b 4bet
     std::unique_ptr<Move> fourBet = strategy.callRaiseOrFold(8.5, board, handAces, threeBetMoves);
     EXPECT_TRUE(fourBet->isRaise());
-    EXPECT_FLOAT_EQ(8.5*2.3, fourBet->moveSize());
+    EXPECT_FLOAT_EQ(8.5f*2.3f, fourBet->moveSize());
 
     Hand hand1(Card::EightC, Card::EightD);
     std::unique_ptr<Move> move1 = strategy.callRaiseOrFold(1, board, hand1, emptyMoves);

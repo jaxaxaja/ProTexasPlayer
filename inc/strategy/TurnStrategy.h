@@ -16,7 +16,7 @@ protected:
 public:
     TurnStrategy(const float bb, const Board& board, const Hand& hand,
                  const std::vector<PlayerMoveInfo>& playersMoveInfo);
-    ~TurnStrategy() = default;
+    ~TurnStrategy() override = default;
 };
 
 #endif //TURN_STRATEGY_H

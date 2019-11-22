@@ -16,7 +16,7 @@ public:
     virtual void dealFlopCards(Board& board) override;
     virtual void dealTurnCards(Board& board) override;
     virtual void dealRiverCards(Board& board) override;
-    virtual ~StreamDeck() = default;
+    ~StreamDeck() override = default;
 };
 
 #endif //STREAM_DECK_H

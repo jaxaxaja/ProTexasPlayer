@@ -16,7 +16,7 @@ protected:
 public:
     FlopStrategy(const float bb, const Board& board, const Hand& hand,
                  const std::vector<PlayerMoveInfo>& playersMoveInfo);
-    virtual ~FlopStrategy() = default;
+    ~FlopStrategy() override = default;
 };
 
 #endif //FLOP_STRATEGY_H
