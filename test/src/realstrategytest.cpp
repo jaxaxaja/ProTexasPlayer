@@ -94,7 +94,15 @@ TEST(RealStrategyTest, EpPreFlopStrategy)
 
 TEST(RealStrategyTest, MpPreFlopStrategy)
 {
+    RealStrategy strategy(Position::MP);
+    Board board;
+    Hand hand(Card::Kd, Card::Js);
+    std::vector<PlayerMoveInfo> emptyMoves;
+    std::vector<PlayerMoveInfo> threeBetMoves;
 
+    std::unique_ptr<Move> move = strategy.callRaiseOrFold(1, board, hand, emptyMoves);
+    EXPECT_TRUE(move->isRaise());
+    EXPECT_FLOAT_EQ(2.5, move->moveSize());
 }
 
 TEST(RealStrategyTest, CoPreFlopStrategy)
