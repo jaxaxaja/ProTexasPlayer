@@ -268,6 +268,8 @@ TEST(CroupierTest, AskPlayers2)
         EXPECT_EQ(3, croupier.playersToAct_.size());
         croupier.askPlayers();
         EXPECT_FLOAT_EQ(173+46, board.pot_);
+        croupier.dealTurnCards();
+        croupier.dealRiverCards();
         croupier.chooseWinner();
         EXPECT_FLOAT_EQ(0, players.front()->getStackSize());
         EXPECT_FLOAT_EQ(82, players.at(2)->getStackSize());

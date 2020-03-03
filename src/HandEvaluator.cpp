@@ -1,4 +1,5 @@
 #include "HandEvaluator.h"
+#include "Exceptions.h"
 #include <algorithm>
 
 bool HandStrength::operator==(const HandStrength& rhs)
@@ -31,6 +32,9 @@ std::ostream& operator<<(std::ostream &out, const HandStrength& h)
 
 HandStrength HandEvaluator::getHandStrength(Hand playerHand, const std::vector<Card>& flop, Card turn, Card river)
 {
+    if (flop.empty() || turn == Card::Unknown || river == Card::Unknown)
+        throw NotEnoughCardsError();
+
     std::fill(cardRanks_.begin(), cardRanks_.end(), 0);
     std::fill(cardSuits_.begin(), cardSuits_.end(), 0);
 
