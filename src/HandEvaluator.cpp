@@ -1,6 +1,7 @@
 #include "HandEvaluator.h"
 #include "Exceptions.h"
 #include <algorithm>
+#include <functional>
 
 bool HandStrength::operator==(const HandStrength& rhs)
 {
@@ -57,15 +58,22 @@ HandStrength HandEvaluator::getHandStrength(Hand playerHand, const std::vector<C
     std::sort(cards.begin(), cards.end());
     HandEvaluator::StrengthType result;
 
-    if ((result = isStreightFlush(cards)).first)
-        return HandStrength(HandStrength::StraightFlush, result.second);
-    if ((result = isQuads()).first)
-        return HandStrength(HandStrength::Quads, result.second);
-    if ((result = isFullHouse()).first)
-        return HandStrength(HandStrength::FullHouse, result.second);
-    if ((result = isFlush()).first)
+    const auto [strFlush, strFlushHand] = isStreightFlush(cards);
+    if (strFlush)
+        return HandStrength(HandStrength::StraightFlush, strFlushHand);
+
+    const auto [quads, quadsHand] = isQuads();
+    if (quads)
+        return HandStrength(HandStrength::Quads, quadsHand);
+
+    const auto [fullHouse, houseHand] = isFullHouse();
+    if (fullHouse)
+        return HandStrength(HandStrength::FullHouse, houseHand);
+
+    const auto [flush, flushHand] = isFlush();
+    if (flush)
     {
-        size_t flushType = result.second.front(); //0 - spades, 1 - hearts, 2 - diamonds, 3 - clubs
+        size_t flushType = flushHand.front(); //0 - spades, 1 - hearts, 2 - diamonds, 3 - clubs
         std::vector<size_t> res;
 
         for (const auto& card : cards)
@@ -75,14 +83,22 @@ HandStrength HandEvaluator::getHandStrength(Hand playerHand, const std::vector<C
         }
         return HandStrength(HandStrength::Flush, res);
     }
-    if ((result = isStreight()).first)
-        return HandStrength(HandStrength::Streight, result.second);
-    if ((result = isTriple()).first)
-        return HandStrength(HandStrength::Triple, result.second);
-    if ((result = isTwoPair()).first)
-        return HandStrength(HandStrength::TwoPair, result.second);
-    if ((result = isPair()).first)
-        return HandStrength(HandStrength::Pair, result.second);
+
+    const auto [streight, strHand] = isStreight();
+    if (streight)
+        return HandStrength(HandStrength::Streight, strHand);
+
+    const auto [trips, tripsHand] = isTriple();
+    if (trips)
+        return HandStrength(HandStrength::Triple, tripsHand);
+
+    const auto [twoPair, twoPairHand] = isTwoPair();
+    if (twoPair)
+        return HandStrength(HandStrength::TwoPair, twoPairHand);
+
+    const auto [pair, pairHand] = isPair();
+    if (pair)
+        return HandStrength(HandStrength::Pair, pairHand);
 
     return HandStrength(HandStrength::HighCard, {highCard(1), highCard(2), highCard(3), highCard(4), highCard(5)});
 }
